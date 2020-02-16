@@ -7,29 +7,29 @@ export function lorentzian(options = {}) {
   const { factor = 8, width = 1000 } = options;
   const halfWidth = width / 2;
   const center = factor * halfWidth;
-  const lorentzian = [];
+  const vector = [];
   for (let i = 0; i <= width * factor; i++) {
-    lorentzian.push(
-      halfWidth / (Math.pow(i - center, 2) + Math.pow(halfWidth, 2)),
+    vector.push(
+      ((1 / Math.PI) * halfWidth) /
+        (Math.pow(i - center, 2) + Math.pow(halfWidth, 2)),
     );
   }
-  return lorentzian;
+  return vector;
 }
 
 export function gaussian(options = {}) {
   const { factor = 5, width = 1000 } = options;
-
-  const gaussian = [];
+  const vector = [];
+  const center = (factor * width) / 2;
   const ratio = Math.sqrt(Math.log(4));
+  const normalConstant = ratio / Math.sqrt(2 * Math.PI) / width;
   for (let i = 0; i <= width * factor; i++) {
-    gaussian.push(
-      Math.exp(
-        (-1 / 2) *
-          Math.pow((((i - (factor * width) / 2) * 2) / width) * ratio, 2),
-      ),
+    vector.push(
+      normalConstant *
+        Math.exp(-(1 / 2) * Math.pow(((i - center) / width) * ratio, 2)),
     );
   }
-  return gaussian;
+  return vector;
 }
 
 export function pseudoVoigt(options = {}) {
@@ -42,12 +42,12 @@ export function pseudoVoigt(options = {}) {
   const rootHalfWidth = Math.pow(halfWidth, 2);
   const lFactor = (mu * halfWidth * 2) / Math.PI;
   const gFactor = (1 - mu) * (ratio / Math.sqrt(Math.PI) / width);
-  const pseudoVoigt = [];
+  const vector = [];
   for (let i = 0; i <= width * factor; i++) {
-    pseudoVoigt.push(
+    vector.push(
       lFactor / (4 * Math.pow(i - center, 2) + rootHalfWidth) +
         gFactor * Math.exp(-1 * Math.pow(((i - center) / width) * ratio, 2)),
     );
   }
-  return pseudoVoigt;
+  return vector;
 }
