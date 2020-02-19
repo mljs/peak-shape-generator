@@ -1,7 +1,5 @@
-/**
- * Returns a very important number
- * @return {number}
- */
-export function myModule() {
-  return 42;
-}
+import { gaussian } from './gaussian';
+import { lorentzian } from './lorentzian';
+import { pseudoVoigt } from './pseudoVoigt';
+
+export { gaussian, lorentzian, pseudoVoigt };
