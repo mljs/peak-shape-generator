@@ -1,18 +1,19 @@
 /**
- * Calculate a linear combination of gaussian and lorentzian function width an same full width at half maximum
+ * Calculate the half of a linear combination of gaussian and lorentzian function width an same full width at half maximum
  * @param {object} [options = {}]
  * @param {number} [options.FWHM = 500] - number of points in Full Width at Half Maximum, Standard deviation for gaussian contribution will be computed as FWHM / 2 / sqrt(2 ln(2))
  * @param {number} [options.mu = 0.5] - fraction of lorentzian contribution.
- * @param {number} [options.factor] - factor of HWHM to increase the window size, the vector size is 2 * factor * HMHM
+ * @param {number} [options.factor] - factor of HWHM to increase the window size, the vector size is 2 * factor * HMHM.
+ * @param {boolean} [options.ascending = false] - if it is true the vector will contain the left side of the Gaussian shape.
  * @return {number}
  */
 
-export function pseudoVoigt(options = {}) {
-  const { factor = 8, FWHM = 500, mu = 0.5 } = options;
+export function halfPseudoVoigt(options = {}) {
+  const { factor = 8, FWHM = 500, mu = 0.5, ascending = false } = options;
 
   const halfWidth = FWHM / 2;
-  const lenPVoigt = 2 * parseInt(factor * halfWidth, 10);
-  const center = lenPVoigt / 2;
+  const lenPVoigt = parseInt(factor * halfWidth, 10);
+  const center = ascending ? lenPVoigt : 0;
   const sigma = FWHM / 2 / Math.sqrt(2 * Math.log(2));
 
   const rootHalfWidth = Math.pow(halfWidth, 2);
