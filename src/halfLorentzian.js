@@ -1,15 +1,15 @@
 /**
  * Calculate a half lorentzian shape
  * @param {object} [options = {}]
- * @param {number} [options.FWHM = 500] - number of points in Full Width at Half Maximum.
+ * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum.
  * @param {number} [options.factor = 3] - factor of HWHM to increase the window size, the vector size is 2 * factor * HMHM
  * @param {boolean} [options.ascending = false] - if it is true the vector will contain the left side of the Gaussian shape
  * @return {Float64Array} - array of Y points.
  */
 
 export function halfLorentzian(options = {}) {
-  const { factor = 8, FWHM = 1000, ascending = false } = options;
-  const halfWidth = FWHM / 2;
+  const { factor = 8, fwhm = 1000, ascending = false } = options;
+  const halfWidth = fwhm / 2;
   const lenLorentzian = parseInt(factor * halfWidth, 10);
   let center = ascending ? lenLorentzian : 0;
   const normalConstant = 1 / Math.PI;

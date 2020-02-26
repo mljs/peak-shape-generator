@@ -1,14 +1,14 @@
 /**
  * Calculate a lorentzian shape
  * @param {object} [options = {}]
- * @param {number} [options.FWHM = 500] - number of points in Full Width at Half Maximum.
+ * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum.
  * @param {number} [options.factor = 3] - factor of HWHM to increase the window size, the vector size is 2 * factor * HMHM
  * @return {Float64Array} - array of Y points.
  */
 
 export function lorentzian(options = {}) {
-  const { factor = 8, FWHM = 1000 } = options;
-  const halfWidth = FWHM / 2;
+  const { factor = 8, fwhm = 1000 } = options;
+  const halfWidth = fwhm / 2;
   const lenLorentzian = 2 * parseInt(factor * halfWidth, 10);
   const center = lenLorentzian / 2;
   const normalConstant = 1 / Math.PI;

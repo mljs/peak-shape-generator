@@ -1,854 +1,864 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.0.0 | Documentation</title>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' rel='stylesheet'>
-  <link href='assets/style.css' rel='stylesheet'>
-  <link href='assets/github.css' rel='stylesheet'>
-  <link href='assets/split.css' rel='stylesheet'>
-</head>
-<body class='documentation m0'>
-    <div class='flex'>
-      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-        <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.0.0</code></div>
+  <head>
+    <meta charset="utf-8" />
+    <title>ml-peak-shape-generator 0.0.0 | Documentation</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="assets/bass.css" rel="stylesheet" />
+    <link href="assets/style.css" rel="stylesheet" />
+    <link href="assets/github.css" rel="stylesheet" />
+    <link href="assets/split.css" rel="stylesheet" />
+  </head>
+  <body class="documentation m0">
+    <div class="flex">
+      <div id="split-left" class="overflow-auto fs0 height-viewport-100">
+        <div class="py1 px2">
+          <h3 class="mb0 no-anchor">ml-peak-shape-generator</h3>
+          <div class="mb1"><code>0.0.0</code></div>
           <input
-            placeholder='Filter'
-            id='filter-input'
-            class='col12 block input'
-            type='text' />
-          <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#gaussian'
-                  class="">
+            placeholder="Filter"
+            id="filter-input"
+            class="col12 block input"
+            type="text"
+          />
+          <div id="toc">
+            <ul class="list-reset h5 py1-ul">
+              <li>
+                <a href="#gaussian" class="">
                   gaussian
-                  
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#halfgaussian'
-                  class="">
+              </li>
+
+              <li>
+                <a href="#halfgaussian" class="">
                   halfGaussian
-                  
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#halflorentzian'
-                  class="">
+              </li>
+
+              <li>
+                <a href="#halflorentzian" class="">
                   halfLorentzian
-                  
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#halfpseudovoigt'
-                  class="">
+              </li>
+
+              <li>
+                <a href="#halfpseudovoigt" class="">
                   halfPseudoVoigt
-                  
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#lorentzian'
-                  class="">
+              </li>
+
+              <li>
+                <a href="#lorentzian" class="">
                   lorentzian
-                  
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#pseudovoigt'
-                  class="">
+              </li>
+
+              <li>
+                <a href="#pseudovoigt" class="">
                   pseudoVoigt
-                  
                 </a>
-                
-                </li>
-              
+              </li>
             </ul>
           </div>
-          <div class='mt1 h6 quiet'>
-            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          <div class="mt1 h6 quiet">
+            <a href="https://documentation.js.org/reading-documentation.html"
+              >Need help reading this?</a
+            >
           </div>
         </div>
       </div>
-      <div id='split-right' class='relative overflow-auto height-viewport-100'>
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
+      <div id="split-right" class="relative overflow-auto height-viewport-100">
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="gaussian">
+              gaussian
+            </h3>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='gaussian'>
-      gaussian
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/gaussian.js#L10-L30'>
-      <span>src/gaussian.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Calculate a normalized gaussian shape</p>
-
-    <div class='pre p1 fill-light mt0'>gaussian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/gaussian.js#L10-L30"
+            >
+              <span>src/gaussian.js</span>
+            </a>
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.FWHM</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>500</code>)
-  </td>
-  <td class='break-word'><span>number of points in Full Width at Half Maximum, Standard deviation will be computed as FWHM / 2 / sqrt(2 ln(2))
-</span></td>
-</tr>
 
+          <p>Calculate a normalized gaussian shape</p>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.SD</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
-  </td>
-  <td class='break-word'><span>Standard deviation, if it's defined FWHM parameter will be ignored.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>3</code>)
-  </td>
-  <td class='break-word'><span>factor of standard deviation to increase the window size, the vector size is 2 
-<em> factor </em>
- SD
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='halfgaussian'>
-      halfGaussian
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/halfGaussian.js#L11-L31'>
-      <span>src/halfGaussian.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Calculate a half gaussian shape</p>
-
-    <div class='pre p1 fill-light mt0'>halfGaussian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+          <div class="pre p1 fill-light mt0">
+            gaussian(options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >):
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            >
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.FWHM</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>500</code>)
-  </td>
-  <td class='break-word'><span>number of points in Full Width at Half Maximum, Standard deviation will be computed as FWHM / 2 / sqrt(2 ln(2))
-</span></td>
-</tr>
 
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.SD</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
-  </td>
-  <td class='break-word'><span>Standard deviation, if it's defined FWHM parameter will be ignored.
-</span></td>
-</tr>
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.fwhm</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
+                      (default <code>500</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >number of points in Full Width at Half Maximum,
+                        Standard deviation will be computed as fwhm / 2 / sqrt(2
+                        ln(2))
+                      </span>
+                    </td>
+                  </tr>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>3</code>)
-  </td>
-  <td class='break-word'><span>factor of standard deviation to increase the window size, the vector size is 2 
-<em> factor </em>
- SD
-</span></td>
-</tr>
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.sd</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        >?</code
+                      >
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >Standard deviation, if it's defined fwhm parameter will
+                        be ignored.
+                      </span>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.factor</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.ascending</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>if it is true the vector will contain the left side of the Gaussian shape
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='halflorentzian'>
-      halfLorentzian
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/halfLorentzian.js#L10-L23'>
-      <span>src/halfLorentzian.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Calculate a half lorentzian shape</p>
-
-    <div class='pre p1 fill-light mt0'>halfLorentzian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+                      (default <code>3</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >factor of standard deviation to increase the window
+                        size, the vector size is 2
+                        <em> factor </em>
+                        sd
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.FWHM</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>500</code>)
-  </td>
-  <td class='break-word'><span>number of points in Full Width at Half Maximum.
-</span></td>
-</tr>
 
+          <div class="py1 quiet mt1 prose-big">Returns</div>
+          <code
+            ><a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            ></code
+          >: array of Y points
+        </section>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>3</code>)
-  </td>
-  <td class='break-word'><span>factor of HWHM to increase the window size, the vector size is 2 
-<em> factor </em>
- HMHM
-</span></td>
-</tr>
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="halfgaussian">
+              halfGaussian
+            </h3>
 
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.ascending</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>if it is true the vector will contain the left side of the Gaussian shape
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points.
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='halfpseudovoigt'>
-      halfPseudoVoigt
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/halfPseudoVoigt.js#L11-L29'>
-      <span>src/halfPseudoVoigt.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Calculate the half of a linear combination of gaussian and lorentzian function width an same full width at half maximum</p>
-
-    <div class='pre p1 fill-light mt0'>halfPseudoVoigt(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/halfGaussian.js#L11-L31"
+            >
+              <span>src/halfGaussian.js</span>
+            </a>
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.FWHM</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>500</code>)
-  </td>
-  <td class='break-word'><span>number of points in Full Width at Half Maximum, Standard deviation for gaussian contribution will be computed as FWHM / 2 / sqrt(2 ln(2))
-</span></td>
-</tr>
 
+          <p>Calculate a half gaussian shape</p>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.mu</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>0.5</code>)
-  </td>
-  <td class='break-word'><span>fraction of lorentzian contribution.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
-  </td>
-  <td class='break-word'><span>factor of HWHM to increase the window size, the vector size is 2 
-<em> factor </em>
- HMHM.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.ascending</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  
-    (default <code>false</code>)
-  </td>
-  <td class='break-word'><span>if it is true the vector will contain the left side of the Gaussian shape.
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='lorentzian'>
-      lorentzian
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/lorentzian.js#L9-L22'>
-      <span>src/lorentzian.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Calculate a lorentzian shape</p>
-
-    <div class='pre p1 fill-light mt0'>lorentzian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+          <div class="pre p1 fill-light mt0">
+            halfGaussian(options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >):
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            >
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.FWHM</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>500</code>)
-  </td>
-  <td class='break-word'><span>number of points in Full Width at Half Maximum.
-</span></td>
-</tr>
 
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>3</code>)
-  </td>
-  <td class='break-word'><span>factor of HWHM to increase the window size, the vector size is 2 
-<em> factor </em>
- HMHM
-</span></td>
-</tr>
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.fwhm</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
+                      (default <code>500</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >number of points in Full Width at Half Maximum,
+                        Standard deviation will be computed as fwhm / 2 / sqrt(2
+                        ln(2))
+                      </span>
+                    </td>
+                  </tr>
 
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.sd</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        >?</code
+                      >
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >Standard deviation, if it's defined fwhm parameter will
+                        be ignored.
+                      </span>
+                    </td>
+                  </tr>
 
-  
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.factor</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points.
+                      (default <code>3</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >factor of standard deviation to increase the window
+                        size, the vector size is 2
+                        <em> factor </em>
+                        sd
+                      </span>
+                    </td>
+                  </tr>
 
-      
-    
-  
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.ascending</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='pseudovoigt'>
-      pseudoVoigt
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/pseudoVoigt.js#L10-L28'>
-      <span>src/pseudoVoigt.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Calculate a linear combination of gaussian and lorentzian function width an same full width at half maximum</p>
-
-    <div class='pre p1 fill-light mt0'>pseudoVoigt(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
-            = <code>{}</code>)</code>
-	    
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >if it is true the vector will contain the left side of
+                        the Gaussian shape
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.FWHM</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>500</code>)
-  </td>
-  <td class='break-word'><span>number of points in Full Width at Half Maximum, Standard deviation for gaussian contribution will be computed as FWHM / 2 / sqrt(2 ln(2))
-</span></td>
-</tr>
 
+          <div class="py1 quiet mt1 prose-big">Returns</div>
+          <code
+            ><a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            ></code
+          >: array of Y points
+        </section>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.mu</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>0.5</code>)
-  </td>
-  <td class='break-word'><span>fraction of lorentzian contribution.
-</span></td>
-</tr>
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="halflorentzian">
+              halfLorentzian
+            </h3>
 
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/halfLorentzian.js#L10-L23"
+            >
+              <span>src/halfLorentzian.js</span>
+            </a>
+          </div>
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
-  </td>
-  <td class='break-word'><span>factor of HWHM to increase the window size, the vector size is 2 
-<em> factor </em>
- HMHM
-</span></td>
-</tr>
+          <p>Calculate a half lorentzian shape</p>
 
+          <div class="pre p1 fill-light mt0">
+            halfLorentzian(options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >):
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            >
+          </div>
 
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
 
-  
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.fwhm</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
-        
+                      (default <code>500</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >number of points in Full Width at Half Maximum.
+                      </span>
+                    </td>
+                  </tr>
 
-      
-    
-  
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.factor</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
 
-  
+                      (default <code>3</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >factor of HWHM to increase the window size, the vector
+                        size is 2
+                        <em> factor </em>
+                        HMHM
+                      </span>
+                    </td>
+                  </tr>
 
-  
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.ascending</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
 
-  
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >if it is true the vector will contain the left side of
+                        the Gaussian shape
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-  
+          <div class="py1 quiet mt1 prose-big">Returns</div>
+          <code
+            ><a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            ></code
+          >: array of Y points.
+        </section>
 
-  
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="halfpseudovoigt">
+              halfPseudoVoigt
+            </h3>
 
-  
-</section>
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/halfPseudoVoigt.js#L11-L29"
+            >
+              <span>src/halfPseudoVoigt.js</span>
+            </a>
+          </div>
 
-          
-        
+          <p>
+            Calculate the half of a linear combination of gaussian and
+            lorentzian function width an same full width at half maximum
+          </p>
+
+          <div class="pre p1 fill-light mt0">
+            halfPseudoVoigt(options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >):
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+              >number</a
+            >
+          </div>
+
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
+
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.fwhm</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
+
+                      (default <code>500</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >number of points in Full Width at Half Maximum,
+                        Standard deviation for gaussian contribution will be
+                        computed as fwhm / 2 / sqrt(2 ln(2))
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.mu</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
+
+                      (default <code>0.5</code>)
+                    </td>
+                    <td class="break-word">
+                      <span>fraction of lorentzian contribution. </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.factor</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        >?</code
+                      >
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >factor of HWHM to increase the window size, the vector
+                        size is 2
+                        <em> factor </em>
+                        HMHM.
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.ascending</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean"
+                          >boolean</a
+                        ></code
+                      >
+
+                      (default <code>false</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >if it is true the vector will contain the left side of
+                        the Gaussian shape.
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="py1 quiet mt1 prose-big">Returns</div>
+          <code
+            ><a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+              >number</a
+            ></code
+          >:
+        </section>
+
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="lorentzian">
+              lorentzian
+            </h3>
+
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/lorentzian.js#L9-L22"
+            >
+              <span>src/lorentzian.js</span>
+            </a>
+          </div>
+
+          <p>Calculate a lorentzian shape</p>
+
+          <div class="pre p1 fill-light mt0">
+            lorentzian(options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >):
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            >
+          </div>
+
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
+
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.fwhm</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
+
+                      (default <code>500</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >number of points in Full Width at Half Maximum.
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.factor</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
+
+                      (default <code>3</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >factor of HWHM to increase the window size, the vector
+                        size is 2
+                        <em> factor </em>
+                        HMHM
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="py1 quiet mt1 prose-big">Returns</div>
+          <code
+            ><a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array"
+              >Float64Array</a
+            ></code
+          >: array of Y points.
+        </section>
+
+        <section class="p2 mb2 clearfix bg-white minishadow">
+          <div class="clearfix">
+            <h3 class="fl m0" id="pseudovoigt">
+              pseudoVoigt
+            </h3>
+
+            <a
+              class="fr fill-darken0 round round pad1x quiet h5"
+              href="https://github.com/mljs/ml-peak-shape-generator/blob/243c2b3ee1cb249d4b902c2845923865b86a79e0/src/pseudoVoigt.js#L10-L28"
+            >
+              <span>src/pseudoVoigt.js</span>
+            </a>
+          </div>
+
+          <p>
+            Calculate a linear combination of gaussian and lorentzian function
+            width an same full width at half maximum
+          </p>
+
+          <div class="pre p1 fill-light mt0">
+            pseudoVoigt(options:
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+              >object</a
+            >):
+            <a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+              >number</a
+            >
+          </div>
+
+          <div class="py1 quiet mt1 prose-big">Parameters</div>
+          <div class="prose">
+            <div class="space-bottom0">
+              <div>
+                <span class="code bold">options</span>
+                <code class="quiet"
+                  >(<a
+                    href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                    >object</a
+                  >
+                  = <code>{}</code>)</code
+                >
+              </div>
+
+              <table class="mt1 mb2 fixed-table h5 col-12">
+                <colgroup>
+                  <col width="30%" />
+                  <col width="70%" />
+                </colgroup>
+                <thead>
+                  <tr class="bold fill-light">
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody class="mt1">
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.fwhm</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
+
+                      (default <code>500</code>)
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >number of points in Full Width at Half Maximum,
+                        Standard deviation for gaussian contribution will be
+                        computed as fwhm / 2 / sqrt(2 ln(2))
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.mu</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        ></code
+                      >
+
+                      (default <code>0.5</code>)
+                    </td>
+                    <td class="break-word">
+                      <span>fraction of lorentzian contribution. </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="break-word">
+                      <span class="code bold">options.factor</span>
+                      <code class="quiet"
+                        ><a
+                          href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+                          >number</a
+                        >?</code
+                      >
+                    </td>
+                    <td class="break-word">
+                      <span
+                        >factor of HWHM to increase the window size, the vector
+                        size is 2
+                        <em> factor </em>
+                        HMHM
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="py1 quiet mt1 prose-big">Returns</div>
+          <code
+            ><a
+              href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number"
+              >number</a
+            ></code
+          >:
+        </section>
       </div>
     </div>
-  <script src='assets/anchor.js'></script>
-  <script src='assets/split.js'></script>
-  <script src='assets/site.js'></script>
-</body>
+    <script src="assets/anchor.js"></script>
+    <script src="assets/split.js"></script>
+    <script src="assets/site.js"></script>
+  </body>
 </html>
