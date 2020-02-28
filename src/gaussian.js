@@ -10,21 +10,23 @@
 export function gaussian(options = {}) {
   let { factor = 3, fwhm = 500, sd } = options;
 
-  let sigma;
   if (sd) {
-    sigma = sd;
+    fwhm = Math.round(2 * Math.sqrt(2 * Math.log(2)) * sd);
   } else {
-    sigma = fwhm / 2 / Math.sqrt(2 * Math.log(2));
+    sd = fwhm / 2 / Math.sqrt(2 * Math.log(2));
   }
-
-  const lenGaussian = 2 * parseInt(sigma, 10) * factor;
-
-  const center = lenGaussian / 2;
-  const normalConstant = 1 / Math.sqrt(2 * Math.PI) / sigma;
+  const lenGaussian = 2 * parseInt(sd, 10) * factor + (fwhm % 2);
+  const center = (lenGaussian - 1) / 2;
   const vector = new Float64Array(lenGaussian);
-  for (let i = 0; i < lenGaussian; i++) {
+  const normalConstant = 1 / Math.sqrt(2 * Math.PI) / sd;
+  for (let i = 0; i <= center; i++) {
     vector[i] =
-      normalConstant * Math.exp(-(1 / 2) * Math.pow((i - center) / sigma, 2));
+      normalConstant * Math.exp(-(1 / 2) * Math.pow((i - center) / sd, 2));
   }
+  let limit = fwhm % 2 ? center : center + 1;
+  vector.set(
+    vector.slice(0, parseInt(limit, 10)).reverse(),
+    parseInt(center + 1, 10),
+  );
   return vector;
 }

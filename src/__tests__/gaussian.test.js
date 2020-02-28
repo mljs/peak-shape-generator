@@ -15,4 +15,18 @@ describe('Normalization', () => {
     let area = vector.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(1, 2);
   });
+  it('odd fwhm', () => {
+    let vector = gaussian({ fwhm: 101, factor: 1 });
+    let lenG = vector.length;
+    let center = parseInt((lenG - 1) / 2, 10);
+    expect(vector[center - 1]).toBeDeepCloseTo(vector[center + 1], 4);
+    expect(vector[center]).toBeGreaterThan(vector[center + 1]);
+  });
+  it('even fwhm', () => {
+    let vector = gaussian({ fwhm: 100, factor: 1 });
+    let lenG = vector.length;
+    let center = parseInt((lenG - 1) / 2, 10);
+    expect(vector[center]).toBeDeepCloseTo(vector[center + 1], 4);
+    expect(vector[0]).toBeDeepCloseTo(vector[vector.length - 1], 4);
+  });
 });

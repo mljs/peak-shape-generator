@@ -9,14 +9,19 @@
 export function lorentzian(options = {}) {
   const { factor = 8, fwhm = 1000 } = options;
   const halfWidth = fwhm / 2;
-  const lenLorentzian = 2 * parseInt(factor * halfWidth, 10);
-  const center = lenLorentzian / 2;
+  const lenLorentzian = 2 * parseInt(halfWidth, 10) * factor + (fwhm % 2);
+  const center = (lenLorentzian - 1) / 2;
   const normalConstant = 1 / Math.PI;
   const vector = new Float64Array(lenLorentzian);
-  for (let i = 0; i < lenLorentzian; i++) {
+  for (let i = 0; i <= center; i++) {
     vector[i] =
       (normalConstant * halfWidth) /
       (Math.pow(i - center, 2) + Math.pow(halfWidth, 2));
   }
+  let limit = fwhm % 2 ? center : center + 1;
+  vector.set(
+    vector.slice(0, parseInt(limit, 10)).reverse(),
+    parseInt(center + 1, 10),
+  );
   return vector;
 }
