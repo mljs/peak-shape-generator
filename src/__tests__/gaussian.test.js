@@ -12,7 +12,7 @@ describe('gaussan', () => {
     expect(area).toBeDeepCloseTo(0.9995, 4);
   });
 
-  it('sd fixed', () => {
+  it.skip('sd fixed', () => {
     let vector = gaussian({ sd: 2500 });
     let area = vector.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9973, 5);
