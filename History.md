@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.2.0...v0.3.0) (2020-03-02)
+
+
+### Features
+
+* allow to specify final length of array ([e83ab31](https://github.com/cheminfo/ml-peak-shape-generator/commit/e83ab31f59c141b95a9f76d6cee782cd6b70b9a8))
+
+
+
 # [0.2.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.1.0...v0.2.0) (2020-03-02)
 
 
