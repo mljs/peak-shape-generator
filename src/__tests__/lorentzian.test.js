@@ -4,8 +4,8 @@ import { lorentzian } from '..';
 
 expect.extend({ toBeDeepCloseTo });
 
-describe('Normalization', () => {
-  it('lorentzian', () => {
+describe('lorentzian', () => {
+  it('fwhm 10, factor 500', () => {
     let vector = lorentzian({ fwhm: 10, factor: 500 });
     let area = vector.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(1, 2);

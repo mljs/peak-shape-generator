@@ -1,5 +1,4 @@
-import { gaussian } from './gaussian';
-import { lorentzian } from './lorentzian';
-import { pseudoVoigt } from './pseudoVoigt';
-
-export { gaussian, lorentzian, pseudoVoigt };
+export * from './gaussian';
+export * from './lorentzian';
+export * from './pseudoVoigt';
+export * from './getShape';

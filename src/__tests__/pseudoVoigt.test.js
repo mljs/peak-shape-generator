@@ -4,8 +4,8 @@ import { pseudoVoigt } from '..';
 
 expect.extend({ toBeDeepCloseTo });
 
-describe('Normalization', () => {
-  it('pseudoVoigt', () => {
+describe('pseudoVoigt', () => {
+  it('factor 50', () => {
     let vector = pseudoVoigt({ factor: 50 });
     let area = vector.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(1, 2);
