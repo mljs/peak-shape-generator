@@ -13,22 +13,30 @@
 ## Usage
 
 ```js
-import { gaussian, lorentzian, pseudoVoigt } from 'ml-peak-shape-generator';
+import { gaussian, lorentzian, pseudoVoigt} from 'ml-peak-shape-generator';
 
-let gaussianVector;
 // It's possible to specify the windows size with factor option
-gaussianVector = gaussian({factor: 3.5, sd: 500});
+const gaussianVector = gaussian({factor: 3.5, sd: 500});
 // or fix the number of points as Full Width at Half Maximum
-gaussianVector = gaussian({factor: 3.5, fwhm: 500});
+const gaussianVector2 = gaussian({factor: 3.5, fwhm: 500});
 
-let lorentzianVector;
 // It's possible to specify the windows size with factor option
-lorenzianVector = loretzian({factor: 5, fwhm: 500});
+const lorenzianVector = loretzian({factor: 5, fwhm: 500});
 
-let pseudoVoigtVector;
 // It's possible to specify the windows size with factor option
-pseudoVoigtVector = pseudoVoigt({{factor: 5, fwhm: 500}});
+const pseudoVoigtVector = pseudoVoigt({{factor: 5, fwhm: 500}});
 ```
+
+```js
+import { getShape, GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT} from 'ml-peak-shape-generator';
+
+// If you want to dynamically select a shape you can use the `getShape` method.
+const shape = getShape(LORENTZIAN, {factor: 3.5, sd: 500});
+
+```
+
+
+
 
 ## [API Documentation](https://cheminfo.github.io/ml-peak-shape-generator/)
 
