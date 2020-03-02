@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.2.0 | Documentation</title>
+  <title>ml-peak-shape-generator 0.3.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.2.0</code></div>
+          <div class='mb1'><code>0.3.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -83,7 +83,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/e96533bc3615b7543dd783fcc5f481e65c252f7e/src/gaussian.js#L10-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/gaussian.js#L11-L32'>
       <span>src/gaussian.js</span>
       </a>
     
@@ -152,7 +152,18 @@
   
     (default <code>3</code>)
   </td>
-  <td class='break-word'><span>factor to increase window size: nbPoints = fwhm * factor
+  <td class='break-word'><span>Number of time to take fwhm to calculate length
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>fwhm*factor</code>)
+  </td>
+  <td class='break-word'><span>total number of points to calculate
 </span></td>
 </tr>
 
@@ -204,7 +215,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/e96533bc3615b7543dd783fcc5f481e65c252f7e/src/getShape.js#L10-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/getShape.js#L10-L10'>
       <span>src/getShape.js</span>
       </a>
     
@@ -327,7 +338,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/e96533bc3615b7543dd783fcc5f481e65c252f7e/src/lorentzian.js#L9-L27'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/lorentzian.js#L10-L25'>
       <span>src/lorentzian.js</span>
       </a>
     
@@ -387,7 +398,18 @@
   
     (default <code>3</code>)
   </td>
-  <td class='break-word'><span>factor to increase window size: nbPoints = fwhm * factor
+  <td class='break-word'><span>Number of time to take fwhm to calculate length
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>fwhm*factor</code>)
+  </td>
+  <td class='break-word'><span>total number of points to calculate
 </span></td>
 </tr>
 
@@ -439,7 +461,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/e96533bc3615b7543dd783fcc5f481e65c252f7e/src/pseudoVoigt.js#L10-L33'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/pseudoVoigt.js#L11-L29'>
       <span>src/pseudoVoigt.js</span>
       </a>
     
@@ -506,9 +528,22 @@
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>3</code>)
   </td>
-  <td class='break-word'><span>factor to increase window size: nbPoints = fwhm * factor
+  <td class='break-word'><span>Number of time to take fwhm to calculate length
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>fwhm*3</code>)
+  </td>
+  <td class='break-word'><span>total number of points to calculate
 </span></td>
 </tr>
 
