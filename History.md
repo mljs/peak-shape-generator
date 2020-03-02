@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.1.0...v0.2.0) (2020-03-02)
+
+
+### Bug Fixes
+
+* final nbPoints is always fwhm * factor ([c72259b](https://github.com/cheminfo/ml-peak-shape-generator/commit/c72259be2e808754dfe8802062bcf4995bdf2313))
+
+
+
 # [0.1.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.0.1...v0.1.0) (2020-03-02)
 
 
