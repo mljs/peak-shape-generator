@@ -2,7 +2,7 @@
  * Calculate a lorentzian shape
  * @param {object} [options = {}]
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum.
- * @param {number} [options.factor = 3] - factor of HWHM to increase the window size, the vector size is 2 * factor * HMHM
+ * @param {number} [options.factor = 3] - factor to increase window size: nbPoints = fwhm * factor
  * @return {Float64Array} - array of Y points.
  */
 

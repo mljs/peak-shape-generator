@@ -3,7 +3,7 @@
  * @param {object} [options = {}]
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {number} [options.sd] - Standard deviation, if it's defined fwhm parameter will be ignored.
- * @param {number} [options.factor = 3] - factor of standard deviation to increase the window size, the vector size is 2 * factor * sd
+ * @param {number} [options.factor = 3] - factor to increase window size: nbPoints = fwhm * factor
  * @return {Float64Array} - array of Y points
  */
 
@@ -15,8 +15,11 @@ export function gaussian(options = {}) {
   } else {
     sd = fwhm / 2 / Math.sqrt(2 * Math.log(2));
   }
-  const lenGaussian = 2 * parseInt(sd, 10) * factor + (fwhm % 2);
+
+  const halfWidth = fwhm / 2;
+  const lenGaussian = 2 * parseInt(halfWidth, 10) * factor + (fwhm % 2);
   const center = (lenGaussian - 1) / 2;
+
   const vector = new Float64Array(lenGaussian);
   const normalConstant = 1 / Math.sqrt(2 * Math.PI) / sd;
   for (let i = 0; i <= center; i++) {

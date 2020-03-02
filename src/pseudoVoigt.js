@@ -3,7 +3,7 @@
  * @param {object} [options = {}]
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum, Standard deviation for gaussian contribution will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {number} [options.mu = 0.5] - fraction of lorentzian contribution.
- * @param {number} [options.factor] - factor of HWHM to increase the window size, the vector size is 2 * factor * HMHM
+ * @param {number} [options.factor] - factor to increase window size: nbPoints = fwhm * factor
  * @return {number}
  */
 
