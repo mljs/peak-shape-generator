@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.3.0 | Documentation</title>
+  <title>ml-peak-shape-generator 0.4.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.3.0</code></div>
+          <div class='mb1'><code>0.4.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -35,9 +35,9 @@
               
                 
                 <li><a
-                  href='#gaussian'
+                  href='#getshape'
                   class="">
-                  gaussian
+                  getShape
                   
                 </a>
                 
@@ -83,7 +83,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/gaussian.js#L11-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/gaussian.js#L11-L32'>
       <span>src/gaussian.js</span>
       </a>
     
@@ -92,7 +92,7 @@
 
   <p>Calculate a normalized gaussian shape</p>
 
-    <div class='pre p1 fill-light mt0'>gaussian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></div>
+    <div class='pre p1 fill-light mt0'>gaussian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
   
   
 
@@ -182,8 +182,10 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
+        {fwhm, data
+<Float64Array>
+}
 
       
     
@@ -210,21 +212,21 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='gaussian'>
-      gaussian
+    <h3 class='fl m0' id='getshape'>
+      getShape
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/getShape.js#L10-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/getShape.js#L18-L30'>
       <span>src/getShape.js</span>
       </a>
     
   </div>
   
 
-  <p>Calculate a normalized gaussian shape</p>
+  <p>Generate a shape of the specified kind</p>
 
-    <div class='pre p1 fill-light mt0'>gaussian</div>
+    <div class='pre p1 fill-light mt0'>getShape(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
   
   
 
@@ -305,8 +307,10 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
+        {fwhm, data
+<Float64Array>
+}
 
       
     
@@ -338,7 +342,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/lorentzian.js#L10-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/lorentzian.js#L10-L25'>
       <span>src/lorentzian.js</span>
       </a>
     
@@ -347,7 +351,7 @@
 
   <p>Calculate a lorentzian shape</p>
 
-    <div class='pre p1 fill-light mt0'>lorentzian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></div>
+    <div class='pre p1 fill-light mt0'>lorentzian(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
   
   
 
@@ -428,8 +432,10 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Array</a></code>:
-        array of Y points.
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
+        {fwhm, data
+<Float64Array>
+}
 
       
     
@@ -461,7 +467,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/a4f75111b437360d049412f2db88d45f78e67821/src/pseudoVoigt.js#L11-L29'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/pseudoVoigt.js#L11-L29'>
       <span>src/pseudoVoigt.js</span>
       </a>
     
@@ -470,7 +476,7 @@
 
   <p>Calculate a linear combination of gaussian and lorentzian function width an same full width at half maximum</p>
 
-    <div class='pre p1 fill-light mt0'>pseudoVoigt(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+    <div class='pre p1 fill-light mt0'>pseudoVoigt(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
   
   
 
@@ -562,8 +568,10 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
-        
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
+        {fwhm, data
+<Float64Array>
+}
 
       
     
