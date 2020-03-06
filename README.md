@@ -38,7 +38,7 @@ const shape = getShape(LORENTZIAN, {factor: 3.5, sd: 500});
 
 
 
-## [API Documentation](https://cheminfo.github.io/ml-peak-shape-generator/)
+## [API Documentation](https://mljs.github.io/ml-peak-shape-generator/)
 
 ## License
 
@@ -46,7 +46,7 @@ const shape = getShape(LORENTZIAN, {factor: 3.5, sd: 500});
 
 [npm-image]: https://img.shields.io/npm/v/ml-peak-shape-generator.svg
 [npm-url]: https://www.npmjs.com/package/ml-peak-shape-generator
-[ci-image]: https://github.com/cheminfo/ml-peak-shape-generator/workflows/Node.js%20CI/badge.svg?branch=master
-[ci-url]: https://github.com/cheminfo/ml-peak-shape-generator/actions?query=workflow%3A%22Node.js+CI%22
+[ci-image]: https://github.com/mljs/ml-peak-shape-generator/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-url]: https://github.com/mljs/ml-peak-shape-generator/actions?query=workflow%3A%22Node.js+CI%22
 [download-image]: https://img.shields.io/npm/dm/ml-peak-shape-generator.svg
 [download-url]: https://www.npmjs.com/package/ml-peak-shape-generator
