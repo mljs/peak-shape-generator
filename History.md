@@ -1,3 +1,17 @@
+# [0.4.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.3.0...v0.4.0) (2020-03-06)
+
+
+### Bug Fixes
+
+* documentation ([09b4ab8](https://github.com/cheminfo/ml-peak-shape-generator/commit/09b4ab89223f2c603eb76969c81f4c37823b22f8))
+
+
+### Features
+
+* returns data + fwhm ([01483ed](https://github.com/cheminfo/ml-peak-shape-generator/commit/01483ed5d8ec7ae78cd161a4aa77a588f313d86f))
+
+
+
 # [0.3.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.2.0...v0.3.0) (2020-03-02)
 
 
