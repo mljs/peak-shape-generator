@@ -5,7 +5,7 @@
  * @param {number} [options.sd] - Standard deviation, if it's defined fwhm parameter will be ignored.
  * @param {number} [options.factor = 3] - Number of time to take fwhm to calculate length
  * @param {number} [options.length = fwhm * factor] - total number of points to calculate
- * @return {Float64Array} - array of Y points
+ * @return {object} - {fwhm, data<Float64Array>}
  */
 
 export function gaussian(options = {}) {
@@ -21,12 +21,12 @@ export function gaussian(options = {}) {
 
   const center = (length - 1) / 2;
 
-  const vector = new Float64Array(length);
+  const data = new Float64Array(length);
   const normalConstant = 1 / Math.sqrt(2 * Math.PI) / sd;
   for (let i = 0; i <= center; i++) {
-    vector[i] =
+    data[i] =
       normalConstant * Math.exp(-(1 / 2) * Math.pow((i - center) / sd, 2));
-    vector[length - 1 - i] = vector[i];
+    data[length - 1 - i] = data[i];
   }
-  return vector;
+  return { data, fwhm };
 }

@@ -5,7 +5,7 @@
  * @param {number} [options.mu = 0.5] - fraction of lorentzian contribution.
  * @param {number} [options.factor = 3] - Number of time to take fwhm to calculate length
  * @param {number} [options.length = fwhm * 3] - total number of points to calculate
- * @return {number}
+ * @return {object} - {fwhm, data<Float64Array>}
  */
 
 export function pseudoVoigt(options = {}) {
@@ -18,12 +18,12 @@ export function pseudoVoigt(options = {}) {
   const rootHalfWidth = Math.pow(halfWidth, 2);
   const lFactor = (mu * halfWidth * 2) / Math.PI;
   const gFactor = (1 - mu) * (1 / Math.sqrt(Math.PI) / sigma);
-  const vector = new Float64Array(length);
+  const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    vector[i] =
+    data[i] =
       lFactor / (4 * Math.pow(i - center, 2) + rootHalfWidth) +
       gFactor * Math.exp(-1 * Math.pow((i - center) / sigma, 2));
-    vector[length - 1 - i] = vector[i];
+    data[length - 1 - i] = data[i];
   }
-  return vector;
+  return { data, fwhm };
 }

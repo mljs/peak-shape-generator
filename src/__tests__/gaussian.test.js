@@ -6,32 +6,33 @@ expect.extend({ toBeDeepCloseTo });
 
 describe('gaussan', () => {
   it('fwhm fixed', () => {
-    let vector = gaussian({ fwhm: 5000, length: 15000 });
-    expect(vector).toHaveLength(15000);
-    let area = vector.reduce((a, b) => a + b, 0);
+    let shape = gaussian({ fwhm: 5000, length: 15000 });
+    expect(shape.fwhm).toBe(5000);
+    expect(shape.data).toHaveLength(15000);
+    let area = shape.data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9995, 4);
   });
 
   it.skip('sd fixed', () => {
-    let vector = gaussian({ sd: 2500 });
-    let area = vector.reduce((a, b) => a + b, 0);
+    let data = gaussian({ sd: 2500 }).data;
+    let area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9973, 5);
   });
 
   it('odd fwhm', () => {
-    let vector = gaussian({ fwhm: 101, length: 101 });
-    expect(vector).toHaveLength(101);
-    let lenG = vector.length;
+    let data = gaussian({ fwhm: 101, length: 101 }).data;
+    expect(data).toHaveLength(101);
+    let lenG = data.length;
     let center = parseInt((lenG - 1) / 2, 10);
-    expect(vector[center - 1]).toBeDeepCloseTo(vector[center + 1], 4);
-    expect(vector[center]).toBeGreaterThan(vector[center + 1]);
+    expect(data[center - 1]).toBeDeepCloseTo(data[center + 1], 4);
+    expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    let vector = gaussian({ fwhm: 100, length: 100 });
-    expect(vector).toHaveLength(100);
-    let lenG = vector.length;
+    let data = gaussian({ fwhm: 100, length: 100 }).data;
+    expect(data).toHaveLength(100);
+    let lenG = data.length;
     let center = parseInt((lenG - 1) / 2, 10);
-    expect(vector[center]).toBeDeepCloseTo(vector[center + 1], 4);
-    expect(vector[0]).toBeDeepCloseTo(vector[vector.length - 1], 4);
+    expect(data[center]).toBeDeepCloseTo(data[center + 1], 4);
+    expect(data[0]).toBeDeepCloseTo(data[data.length - 1], 4);
   });
 });

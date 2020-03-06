@@ -12,7 +12,7 @@ export const PSEUDO_VOIGT = 3;
  * @param {object} [options = {}]
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {number} [options.factor = 3] - factor of standard deviation to increase the window size, the vector size is 2 * factor * sd
- * @return {Float64Array} - array of Y points
+ * @return {object} - {fwhm, data<Float64Array>}
  */
 
 export function getShape(kind = 1, options = {}) {
