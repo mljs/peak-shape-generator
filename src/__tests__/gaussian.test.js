@@ -13,9 +13,15 @@ describe('gaussan', () => {
     expect(area).toBeDeepCloseTo(0.9995, 4);
   });
 
-  it.skip('sd fixed', () => {
-    let data = gaussian({ sd: 2500 }).data;
-    let area = data.reduce((a, b) => a + b, 0);
+  it('sd fixed', () => {
+    const sd = 2500;
+    let data = gaussian({ sd }).data;
+    let start = (data.length - sd * 6) / 2;
+    let end = data.length - start;
+    let area = 0;
+    for (let i = start; i < end - 1; i++) {
+      area += data[i];
+    }
     expect(area).toBeDeepCloseTo(0.9973, 5);
   });
 
