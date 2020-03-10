@@ -10,7 +10,12 @@
 
 export function pseudoVoigt(options = {}) {
   let { length, factor = 3, fwhm = 1000, mu = 0.5 } = options;
-  if (length === undefined) length = fwhm * factor + 1;
+
+  if (!length) {
+    length = fwhm * factor;
+    if (length % 2 === 0) length++;
+  }
+
   const halfWidth = fwhm / 2;
   const center = (length - 1) / 2;
   const sigma = fwhm / 2 / Math.sqrt(2 * Math.log(2));

@@ -17,7 +17,10 @@ export function gaussian(options = {}) {
     sd = fwhm / 2 / Math.sqrt(2 * Math.log(2));
   }
 
-  if (!length) length = fwhm * factor + 1;
+  if (!length) {
+    length = fwhm * factor;
+    if (length % 2 === 0) length++;
+  }
 
   const center = (length - 1) / 2;
 
