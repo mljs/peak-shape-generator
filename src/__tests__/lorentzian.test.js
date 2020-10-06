@@ -1,6 +1,6 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { lorentzian } from '..';
+import { lorentzian } from '../lorentzian';
 
 expect.extend({ toBeDeepCloseTo });
 

@@ -1,6 +1,6 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { pseudoVoigt } from '..';
+import { pseudoVoigt } from '../pseudoVoigt';
 
 expect.extend({ toBeDeepCloseTo });
 

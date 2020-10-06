@@ -1,6 +1,6 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { gaussian } from '..';
+import { gaussian } from '../gaussian';
 
 expect.extend({ toBeDeepCloseTo });
 
@@ -16,7 +16,7 @@ describe('gaussan', () => {
   it('sd fixed', () => {
     const sd = 2500;
     let data = gaussian({ sd }).data;
-    let start = (data.length - sd * 6) / 2;
+    let start = ((data.length - sd * 6) / 2) >> 0;
     let end = data.length - start;
     let area = 0;
     for (let i = start; i < end - 1; i++) {
