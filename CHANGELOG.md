@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.1](https://www.github.com/mljs/peak-shape-generator/compare/v0.5.0...v0.5.1) (2020-10-14)
+
+
+### Bug Fixes
+
+* remove docs ([e84aa37](https://www.github.com/mljs/peak-shape-generator/commit/e84aa371ef440a0feb49cddea15c5a5ab4af3dd0))
+
 ## [0.5.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.4.0...v0.5.0) (2020-10-14)
 
 
@@ -55,6 +62,3 @@
 
 
 ## 0.0.1 (2020-02-29)
-
-
-
