@@ -16,7 +16,7 @@ export const PSEUDO_VOIGT = 3;
  * @return {object} - {fwhm, data<Float64Array>}
  */
 
-export function getShape(kind = GAUSSIAN, options = {}) {
+export function getShape(kind = GAUSSIAN, options) {
   if (typeof kind === 'string') kind = getKind(kind);
   switch (kind) {
     case 1:

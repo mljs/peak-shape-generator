@@ -8,22 +8,7 @@
  * @return {object} - {fwhm, data<Float64Array>}
  */
 
-export function gaussian(options) {
-  let { length, fwhm, sd } = gaussianOptions(options);
-
-  const center = (length - 1) / 2;
-
-  const data = new Float64Array(length);
-  const normalConstant = 1 / Math.sqrt(2 * Math.PI) / sd;
-  for (let i = 0; i <= center; i++) {
-    data[i] =
-      normalConstant * Math.exp(-(1 / 2) * Math.pow((i - center) / sd, 2));
-    data[length - 1 - i] = data[i];
-  }
-  return { data, fwhm };
-}
-
-export function gaussianOptions(options = {}) {
+export function gaussian(options = {}) {
   let { length, factor = 3, fwhm = 500, sd } = options;
 
   if (sd) {
@@ -37,5 +22,14 @@ export function gaussianOptions(options = {}) {
     if (length % 2 === 0) length++;
   }
 
-  return { length, factor, fwhm, sd };
+  const center = (length - 1) / 2;
+
+  const data = new Float64Array(length);
+  const normalConstant = 1 / Math.sqrt(2 * Math.PI) / sd;
+  for (let i = 0; i <= center; i++) {
+    data[i] =
+      normalConstant * Math.exp(-(1 / 2) * Math.pow((i - center) / sd, 2));
+    data[length - 1 - i] = data[i];
+  }
+  return { data, fwhm };
 }

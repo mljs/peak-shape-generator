@@ -8,10 +8,13 @@
  * @return {object} - {fwhm, data<Float64Array>}
  */
 
-export function pseudoVoigt(options) {
-  let { length, factor = 3, fwhm = 1000, mu = 0.5 } = pseudoVoigtOptions(
-    options,
-  );
+export function pseudoVoigt(options = {}) {
+  let { length, factor = 3, fwhm = 1000, mu = 0.5 } = options;
+
+  if (!length) {
+    length = fwhm * factor;
+    if (length % 2 === 0) length++;
+  }
 
   if (!length) {
     length = fwhm * factor;
@@ -33,14 +36,4 @@ export function pseudoVoigt(options) {
     data[length - 1 - i] = data[i];
   }
   return { data, fwhm };
-}
-
-export function pseudoVoigtOptions(options = {}) {
-  let { length, factor = 3, fwhm = 1000, mu = 0.5 } = options;
-
-  if (!length) {
-    length = fwhm * factor;
-    if (length % 2 === 0) length++;
-  }
-  return { length, factor, fwhm, mu };
 }

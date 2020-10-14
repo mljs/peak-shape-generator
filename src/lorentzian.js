@@ -8,7 +8,12 @@
  */
 
 export function lorentzian(options = {}) {
-  let { length, fwhm } = lorentzianOptions(options);
+  let { length, factor = 3, fwhm = 1000 } = options;
+
+  if (!length) {
+    length = fwhm * factor;
+    if (length % 2 === 0) length++;
+  }
 
   const halfWidth = fwhm / 2;
   const center = (length - 1) / 2;
@@ -21,14 +26,4 @@ export function lorentzian(options = {}) {
     data[length - 1 - i] = data[i];
   }
   return { data, fwhm };
-}
-
-export function lorentzianOptions(options = {}) {
-  let { length, factor = 3, fwhm = 1000 } = options;
-
-  if (!length) {
-    length = fwhm * factor;
-    if (length % 2 === 0) length++;
-  }
-  return { length, factor, fwhm };
 }

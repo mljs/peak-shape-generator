@@ -35,6 +35,19 @@ let {data, fwhm} = getShape(LORENTZIAN, {factor: 3.5, sd: 500});
 
 ```
 
+```js
+const peakShapeGenerator = new PeakShapeGenerator({cacheSize:20});
+
+let shape = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 500 });
+let shape2 = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 500 });
+// shape===shape2 true
+
+let shape3 = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 100 });
+// shape===shape3 false
+let shape4 = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 100 });
+// shape3===shape4 true
+```
+
 
 
 
