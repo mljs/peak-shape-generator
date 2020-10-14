@@ -30,5 +30,6 @@ export function pseudoVoigt(options = {}) {
       gFactor * Math.exp(-1 * Math.pow((i - center) / sigma, 2));
     data[length - 1 - i] = data[i];
   }
-  return { data, fwhm };
+  let shapeID = `pseudovoigt-${fwhm}-${length}-${mu}`;
+  return { data, fwhm, shapeID };
 }

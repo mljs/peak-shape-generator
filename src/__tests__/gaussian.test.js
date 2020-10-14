@@ -11,6 +11,7 @@ describe('gaussan', () => {
     expect(shape.data).toHaveLength(15000);
     let area = shape.data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9995, 4);
+    expect(shape.shapeID).toBe('gaussian-5000-15000');
   });
 
   it('sd fixed', () => {

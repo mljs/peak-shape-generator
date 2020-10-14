@@ -11,9 +11,11 @@ describe('pseudoVoigt', () => {
     expect(area).toBeDeepCloseTo(1, 2);
   });
   it('odd fwhm', () => {
-    let data = pseudoVoigt({ fwhm: 11, length: 11 }).data;
+    let shape = pseudoVoigt({ fwhm: 11, length: 11 });
+    let data = shape.data;
     let lenG = data.length;
     let center = parseInt((lenG - 1) / 2, 10);
+    expect(shape.shapeID).toBe('pseudovoigt-11-11-0.5');
     expect(data[center - 1]).toBeDeepCloseTo(data[center + 1], 4);
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });

@@ -31,5 +31,6 @@ export function gaussian(options = {}) {
       normalConstant * Math.exp(-(1 / 2) * Math.pow((i - center) / sd, 2));
     data[length - 1 - i] = data[i];
   }
-  return { data, fwhm };
+  let shapeID = `gaussian-${fwhm}-${length}`;
+  return { data, fwhm, shapeID };
 }

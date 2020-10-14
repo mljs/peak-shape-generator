@@ -25,5 +25,6 @@ export function lorentzian(options = {}) {
       (Math.pow(i - center, 2) + Math.pow(halfWidth, 2));
     data[length - 1 - i] = data[i];
   }
-  return { data, fwhm };
+  let shapeID = `lorentzian-${fwhm}-${length}`;
+  return { data, fwhm, shapeID };
 }

@@ -9,6 +9,7 @@ describe('lorentzian', () => {
     let shape = lorentzian({ fwhm: 10, length: 5000 });
     let area = shape.data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(1, 2);
+    expect(shape.shapeID).toBe('lorentzian-10-5000');
   });
   it('odd fwhm', () => {
     let shape = lorentzian({ fwhm: 11, length: 11 });
