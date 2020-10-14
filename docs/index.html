@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.4.0 | Documentation</title>
+  <title>ml-peak-shape-generator 0.5.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,11 +14,14 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.4.0</code></div>
+          <div class='mb1'><code>0.5.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
             class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
@@ -55,6 +58,16 @@
               
                 
                 <li><a
+                  href='#peakshapegenerator'
+                  class="">
+                  PeakShapeGenerator
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#pseudovoigt'
                   class="">
                   pseudoVoigt
@@ -83,7 +96,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/gaussian.js#L11-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/9fa09f309519c1ce11172ccd88a517e981af87ea/src/gaussian.js#L11-L35'>
       <span>src/gaussian.js</span>
       </a>
     
@@ -161,7 +174,7 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>fwhm*factor</code>)
+    (default <code>fwhm*factor+1</code>)
   </td>
   <td class='break-word'><span>total number of points to calculate
 </span></td>
@@ -202,6 +215,8 @@
   
 
   
+
+  
 </section>
 
           
@@ -217,7 +232,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/getShape.js#L18-L30'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/9fa09f309519c1ce11172ccd88a517e981af87ea/src/getShape.js#L19-L31'>
       <span>src/getShape.js</span>
       </a>
     
@@ -294,6 +309,17 @@
 
 
               
+                <tr>
+  <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>fwhm*factor+1</code>)
+  </td>
+  <td class='break-word'><span>total number of points to calculate
+</span></td>
+</tr>
+
+
+              
             </tbody>
           </table>
           
@@ -327,6 +353,8 @@
   
 
   
+
+  
 </section>
 
           
@@ -342,7 +370,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/lorentzian.js#L10-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/9fa09f309519c1ce11172ccd88a517e981af87ea/src/lorentzian.js#L10-L29'>
       <span>src/lorentzian.js</span>
       </a>
     
@@ -411,7 +439,7 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>fwhm*factor</code>)
+    (default <code>fwhm*factor+1</code>)
   </td>
   <td class='break-word'><span>total number of points to calculate
 </span></td>
@@ -452,6 +480,76 @@
   
 
   
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='peakshapegenerator'>
+      PeakShapeGenerator
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/9fa09f309519c1ce11172ccd88a517e981af87ea/src/PeakShapeGenerator.js#L8-L24'>
+      <span>src/PeakShapeGenerator.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Allows to generate and cache shapes</p>
+
+    <div class='pre p1 fill-light mt0'>new PeakShapeGenerator(options: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(any
+            = <code>{}</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 </section>
 
           
@@ -467,7 +565,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/f48a96397c04f9ddd97b8848dddafc109ef0654b/src/pseudoVoigt.js#L11-L29'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/ml-peak-shape-generator/blob/9fa09f309519c1ce11172ccd88a517e981af87ea/src/pseudoVoigt.js#L11-L39'>
       <span>src/pseudoVoigt.js</span>
       </a>
     
@@ -547,7 +645,7 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.length</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>fwhm*3</code>)
+    (default <code>fwhm*factor+1</code>)
   </td>
   <td class='break-word'><span>total number of points to calculate
 </span></td>
@@ -575,6 +673,8 @@
 
       
     
+  
+
   
 
   
