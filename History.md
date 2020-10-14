@@ -1,3 +1,16 @@
+## [0.5.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.4.0...v0.5.0) (2020-10-14)
+
+
+### Features
+
+* add PeakShapeGenerator ([142a750](https://github.com/cheminfo/ml-peak-shape-generator/commit/142a7501e2326eb105f19884663aff9c99e95057))
+
+
+### Bug Fixes
+
+* default length to odd number ([0d77fff](https://github.com/cheminfo/ml-peak-shape-generator/commit/0d77fff7f09b2cf8591d2b58ed1b1eca909a5df3))
+* ensure default odd number of points ([720b864](https://github.com/cheminfo/ml-peak-shape-generator/commit/720b864740027e45d23a05587b76a593e163eebd))
+
 # [0.4.0](https://github.com/cheminfo/ml-peak-shape-generator/compare/v0.3.0...v0.4.0) (2020-03-06)
 
 
