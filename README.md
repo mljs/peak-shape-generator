@@ -46,6 +46,15 @@ let {data, fwhm} = getShape(LORENTZIAN, {factor: 3.5, sd: 500});
 
 ```
 
+It is also possible to get a function that allows to calculate y for any x
+
+```js
+import { gaussianFct} from 'ml-peak-shape-generator';
+const func = gaussianFct({ x: 0, y: 2, width: 0.2 });
+
+```
+
+
 ```js
 const peakShapeGenerator = new PeakShapeGenerator({cacheSize:20});
 
