@@ -1,4 +1,5 @@
 import hashObject from 'hash-object';
+
 import { getShape } from './getShape';
 
 /**
