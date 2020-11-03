@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.5.1 | Documentation</title>
+  <title>ml-peak-shape-generator 0.6.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.5.1</code></div>
+          <div class='mb1'><code>0.6.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -31,6 +31,16 @@
                   href='#gaussian'
                   class="">
                   gaussian
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#gaussianfct'
+                  class="">
+                  gaussianFct
                   
                 </a>
                 
@@ -58,6 +68,16 @@
               
                 
                 <li><a
+                  href='#lorentzianfct'
+                  class="">
+                  lorentzianFct
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#peakshapegenerator'
                   class="">
                   PeakShapeGenerator
@@ -71,6 +91,16 @@
                   href='#pseudovoigt'
                   class="">
                   pseudoVoigt
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pseudovoigtfct'
+                  class="">
+                  pseudovoigtFct
                   
                 </a>
                 
@@ -96,7 +126,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/757af70adbff8350ec9c9436586fe6f9e17d2972/src/gaussian.js#L11-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/gaussian.js#L14-L49'>
       <span>src/gaussian.js</span>
       </a>
     
@@ -141,6 +171,28 @@
             <tbody class='mt1'>
               
                 <tr>
+  <td class='break-word'><span class='code bold'>options.height</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>maximum value of the curve.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.normalized</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>If it's true the area under the curve will be equal to one, ignoring height option.
+</span></td>
+</tr>
+
+
+              
+                <tr>
   <td class='break-word'><span class='code bold'>options.fwhm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
     (default <code>500</code>)
@@ -163,9 +215,9 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>3</code>)
+    (default <code>4</code>)
   </td>
-  <td class='break-word'><span>Number of time to take fwhm to calculate length
+  <td class='break-word'><span>Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
 </span></td>
 </tr>
 
@@ -227,21 +279,21 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='getshape'>
-      getShape
+    <h3 class='fl m0' id='gaussianfct'>
+      gaussianFct
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/757af70adbff8350ec9c9436586fe6f9e17d2972/src/getShape.js#L19-L31'>
-      <span>src/getShape.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/shapes/gaussianFct.js#L8-L14'>
+      <span>src/shapes/gaussianFct.js</span>
       </a>
     
   </div>
   
 
-  <p>Generate a shape of the specified kind</p>
+  <p>Return a parameterized function of a gaussian shape (see README for equation).</p>
 
-    <div class='pre p1 fill-light mt0'>getShape(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
+    <div class='pre p1 fill-light mt0'>gaussianFct(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
   
   
 
@@ -258,9 +310,122 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>kind</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
+	    options.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.x</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>center of the lorentzian function.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.y</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>height of the lorentzian shape curve.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.width</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>full width at half maximum (FWHM) of the lorentzian function.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getshape'>
+      getShape
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/getShape.js#L19-L31'>
+      <span>src/getShape.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Generate a shape of the specified kind</p>
+
+    <div class='pre p1 fill-light mt0'>getShape(kind: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>), options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>kind</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
             = <code>1</code>)</code>
-	    
+	    kind may be 'gaussian', 'lorentzian' or 'pseudovoigt' or their corresponding number
+
           </div>
           
         </div>
@@ -370,7 +535,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/757af70adbff8350ec9c9436586fe6f9e17d2972/src/lorentzian.js#L10-L29'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/lorentzian.js#L13-L41'>
       <span>src/lorentzian.js</span>
       </a>
     
@@ -415,6 +580,24 @@
             <tbody class='mt1'>
               
                 <tr>
+  <td class='break-word'><span class='code bold'>options.height</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>maximum value of the curve.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.normalized</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>If it's true the area under the curve will be equal to one, ignoring height option.
+</span></td>
+</tr>
+
+
+              
+                <tr>
   <td class='break-word'><span class='code bold'>options.fwhm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
     (default <code>500</code>)
@@ -428,9 +611,9 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>3</code>)
+    (default <code>Math.tan(Math.PI*(0.9999-0.5))</code>)
   </td>
-  <td class='break-word'><span>Number of time to take fwhm to calculate length
+  <td class='break-word'><span>Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
 </span></td>
 </tr>
 
@@ -492,12 +675,124 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='lorentzianfct'>
+      lorentzianFct
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/shapes/lorentzianFct.js#L8-L15'>
+      <span>src/shapes/lorentzianFct.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Return a parameterized function of a lorentzian shape (see README for equation)</p>
+
+    <div class='pre p1 fill-light mt0'>lorentzianFct(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
+	    options.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.x</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>center of the lorentzian function.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.y</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>height of the lorentzian shape curve.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.width</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>full width at half maximum (FWHM) of the lorentzian function.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='peakshapegenerator'>
       PeakShapeGenerator
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/757af70adbff8350ec9c9436586fe6f9e17d2972/src/PeakShapeGenerator.js#L8-L24'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/PeakShapeGenerator.js#L9-L25'>
       <span>src/PeakShapeGenerator.js</span>
       </a>
     
@@ -565,7 +860,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/757af70adbff8350ec9c9436586fe6f9e17d2972/src/pseudoVoigt.js#L11-L39'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/pseudoVoigt.js#L14-L45'>
       <span>src/pseudoVoigt.js</span>
       </a>
     
@@ -610,9 +905,31 @@
             <tbody class='mt1'>
               
                 <tr>
+  <td class='break-word'><span class='code bold'>options.height</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>maximum value of the curve.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.normalized</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>If it's true the area under the curve will be equal to one, ignoring height option.
+</span></td>
+</tr>
+
+
+              
+                <tr>
   <td class='break-word'><span class='code bold'>options.fwhm</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>500</code>)
+    (default <code>1000</code>)
   </td>
   <td class='break-word'><span>number of points in Full Width at Half Maximum, Standard deviation for gaussian contribution will be computed as fwhm / 2 / sqrt(2 ln(2))
 </span></td>
@@ -634,9 +951,9 @@
                 <tr>
   <td class='break-word'><span class='code bold'>options.factor</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
-    (default <code>3</code>)
+    (default <code>Math.tan(Math.PI*(0.9999-0.5))</code>)
   </td>
-  <td class='break-word'><span>Number of time to take fwhm to calculate length
+  <td class='break-word'><span>Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
 </span></td>
 </tr>
 
@@ -673,6 +990,127 @@
 
       
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pseudovoigtfct'>
+      pseudovoigtFct
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/8a7247561c00b22289381f92d42627ada68bcdf6/src/shapes/pseudovoigtFct.js#L10-L26'>
+      <span>src/shapes/pseudovoigtFct.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Return a parameterized function of a linear combination of Gaussian and Lorentzian shapes (see README for equation).</p>
+
+    <div class='pre p1 fill-light mt0'>pseudovoigtFct(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
+	    options.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.x</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>center of the lorentzian function.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.y</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>height of the lorentzian shape curve.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.width</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>full width at half maximum (FWHM) of the lorentzian function.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.normalized</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
+  </td>
+  <td class='break-word'><span>If it's true the area under the curve will be equal to one.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
   
 
   
