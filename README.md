@@ -54,7 +54,7 @@ const func = gaussianFct({ x: 0, y: 2, width: 0.2 });
 
 ```
 
-
+You can create a class as well and add many peaks
 ```js
 const peakShapeGenerator = new PeakShapeGenerator({cacheSize:20});
 
