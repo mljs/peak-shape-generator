@@ -1,6 +1,9 @@
+import { pseudovoigtFct } from './shapes/pseudovoigt';
 /**
  * Calculate a linear combination of gaussian and lorentzian function width an same full width at half maximum
  * @param {object} [options = {}]
+ * @param {Number} [options.height] - maximum value of the curve.
+ * @param {Number} [parameters.normalized] - If it's true the area under the curve will be equal to one, ignoring height option.
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum, Standard deviation for gaussian contribution will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {number} [options.mu = 0.5] - fraction of lorentzian contribution.
  * @param {number} [options.factor = 3] - Number of time to take fwhm to calculate length
@@ -9,30 +12,36 @@
  */
 
 export function pseudoVoigt(options = {}) {
-  let { length, factor = 3, fwhm = 1000, mu = 0.5 } = options;
+  let {
+    height = 1,
+    normalized = false,
+    length,
+    factor,
+    fwhm = 1000,
+    mu = 0.5,
+  } = options;
 
+  if (!factor) {
+    factor = 2 * Math.tan(Math.PI * (0.99 - 0.5));
+  }
   if (!length) {
-    length = fwhm * factor;
+    length = Math.round(fwhm * factor);
     if (length % 2 === 0) length++;
   }
 
-  if (!length) {
-    length = fwhm * factor;
-    if (length % 2 === 0) length++;
-  }
-
-  const halfWidth = fwhm / 2;
   const center = (length - 1) / 2;
-  const sigma = fwhm / 2 / Math.sqrt(2 * Math.log(2));
 
-  const rootHalfWidth = Math.pow(halfWidth, 2);
-  const lFactor = (mu * halfWidth * 2) / Math.PI;
-  const gFactor = (1 - mu) * (1 / Math.sqrt(Math.PI) / sigma);
+  const func = pseudovoigtFct({
+    x: center,
+    width: fwhm,
+    y: height,
+    mu,
+    normalized,
+  });
+
   const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    data[i] =
-      lFactor / (4 * Math.pow(i - center, 2) + rootHalfWidth) +
-      gFactor * Math.exp(-1 * Math.pow((i - center) / sigma, 2));
+    data[i] = func(i);
     data[length - 1 - i] = data[i];
   }
   return { data, fwhm };
