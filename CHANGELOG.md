@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.5.1...v0.6.0) (2020-11-03)
+
+
+### Features
+
+* export function and deal with shape height ([f7dfade](https://www.github.com/mljs/peak-shape-generator/commit/f7dfade288d37b8f3fddd01d9205751a1cea7eb2))
+
 ### [0.5.1](https://www.github.com/mljs/peak-shape-generator/compare/v0.5.0...v0.5.1) (2020-10-14)
 
 
