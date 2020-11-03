@@ -1,8 +1,8 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { pseudovoigtFct } from '../pseudovoigtFct';
-import { lorentzianFct } from '../lorentzianFct';
 import { gaussianFct } from '../gaussianFct';
+import { lorentzianFct } from '../lorentzianFct';
+import { pseudovoigtFct } from '../pseudovoigtFct';
 
 expect.extend({ toBeDeepCloseTo });
 
