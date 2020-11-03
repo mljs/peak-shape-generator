@@ -1,12 +1,12 @@
-import { gaussianFct } from './shapes/gaussian';
+import { gaussianFct } from './shapes/gaussianFct';
 /**
  * Calculate a normalized gaussian shape
  * @param {object} [options = {}]
- * @param {Number} [options.height] - maximum value of the curve.
- * @param {Number} [parameters.normalized] - If it's true the area under the curve will be equal to one, ignoring height option.
+ * @param {Number} [options.height = 1] - maximum value of the curve.
+ * @param {Number} [options.normalized = false] - If it's true the area under the curve will be equal to one, ignoring height option.
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {number} [options.sd] - Standard deviation, if it's defined fwhm parameter will be ignored.
- * @param {number} [options.factor = 3] - Number of time to take fwhm to calculate length
+ * @param {number} [options.factor = 4] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
  * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
  * @return {object} - {fwhm, data<Float64Array>}
  */
@@ -22,13 +22,13 @@ export function gaussian(options = {}) {
   } = options;
 
   if (sd) {
-    fwhm = 2 * Math.sqrt(2 * Math.log(2)) * sd;
+    fwhm = 2 * Math.sqrt(2 * Math.LN2) * sd;
   } else {
-    sd = fwhm / 2 / Math.sqrt(2 * Math.log(2));
+    sd = fwhm / 2 / Math.sqrt(2 * Math.LN2);
   }
 
   if (!length) {
-    length = Math.round(fwhm * factor);
+    length = Math.ceil(fwhm * factor);
     if (length % 2 === 0) length++;
   }
 

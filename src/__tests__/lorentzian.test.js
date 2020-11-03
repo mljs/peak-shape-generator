@@ -10,7 +10,7 @@ describe('lorentzian', () => {
     let area = shape.data.reduce((a, b) => a + b, 0);
     const center = (shape.data.length - 1) / 2;
     expect(shape.data[center]).toBe(1);
-    expect(area).toBeDeepCloseTo((0.99 * Math.PI * 10) / 2, 3);
+    expect(area).toBeDeepCloseTo((0.9999 * Math.PI * 10) / 2, 3);
   });
   it('fwhm 10, factor 500', () => {
     let shape = lorentzian({ fwhm: 10, length: 5000, normalized: true });
