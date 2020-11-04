@@ -6,6 +6,6 @@
  * @param {Number} t - x value to calculate.
  */
 export function lorentzianFct(x, y, width, t) {
-  const rootWidth = width * width;
-  return (y * rootWidth) / (4 * Math.pow(t - x, 2) + rootWidth);
+  const squareWidth = width * width;
+  return (y * squareWidth) / (4 * Math.pow(t - x, 2) + squareWidth);
 }
