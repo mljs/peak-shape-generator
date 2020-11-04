@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.6.1...v0.7.0) (2020-11-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* refactor xFct functions (#19)
+
+### Features
+
+* refactor xFct functions ([#19](https://www.github.com/mljs/peak-shape-generator/issues/19)) ([1c0271e](https://www.github.com/mljs/peak-shape-generator/commit/1c0271eaf7292c8080ac76f6fe79470f6d2b030c))
+
 ### [0.6.1](https://www.github.com/mljs/peak-shape-generator/compare/v0.6.0...v0.6.1) (2020-11-04)
 
 
