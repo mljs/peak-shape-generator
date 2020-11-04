@@ -6,9 +6,11 @@ expect.extend({ toBeDeepCloseTo });
 
 describe('gaussianFct', () => {
   it('unit test', () => {
-    const func = gaussianFct({ x: 0, y: 2, width: 0.2 });
-    expect(func(0)).toBeDeepCloseTo(2, 2);
-    expect(func(0.1)).toBeDeepCloseTo(1, 2);
-    expect(func(0.1)).toBeDeepCloseTo(func(-0.1, 2));
+    expect(gaussianFct(0, 2, 0.2, 0)).toBeDeepCloseTo(2, 2);
+    expect(gaussianFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(1, 2);
+    expect(gaussianFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(
+      gaussianFct(0, 2, 0.2, -0.1),
+      2,
+    );
   });
 });

@@ -25,16 +25,10 @@ export function lorentzian(options = {}) {
   }
 
   const center = (length - 1) / 2;
-
-  const func = lorentzianFct({
-    x: center,
-    width: fwhm,
-    y: normalized ? 2 / Math.PI / fwhm : height,
-  });
-
   const data = new Float64Array(length);
+  const intensity = normalized ? 2 / Math.PI / fwhm : height;
   for (let i = 0; i <= center; i++) {
-    data[i] = func(i);
+    data[i] = lorentzianFct(center, intensity, fwhm, i);
     data[length - 1 - i] = data[i];
   }
   return { data, fwhm };
