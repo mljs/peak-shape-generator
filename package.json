@@ -50,6 +50,6 @@
     "rollup": "^2.33.1"
   },
   "dependencies": {
-    "hash-object": "^0.1.7"
+    "object-hash": "^2.0.3"
   }
 }

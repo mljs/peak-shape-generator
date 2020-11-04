@@ -1,4 +1,4 @@
-import hashObject from 'hash-object';
+import hash from 'object-hash';
 
 import { getShape } from './getShape';
 
@@ -14,7 +14,7 @@ export class PeakShapeGenerator {
   }
 
   getShape(kind, options) {
-    let uuid = hashObject({ kind, options });
+    let uuid = hash({ kind, options });
     if (this.cache[uuid]) return this.cache[uuid];
     const shape = getShape(kind, options);
     if (Object.keys(this.cache) < this.cacheSize) {
