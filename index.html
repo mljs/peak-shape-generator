@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.6.1 | Documentation</title>
+  <title>ml-peak-shape-generator 0.7.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.6.1</code></div>
+          <div class='mb1'><code>0.7.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -126,7 +126,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/gaussian.js#L14-L49'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/gaussian.js#L14-L44'>
       <span>src/gaussian.js</span>
       </a>
     
@@ -284,7 +284,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/shapes/gaussianFct.js#L8-L14'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/shapes/gaussianFct.js#L9-L11'>
       <span>src/shapes/gaussianFct.js</span>
       </a>
     
@@ -293,7 +293,7 @@
 
   <p>Return a parameterized function of a gaussian shape (see README for equation).</p>
 
-    <div class='pre p1 fill-light mt0'>gaussianFct(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+    <div class='pre p1 fill-light mt0'>gaussianFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
   
   
 
@@ -310,54 +310,37 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-            = <code>{}</code>)</code>
-	    options.
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    center of the lorentzian function.
 
           </div>
           
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.x</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>center of the lorentzian function.
-</span></td>
-</tr>
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    height of the lorentzian shape curve.
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    full width at half maximum (FWHM) of the lorentzian function.
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.y</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>height of the lorentzian shape curve.
-</span></td>
-</tr>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>t</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    x value to calculate.
 
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.width</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>full width at half maximum (FWHM) of the lorentzian function.
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
+          </div>
           
         </div>
       
@@ -396,7 +379,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/getShape.js#L19-L31'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/getShape.js#L19-L31'>
       <span>src/getShape.js</span>
       </a>
     
@@ -535,7 +518,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/lorentzian.js#L13-L41'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/lorentzian.js#L13-L35'>
       <span>src/lorentzian.js</span>
       </a>
     
@@ -680,7 +663,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/shapes/lorentzianFct.js#L8-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/shapes/lorentzianFct.js#L8-L11'>
       <span>src/shapes/lorentzianFct.js</span>
       </a>
     
@@ -689,7 +672,7 @@
 
   <p>Return a parameterized function of a lorentzian shape (see README for equation)</p>
 
-    <div class='pre p1 fill-light mt0'>lorentzianFct(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+    <div class='pre p1 fill-light mt0'>lorentzianFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
   
   
 
@@ -706,54 +689,37 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-            = <code>{}</code>)</code>
-	    options.
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    center of the lorentzian function.
 
           </div>
           
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.x</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>center of the lorentzian function.
-</span></td>
-</tr>
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    height of the lorentzian shape curve.
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    full width at half maximum (FWHM) of the lorentzian function.
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.y</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>height of the lorentzian shape curve.
-</span></td>
-</tr>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>t</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    x value to calculate.
 
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.width</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>full width at half maximum (FWHM) of the lorentzian function.
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
+          </div>
           
         </div>
       
@@ -792,7 +758,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/PeakShapeGenerator.js#L9-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/PeakShapeGenerator.js#L9-L25'>
       <span>src/PeakShapeGenerator.js</span>
       </a>
     
@@ -860,7 +826,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/pseudoVoigt.js#L14-L45'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/pseudoVoigt.js#L14-L44'>
       <span>src/pseudoVoigt.js</span>
       </a>
     
@@ -942,7 +908,7 @@
   
     (default <code>0.5</code>)
   </td>
-  <td class='break-word'><span>fraction of lorentzian contribution.
+  <td class='break-word'><span>ratio of gaussian contribution.
 </span></td>
 </tr>
 
@@ -1020,7 +986,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/98b95296e958c6a90c04e75ae4088b0a043008ec/src/shapes/pseudovoigtFct.js#L10-L26'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/shapes/pseudovoigtFct.js#L10-L17'>
       <span>src/shapes/pseudovoigtFct.js</span>
       </a>
     
@@ -1029,7 +995,7 @@
 
   <p>Return a parameterized function of a linear combination of Gaussian and Lorentzian shapes (see README for equation).</p>
 
-    <div class='pre p1 fill-light mt0'>pseudovoigtFct(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+    <div class='pre p1 fill-light mt0'>pseudovoigtFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
   
   
 
@@ -1046,63 +1012,46 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-            = <code>{}</code>)</code>
-	    options.
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    center of the lorentzian function.
 
           </div>
           
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.x</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>center of the lorentzian function.
-</span></td>
-</tr>
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    height of the lorentzian shape curve.
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    full width at half maximum (FWHM) of the lorentzian function.
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.y</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>height of the lorentzian shape curve.
-</span></td>
-</tr>
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    ratio of gaussian contribution.
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>t</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    x value to calculate.
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.width</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>full width at half maximum (FWHM) of the lorentzian function.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>options.normalized</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
-  </td>
-  <td class='break-word'><span>If it's true the area under the curve will be equal to one.
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
+          </div>
           
         </div>
       
