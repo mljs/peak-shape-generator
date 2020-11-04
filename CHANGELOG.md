@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.1](https://www.github.com/mljs/peak-shape-generator/compare/v0.6.0...v0.6.1) (2020-11-04)
+
+
+### Bug Fixes
+
+* replace hash-object by object-hash for browser compatiblity ([8aec664](https://www.github.com/mljs/peak-shape-generator/commit/8aec664692bcaba9eb891c22e104bc676420a6dc))
+
 ## [0.6.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.5.1...v0.6.0) (2020-11-03)
 
 
