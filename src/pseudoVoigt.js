@@ -28,18 +28,17 @@ export function pseudoVoigt(options = {}) {
 
   const center = (length - 1) / 2;
 
-  const func = pseudovoigtFct({
-    x: center,
-    width: fwhm,
-    y: height,
-    mu,
-    normalized,
-  });
+  let intensity = normalized
+    ? 1 /
+      ((mu / Math.sqrt((4 * Math.LN2) / Math.PI)) * fwhm +
+        ((1 - mu) * fwhm * Math.PI) / 2)
+    : height;
 
-  const data = new Float64Array(length);
+  let data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    data[i] = func(i);
+    data[i] = pseudovoigtFct(center, intensity, fwhm, mu, i);
     data[length - 1 - i] = data[i];
   }
+
   return { data, fwhm };
 }

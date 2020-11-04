@@ -1,15 +1,11 @@
 /**
  * Return a parameterized function of a lorentzian shape (see README for equation)
- * @param {Object} [options = {}] - options.
- * @param {Number} [options.x] - center of the lorentzian function.
- * @param {Number} [options.y] - height of the lorentzian shape curve.
- * @param {Number} [options.width] - full width at half maximum (FWHM) of the lorentzian function.
+ * @param {Number} x - center of the lorentzian function.
+ * @param {Number} y - height of the lorentzian shape curve.
+ * @param {Number} width - full width at half maximum (FWHM) of the lorentzian function.
+ * @param {Number} t - x value to calculate.
  */
-export function lorentzianFct(options = {}) {
-  const { x, width, y } = options;
+export function lorentzianFct(x, y, width, t) {
   const rootWidth = width * width;
-  const numerator = y * rootWidth;
-  return (t) => {
-    return numerator / (4 * Math.pow(t - x, 2) + rootWidth);
-  };
+  return (y * rootWidth) / (4 * Math.pow(t - x, 2) + rootWidth);
 }

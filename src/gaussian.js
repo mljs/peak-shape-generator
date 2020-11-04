@@ -34,15 +34,10 @@ export function gaussian(options = {}) {
 
   const center = (length - 1) / 2;
 
-  const func = gaussianFct({
-    x: center,
-    width: fwhm,
-    y: normalized ? 1 / Math.sqrt(2 * Math.PI) / sd : height,
-  });
-
   const data = new Float64Array(length);
+  let intensity = normalized ? 1 / Math.sqrt(2 * Math.PI) / sd : height;
   for (let i = 0; i <= center; i++) {
-    data[i] = func(i);
+    data[i] = gaussianFct(center, intensity, fwhm, i);
     data[length - 1 - i] = data[i];
   }
   return { data, fwhm };

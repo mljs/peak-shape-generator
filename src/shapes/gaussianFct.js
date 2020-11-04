@@ -1,14 +1,11 @@
 /**
  * Return a parameterized function of a gaussian shape (see README for equation).
- * @param {Object} [options = {}] - options.
- * @param {Number} [options.x] - center of the lorentzian function.
- * @param {Number} [options.y] - height of the lorentzian shape curve.
- * @param {Number} [options.width] - full width at half maximum (FWHM) of the lorentzian function.
+ * @param {Number} x - center of the lorentzian function.
+ * @param {Number} y - height of the lorentzian shape curve.
+ * @param {Number} width - full width at half maximum (FWHM) of the lorentzian function.
+ * @param {Number} t - x value to calculate.
  */
-export function gaussianFct(options = {}) {
-  const { x, width, y } = options;
-  const sd = width / 2 / Math.sqrt(2 * Math.LN2);
-  return (t) => {
-    return y * Math.exp(-0.5 * Math.pow((t - x) / sd, 2));
-  };
+
+export function gaussianFct(x, y, width, t) {
+  return y * Math.exp(-4 * Math.LN2 * Math.pow((t - x) / width, 2));
 }

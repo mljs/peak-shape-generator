@@ -11,7 +11,7 @@ describe('pseudoVoigt', () => {
     expect(data[center]).toBeDeepCloseTo(5, 4);
   });
   it('fix fwhm', () => {
-    let data = pseudoVoigt({ fwhm: 50, normalized: true }).data;
+    let data = pseudoVoigt({ fwhm: 50, normalized: true, mu: 0.5 }).data;
     let area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.99, 2);
   });
