@@ -1,4 +1,6 @@
+import { inflectionPointsWidthToFWHM } from './inflectionPointsWidthToFWHM';
 import { gaussianFct } from './shapes/gaussianFct';
+
 /**
  * Calculate a normalized gaussian shape
  * @param {object} [options = {}]
@@ -22,7 +24,7 @@ export function gaussian(options = {}) {
   } = options;
 
   if (sd) {
-    fwhm = 2 * Math.sqrt(2 * Math.LN2) * sd;
+    fwhm = inflectionPointsWidthToFWHM(sd);
   }
 
   if (!length) {
