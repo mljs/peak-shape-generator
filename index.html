@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.7.0 | Documentation</title>
+  <title>ml-peak-shape-generator 0.8.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.7.0</code></div>
+          <div class='mb1'><code>0.8.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -25,6 +25,16 @@
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#fwhmtoinflectionpointswidth'
+                  class="">
+                  fwhmToInflectionPointsWidth
+                  
+                </a>
+                
+                </li>
               
                 
                 <li><a
@@ -48,9 +58,29 @@
               
                 
                 <li><a
+                  href='#getarea'
+                  class="">
+                  getArea
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#getshape'
                   class="">
                   getShape
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inflectionpointswidthtofwhm'
+                  class="">
+                  inflectionPointsWidthToFWHM
                   
                 </a>
                 
@@ -121,12 +151,127 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='fwhmtoinflectionpointswidth'>
+      fwhmToInflectionPointsWidth
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/fwhmToInflectionPointsWidth.js#L11-L29'>
+      <span>src/fwhmToInflectionPointsWidth.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).</p>
+
+    <div class='pre p1 fill-light mt0'>fwhmToInflectionPointsWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, kind: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>), options: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fwhm</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Full Width at Half Maximum.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>kind</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            = <code>1</code>)</code>
+	    kind may be 'gaussian', 'lorentzian' or 'pseudovoigt' or their corresponding number
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(any
+            = <code>{}</code>)</code>
+	    options
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.mu</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>0.5</code>)
+  </td>
+  <td class='break-word'><span>ratio of gaussian contribution. It is used if the kind = 3 or pseudovoigt.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='gaussian'>
       gaussian
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/gaussian.js#L14-L44'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/gaussian.js#L16-L46'>
       <span>src/gaussian.js</span>
       </a>
     
@@ -250,7 +395,7 @@
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
         {fwhm, data
 <Float64Array>
-}
+} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
 
       
     
@@ -284,7 +429,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/shapes/gaussianFct.js#L9-L11'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/shapes/gaussianFct.js#L10-L12'>
       <span>src/shapes/gaussianFct.js</span>
       </a>
     
@@ -293,7 +438,7 @@
 
   <p>Return a parameterized function of a gaussian shape (see README for equation).</p>
 
-    <div class='pre p1 fill-light mt0'>gaussianFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+    <div class='pre p1 fill-light mt0'>gaussianFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
   
   
 
@@ -350,6 +495,148 @@
   
 
   
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        the y value of gaussian with the current parameters.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getarea'>
+      getArea
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/getArea.js#L13-L32'>
+      <span>src/getArea.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Calculate the area of a specific shape.</p>
+
+    <div class='pre p1 fill-light mt0'>getArea(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, kind: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>), options: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fwhm</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Full width at half maximum.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>kind</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            = <code>1</code>)</code>
+	    number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(any
+            = <code>{}</code>)</code>
+	    options.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.height</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>Maximum y value of the shape.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.mu</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>0.5</code>)
+  </td>
+  <td class='break-word'><span>ratio of gaussian contribution. It is used if the kind = 3 or pseudovoigt.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        returns the area of the specific shape and parameters.
+
+      
+    
+  
 
   
 
@@ -379,7 +666,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/getShape.js#L19-L31'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/getShape.js#L16-L28'>
       <span>src/getShape.js</span>
       </a>
     
@@ -484,10 +771,125 @@
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
         {fwhm, data
 <Float64Array>
-}
+} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
 
       
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inflectionpointswidthtofwhm'>
+      inflectionPointsWidthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/inflectionPointsWidthToFWHM.js#L11-L29'>
+      <span>src/inflectionPointsWidthToFWHM.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.</p>
+
+    <div class='pre p1 fill-light mt0'>inflectionPointsWidthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, kind: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>), options: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Width between the inflection points
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>kind</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            = <code>1</code>)</code>
+	    kind may be 'gaussian', 'lorentzian' or 'pseudovoigt' or their corresponding number
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(any
+            = <code>{}</code>)</code>
+	    options
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.mu</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>0.5</code>)
+  </td>
+  <td class='break-word'><span>ratio of gaussian contribution. It is used if the kind = 3 or pseudovoigt.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
   
 
   
@@ -518,7 +920,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/lorentzian.js#L13-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/lorentzian.js#L13-L35'>
       <span>src/lorentzian.js</span>
       </a>
     
@@ -629,7 +1031,7 @@
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
         {fwhm, data
 <Float64Array>
-}
+} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
 
       
     
@@ -663,7 +1065,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/shapes/lorentzianFct.js#L8-L11'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/shapes/lorentzianFct.js#L9-L12'>
       <span>src/shapes/lorentzianFct.js</span>
       </a>
     
@@ -672,7 +1074,7 @@
 
   <p>Return a parameterized function of a lorentzian shape (see README for equation)</p>
 
-    <div class='pre p1 fill-light mt0'>lorentzianFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+    <div class='pre p1 fill-light mt0'>lorentzianFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
   
   
 
@@ -729,6 +1131,14 @@
   
 
   
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        the y value of lorentzian with the current parameters.
+
+      
+    
+  
 
   
 
@@ -758,7 +1168,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/PeakShapeGenerator.js#L9-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/PeakShapeGenerator.js#L9-L25'>
       <span>src/PeakShapeGenerator.js</span>
       </a>
     
@@ -826,7 +1236,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/pseudoVoigt.js#L14-L44'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/pseudoVoigt.js#L14-L44'>
       <span>src/pseudoVoigt.js</span>
       </a>
     
@@ -952,7 +1362,7 @@
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>:
         {fwhm, data
 <Float64Array>
-}
+} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
 
       
     
@@ -986,7 +1396,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/f6cf17cef9d820bbe07e859105b1580086764357/src/shapes/pseudovoigtFct.js#L10-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/6f7b45dc93f37ada139ddfda2c255dff8ba1f601/src/shapes/pseudovoigtFct.js#L11-L18'>
       <span>src/shapes/pseudovoigtFct.js</span>
       </a>
     
@@ -995,7 +1405,7 @@
 
   <p>Return a parameterized function of a linear combination of Gaussian and Lorentzian shapes (see README for equation).</p>
 
-    <div class='pre p1 fill-light mt0'>pseudovoigtFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+    <div class='pre p1 fill-light mt0'>pseudovoigtFct(x: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, y: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, t: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
   
   
 
@@ -1060,6 +1470,14 @@
 
   
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        the y value of a pseudo voigt with the current parameters.
+
+      
+    
   
 
   
