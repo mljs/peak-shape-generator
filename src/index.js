@@ -2,6 +2,7 @@ export * from './gaussian';
 export * from './lorentzian';
 export * from './pseudoVoigt';
 export * from './getShape';
+export * from './getArea';
 export * from './PeakShapeGenerator';
 export * from './shapes/gaussianFct';
 export * from './shapes/lorentzianFct';

@@ -8,7 +8,7 @@ import { gaussianFct } from './shapes/gaussianFct';
  * @param {number} [options.sd] - Standard deviation, if it's defined fwhm parameter will be ignored.
  * @param {number} [options.factor = 4] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
  * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
- * @return {object} - {fwhm, data<Float64Array>}
+ * @return {object} - {fwhm, data<Float64Array>} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
  */
 
 export function gaussian(options = {}) {
@@ -23,8 +23,6 @@ export function gaussian(options = {}) {
 
   if (sd) {
     fwhm = 2 * Math.sqrt(2 * Math.LN2) * sd;
-  } else {
-    sd = fwhm / 2 / Math.sqrt(2 * Math.LN2);
   }
 
   if (!length) {
@@ -35,7 +33,9 @@ export function gaussian(options = {}) {
   const center = (length - 1) / 2;
 
   const data = new Float64Array(length);
-  let intensity = normalized ? 1 / Math.sqrt(2 * Math.PI) / sd : height;
+  let intensity = normalized
+    ? Math.sqrt((4 * Math.LN2) / Math.PI) / fwhm
+    : height;
   for (let i = 0; i <= center; i++) {
     data[i] = gaussianFct(center, intensity, fwhm, i);
     data[length - 1 - i] = data[i];

@@ -1,6 +1,7 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { PeakShapeGenerator, GAUSSIAN } from '..';
+import { PeakShapeGenerator } from '..';
+import { GAUSSIAN } from '../util/getKind';
 
 expect.extend({ toBeDeepCloseTo });
 

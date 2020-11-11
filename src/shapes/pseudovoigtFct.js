@@ -5,6 +5,7 @@
  * @param {Number} width - full width at half maximum (FWHM) of the lorentzian function.
  * @param {Number} mu - ratio of gaussian contribution.
  * @param {Number} t - x value to calculate.
+ * @returns {Number} - the y value of a pseudo voigt with the current parameters.
  */
 
 export function pseudovoigtFct(x, y, width, mu, t) {
