@@ -4,7 +4,7 @@ import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT, getKind } from '../getKind';
 
 expect.extend({ toBeDeepCloseTo });
 
-describe('gaussan', () => {
+describe('gaussian', () => {
   it('kind as a string', () => {
     let kindString = ['gaussian', 'lorentzian', 'pseudovoigt'];
     let kindValues = [GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT];

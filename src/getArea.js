@@ -13,7 +13,7 @@ import { GAUSSIAN, getKind } from './util/getKind';
 export function getArea(fwhm, kind = GAUSSIAN, options = {}) {
   let { height = 1, mu = 0.5 } = options;
 
-  if (typeof kind === 'string') kind = getKind(kind);
+  kind = getKind(kind);
   switch (kind) {
     case 1:
       return (height * Math.sqrt(Math.PI / Math.LN2) * fwhm) / 2;

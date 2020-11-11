@@ -3,6 +3,7 @@ export const LORENTZIAN = 2;
 export const PSEUDO_VOIGT = 3;
 
 export function getKind(kind) {
+  if (typeof kind !== 'string') return kind;
   switch (kind.toLowerCase().replace(/[^a-z]/g, '')) {
     case 'gaussian':
       return GAUSSIAN;

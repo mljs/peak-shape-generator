@@ -14,7 +14,7 @@ import { getKind, GAUSSIAN } from './util/getKind';
  */
 
 export function getShape(kind = GAUSSIAN, options = {}) {
-  if (typeof kind === 'string') kind = getKind(kind);
+  kind = getKind(kind);
   switch (kind) {
     case 1:
       return gaussian(options);
