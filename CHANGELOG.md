@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.7.0...v0.8.0) (2020-11-11)
+
+
+### Features
+
+* add getArea ([b77b3a0](https://www.github.com/mljs/peak-shape-generator/commit/b77b3a090ae4b042d6535fb3657ed19887130389))
+* add inflectionPointsWidthToFWHM and fwhmToInflectionPointsWidth ([#25](https://www.github.com/mljs/peak-shape-generator/issues/25)) ([c3c2c2a](https://www.github.com/mljs/peak-shape-generator/commit/c3c2c2a52675394385fb81f3eb9da8f8e1be99cf)), closes [#21](https://www.github.com/mljs/peak-shape-generator/issues/21)
+* added getArea method  ([#23](https://www.github.com/mljs/peak-shape-generator/issues/23)) ([cccc44e](https://www.github.com/mljs/peak-shape-generator/commit/cccc44e48148b17da41f302a59892168246b3a7b)), closes [#17](https://www.github.com/mljs/peak-shape-generator/issues/17)
+
 ## [0.7.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.6.1...v0.7.0) (2020-11-04)
 
 
