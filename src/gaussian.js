@@ -23,8 +23,6 @@ export function gaussian(options = {}) {
 
   if (sd) {
     fwhm = 2 * Math.sqrt(2 * Math.LN2) * sd;
-  } else {
-    sd = fwhm / 2 / Math.sqrt(2 * Math.LN2);
   }
 
   if (!length) {
@@ -35,7 +33,9 @@ export function gaussian(options = {}) {
   const center = (length - 1) / 2;
 
   const data = new Float64Array(length);
-  let intensity = normalized ? 1 / Math.sqrt(2 * Math.PI) / sd : height;
+  let intensity = normalized
+    ? Math.sqrt((4 * Math.LN2) / Math.PI) / fwhm
+    : height;
   for (let i = 0; i <= center; i++) {
     data[i] = gaussianFct(center, intensity, fwhm, i);
     data[length - 1 - i] = data[i];
