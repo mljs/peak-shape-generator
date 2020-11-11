@@ -7,6 +7,7 @@ import { GAUSSIAN, getKind } from './util/getKind';
  * @param {*} [options = {}] - options.
  * @param {number} [options.height = 1] - Maximum y value of the shape.
  * @param {number} [options.mu = 0.5] - ratio of gaussian contribution. It is used if the kind = 3 or pseudovoigt.
+ * @returns {number} - returns the area of the specific shape and parameters.
  */
 
 export function getArea(fwhm, kind = GAUSSIAN, options = {}) {

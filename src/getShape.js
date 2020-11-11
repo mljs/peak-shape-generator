@@ -10,7 +10,7 @@ import { getKind, GAUSSIAN } from './util/getKind';
  * @param {number} [options.fwhm = 500] - number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {number} [options.factor = 3] - factor of standard deviation to increase the window size, the vector size is 2 * factor * sd
  * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
- * @return {object} - {fwhm, data<Float64Array>}
+ * @return {object} - {fwhm, data<Float64Array>} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
  */
 
 export function getShape(kind = GAUSSIAN, options = {}) {

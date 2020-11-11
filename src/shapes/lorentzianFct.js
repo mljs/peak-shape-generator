@@ -4,6 +4,7 @@
  * @param {Number} y - height of the lorentzian shape curve.
  * @param {Number} width - full width at half maximum (FWHM) of the lorentzian function.
  * @param {Number} t - x value to calculate.
+ * @returns {Number} - the y value of lorentzian with the current parameters.
  */
 export function lorentzianFct(x, y, width, t) {
   const squareWidth = width * width;

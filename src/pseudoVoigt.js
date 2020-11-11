@@ -8,7 +8,7 @@ import { pseudovoigtFct } from './shapes/pseudovoigtFct';
  * @param {number} [options.mu = 0.5] - ratio of gaussian contribution.
  * @param {number} [options.factor = Math.tan(Math.PI * (0.9999 - 0.5))] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
  * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
- * @return {object} - {fwhm, data<Float64Array>}
+ * @return {object} - {fwhm, data<Float64Array>} - An object with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
  */
 
 export function pseudoVoigt(options = {}) {
