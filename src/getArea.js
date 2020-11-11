@@ -3,7 +3,7 @@ import { GAUSSIAN, getKind } from './util/getKind';
 /**
  * Calculate the area of a specific shape.
  * @param {number} fwhm - Full width at half maximum.
- * @param {number || string} [kind = 1] - number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
+ * @param {number|string} [kind = 1] - number of points in Full Width at Half Maximum, Standard deviation will be computed as fwhm / 2 / sqrt(2 ln(2))
  * @param {*} [options = {}] - options.
  * @param {number} [options.height = 1] - Maximum y value of the shape.
  * @param {number} [options.mu = 0.5] - ratio of gaussian contribution. It is used if the kind = 3 or pseudovoigt.
