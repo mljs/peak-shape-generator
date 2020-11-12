@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.9.0...v0.10.0) (2020-11-12)
+
+
+### Features
+
+* export getKind ([997266e](https://www.github.com/mljs/peak-shape-generator/commit/997266e3e7ea340ec51c13352ea2d7f1c08636aa))
+
 ## [0.9.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.8.0...v0.9.0) (2020-11-12)
 
 
