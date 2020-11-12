@@ -19,15 +19,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cheminfo/ml-peak-shape-generator.git"
+    "url": "git+https://github.com/mljs/peak-shape-generator.git"
   },
   "keywords": [],
   "author": "Luc Patiny",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cheminfo/ml-peak-shape-generator/issues"
+    "url": "https://github.com/mljs/peak-shape-generator/issues"
   },
-  "homepage": "https://github.com/cheminfo/ml-peak-shape-generator#readme",
+  "homepage": "https://github.com/mljs/peak-shape-generator#readme",
   "jest": {
     "testEnvironment": "node"
   },
