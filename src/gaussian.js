@@ -24,7 +24,7 @@ export function gaussian(options = {}) {
   } = options;
 
   if (sd) {
-    fwhm = inflectionPointsWidthToFWHM(sd);
+    fwhm = inflectionPointsWidthToFWHM(2 * sd);
   }
 
   if (!length) {
