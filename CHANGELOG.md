@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.10.2](https://www.github.com/mljs/peak-shape-generator/compare/v0.10.1...v0.10.2) (2020-11-16)
+
+
+### Bug Fixes
+
+* wrong covertion from FWHM to width between inflectionPointswidth ([75b7763](https://www.github.com/mljs/peak-shape-generator/commit/75b776399473b43cbb96e3b955cf23d957786d16))
+
 ### [0.10.1](https://www.github.com/mljs/peak-shape-generator/compare/v0.10.0...v0.10.1) (2020-11-16)
 
 
