@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.10.1](https://www.github.com/mljs/peak-shape-generator/compare/v0.10.0...v0.10.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* wrong convertion from standard deviation to FWHM ([66f1bd5](https://www.github.com/mljs/peak-shape-generator/commit/66f1bd5be618b8d845b5b31fe5cd570bf708ac38))
+* wrong covertion from width between inflectionPointswidth to FWHM ([8d3a658](https://www.github.com/mljs/peak-shape-generator/commit/8d3a6581130769e24a7f10659600f5ff671fdfda))
+
 ## [0.10.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.9.0...v0.10.0) (2020-11-12)
 
 
