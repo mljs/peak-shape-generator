@@ -9,7 +9,7 @@ const width = 20;
 describe('getShape', () => {
   it('get inflection point width from fwhm of a gaussian', () => {
     let fwhm = inflectionPointsWidthToFWHM(width, GAUSSIAN);
-    expect(fwhm).toBeDeepCloseTo(width * 2.3548, 2);
+    expect(fwhm).toBeDeepCloseTo(width * 1.1774, 2);
   });
   it('get inflection point width from fwhm of a lorenztian', () => {
     let fwhm = inflectionPointsWidthToFWHM(width, LORENTZIAN);
@@ -20,7 +20,7 @@ describe('getShape', () => {
     let fwhm = inflectionPointsWidthToFWHM(width, PSEUDO_VOIGT, {
       mu,
     });
-    expect(fwhm).toBeDeepCloseTo(width * (mu * 1.3548 + 1), 2);
+    expect(fwhm).toBeDeepCloseTo(width * (mu * 0.1774 + 1), 2);
   });
   it('throw error', () => {
     expect(() => {
