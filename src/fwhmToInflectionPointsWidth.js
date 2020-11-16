@@ -18,11 +18,11 @@ export function fwhmToInflectionPointsWidth(
   if (typeof kind === 'string') kind = getKind(kind);
   switch (kind) {
     case 1:
-      return fwhm / Math.sqrt(8 * Math.LN2);
+      return fwhm / Math.sqrt(2 * Math.LN2);
     case 2:
       return fwhm;
     case 3:
-      return fwhm / (mu * (Math.sqrt(8 * Math.LN2) - 1) + 1);
+      return fwhm / (mu * (Math.sqrt(2 * Math.LN2) - 1) + 1);
     default:
       throw new Error(`Unknown shape kind: ${kind}`);
   }
