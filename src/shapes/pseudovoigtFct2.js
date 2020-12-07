@@ -9,11 +9,12 @@
  * @returns {Number} - the y value of a pseudo voigt with the current parameters.
  */
 
+const factor = -4 * Math.LN2;
 export function pseudovoigtFct2(x, y, gaussianWidth, lorentzianWidth, mu, t) {
   const squareWidth = lorentzianWidth * lorentzianWidth;
   return (
     y *
     (((1 - mu) * squareWidth) / (4 * Math.pow(t - x, 2) + squareWidth) +
-      mu * Math.exp(-4 * Math.LN2 * Math.pow((t - x) / gaussianWidth, 2)))
+      mu * Math.exp(factor * Math.pow((t - x) / gaussianWidth, 2)))
   );
 }

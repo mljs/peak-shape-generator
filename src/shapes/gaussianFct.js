@@ -7,6 +7,7 @@
  * @returns {Number} - the y value of gaussian with the current parameters.
  */
 
+const factor = -4 * Math.LN2;
 export function gaussianFct(x, y, width, t) {
-  return y * Math.exp(-4 * Math.LN2 * Math.pow((t - x) / width, 2));
+  return y * Math.exp(factor * Math.pow((t - x) / width, 2));
 }
