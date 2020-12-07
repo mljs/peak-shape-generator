@@ -5,6 +5,35 @@ import { gaussian } from '../gaussian';
 expect.extend({ toBeDeepCloseTo });
 
 describe('gaussan', () => {
+  it('check gaussian continuous', () => {
+    let shape = gaussian({ factor: 1, fwhm: 5900 });
+
+    let y = Array.from(shape.data);
+    let yPrime = [0];
+
+    for (let i = 1; i < y.length; i++) {
+      // first derivative
+      yPrime[i] = y[i] - y[i - 1];
+    }
+
+    let positive = true;
+    let nbChanges = 0;
+    for (let i = 1; i < yPrime.length; i++) {
+      let diff = yPrime[i] - yPrime[i - 1];
+
+      if (diff > 0 && positive === false) {
+        positive = true;
+        nbChanges++;
+      }
+      if (diff < 0 && positive) {
+        positive = false;
+        nbChanges++;
+      }
+    }
+
+    expect(nbChanges).toBe(2);
+  });
+
   it('fwhm fixed and normalized', () => {
     let shape = gaussian({ fwhm: 50, normalized: true });
     expect(shape.fwhm).toBe(50);
