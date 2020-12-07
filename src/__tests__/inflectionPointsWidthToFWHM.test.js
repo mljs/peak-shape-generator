@@ -13,7 +13,7 @@ describe('getShape', () => {
   });
   it('get inflection point width from fwhm of a lorenztian', () => {
     let fwhm = inflectionPointsWidthToFWHM(width, LORENTZIAN);
-    expect(fwhm).toBeDeepCloseTo(width, 2);
+    expect(fwhm).toBeDeepCloseTo(width * Math.sqrt(3), 2);
   });
   it('get inflection point width from fwhm of a pseudo voigt', () => {
     let mu = 0.5;

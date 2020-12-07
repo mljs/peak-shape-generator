@@ -20,7 +20,7 @@ export function fwhmToInflectionPointsWidth(
     case 1:
       return fwhm / Math.sqrt(2 * Math.LN2);
     case 2:
-      return fwhm;
+      return fwhm / Math.sqrt(3);
     case 3:
       return fwhm / (mu * (Math.sqrt(2 * Math.LN2) - 1) + 1);
     default:
