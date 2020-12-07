@@ -1,5 +1,5 @@
 /**
- * Return a parameterized function of a linear combination of Gaussian and Lorentzian shapes (see README for equation).
+ * Return a parameterized function of a linear combination of Gaussian and Lorentzian shapes where the full width at half maximum are the same for both kind of shapes (see README for equation).
  * @param {Number} x - center of the lorentzian function.
  * @param {Number} y - height of the lorentzian shape curve.
  * @param {Number} width - full width at half maximum (FWHM) of the lorentzian function.

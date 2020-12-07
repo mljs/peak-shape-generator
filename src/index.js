@@ -8,5 +8,6 @@ export * from './PeakShapeGenerator';
 export * from './shapes/gaussianFct';
 export * from './shapes/lorentzianFct';
 export * from './shapes/pseudovoigtFct';
+export * from './shapes/pseudovoigtFct2';
 export * from './fwhmToInflectionPointsWidth';
 export * from './inflectionPointsWidthToFWHM';
