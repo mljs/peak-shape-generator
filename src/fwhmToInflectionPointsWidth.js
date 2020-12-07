@@ -7,7 +7,9 @@ import { getKind, GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from './util/getKind';
  * @param {*} options - options
  * @param {number} [options.mu = 0.5] - ratio of gaussian contribution. It is used if the kind = 3 or pseudovoigt.
  */
-
+const lorentzianFactor = Math.sqrt(3);
+const gaussianFactor = Math.sqrt(2 * Math.LN2);
+const pseudoVoigtFactor = Math.sqrt(2 * Math.LN2) - 1;
 export function fwhmToInflectionPointsWidth(
   fwhm,
   kind = GAUSSIAN,
@@ -18,11 +20,11 @@ export function fwhmToInflectionPointsWidth(
   if (typeof kind === 'string') kind = getKind(kind);
   switch (kind) {
     case GAUSSIAN:
-      return fwhm / Math.sqrt(2 * Math.LN2);
+      return fwhm / gaussianFactor;
     case LORENTZIAN:
-      return fwhm / Math.sqrt(3);
+      return fwhm / lorentzianFactor;
     case PSEUDO_VOIGT:
-      return fwhm / (mu * (Math.sqrt(2 * Math.LN2) - 1) + 1);
+      return fwhm / (mu * pseudoVoigtFactor + 1);
     default:
       throw new Error(`Unknown shape kind: ${kind}`);
   }
