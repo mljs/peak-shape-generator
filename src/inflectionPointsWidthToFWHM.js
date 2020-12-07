@@ -1,4 +1,4 @@
-import { getKind, GAUSSIAN } from './util/getKind';
+import { getKind, GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from './util/getKind';
 
 /**
  * Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.
@@ -17,13 +17,13 @@ export function inflectionPointsWidthToFWHM(
 
   if (typeof kind === 'string') kind = getKind(kind);
   switch (kind) {
-    case 1:
+    case GAUSSIAN:
       //https://mathworld.wolfram.com/GaussianFunction.html
       return width * Math.sqrt(2 * Math.LN2);
-    case 2:
+    case LORENTZIAN:
       //https://mathworld.wolfram.com/LorentzianFunction.html
       return width * Math.sqrt(3);
-    case 3:
+    case PSEUDO_VOIGT:
       return width * (mu * (Math.sqrt(2 * Math.LN2) - 1) + 1);
     default:
       throw new Error(`Unknown shape kind: ${kind}`);
