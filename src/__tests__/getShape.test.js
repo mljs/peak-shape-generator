@@ -1,7 +1,7 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
 import { getShape } from '..';
-import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/getKind';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/constants';
 
 expect.extend({ toBeDeepCloseTo });
 

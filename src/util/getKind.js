@@ -1,6 +1,4 @@
-export const GAUSSIAN = 1;
-export const LORENTZIAN = 2;
-export const PSEUDO_VOIGT = 3;
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from './constants';
 
 export function getKind(kind) {
   if (typeof kind !== 'string') return kind;

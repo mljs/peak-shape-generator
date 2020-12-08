@@ -1,4 +1,5 @@
 import { lorentzianFct } from './shapes/lorentzianFct';
+import { LORENTZIAN_WIDTH_FACTOR } from './util/constants';
 /**
  * Calculate a lorentzian shape
  * @param {object} [options = {}]
@@ -16,7 +17,7 @@ export function lorentzian(options = {}) {
     height = 1,
     interval = 1,
     length,
-    factor = Math.ceil(2 * Math.tan(Math.PI * (0.9999 - 0.5))),
+    factor = Math.ceil(LORENTZIAN_WIDTH_FACTOR),
     fwhm = 500,
     normalized = false,
   } = options;

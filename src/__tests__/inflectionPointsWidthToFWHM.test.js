@@ -1,7 +1,7 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
 import { inflectionPointsWidthToFWHM } from '..';
-import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/getKind';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/constants';
 
 expect.extend({ toBeDeepCloseTo });
 
@@ -24,7 +24,7 @@ describe('getShape', () => {
   });
   it('throw error', () => {
     expect(() => {
-      inflectionPointsWidthToFWHM(2, 'gausian');
-    }).toThrow('Unknown kind: gausian');
+      inflectionPointsWidthToFWHM(2, 4);
+    }).toThrow('Unknown kind: 4');
   });
 });

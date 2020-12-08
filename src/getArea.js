@@ -1,4 +1,5 @@
-import { GAUSSIAN, getKind } from './util/getKind';
+import { GAUSSIAN } from './util/constants';
+import { getKind } from './util/getKind';
 
 /**
  * Calculate the area of a specific shape.
@@ -27,6 +28,6 @@ export function getArea(fwhm, kind = GAUSSIAN, options = {}) {
         2
       );
     default:
-      throw new Error(`Unknown shape kind: ${kind}`);
+      throw new Error(`Unknown kind: ${kind}`);
   }
 }

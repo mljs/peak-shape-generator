@@ -1,7 +1,7 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
 import { getArea } from '..';
-import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/getKind';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/constants';
 
 expect.extend({ toBeDeepCloseTo });
 
@@ -30,7 +30,7 @@ describe('getShape', () => {
   });
   it('throw error', () => {
     expect(() => {
-      getArea(2, 'gausian');
-    }).toThrow('Unknown kind: gausian');
+      getArea(2, 4);
+    }).toThrow('Unknown kind: 4');
   });
 });
