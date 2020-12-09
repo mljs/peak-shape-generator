@@ -7,29 +7,29 @@ expect.extend({ toBeDeepCloseTo });
 
 describe('getShapeFct', () => {
   it('gaussianFct', () => {
-    let shape = getShapeFct(GAUSSIAN);
-    expect(shape.shapeFct(0, 2, 0.2, 0)).toBeDeepCloseTo(2, 2);
-    expect(shape.shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(1, 2);
-    expect(shape.shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(
-      shape.shapeFct(0, 2, 0.2, -0.1),
+    let shapeFct = getShapeFct(GAUSSIAN);
+    expect(shapeFct(0, 2, 0.2, 0)).toBeDeepCloseTo(2, 2);
+    expect(shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(1, 2);
+    expect(shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(
+      shapeFct(0, 2, 0.2, -0.1),
       2,
     );
   });
   it('lorentzianFct', () => {
-    let shape = getShapeFct(LORENTZIAN);
-    expect(shape.shapeFct(0, 2, 0.2, 0)).toBeDeepCloseTo(2, 2);
-    expect(shape.shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(1, 2);
-    expect(shape.shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(
-      shape.shapeFct(0, 2, 0.2, -0.1),
+    let shapeFct = getShapeFct(LORENTZIAN);
+    expect(shapeFct(0, 2, 0.2, 0)).toBeDeepCloseTo(2, 2);
+    expect(shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(1, 2);
+    expect(shapeFct(0, 2, 0.2, 0.1)).toBeDeepCloseTo(
+      shapeFct(0, 2, 0.2, -0.1),
       2,
     );
   });
   it('pseudovoigtFct', () => {
-    let shape = getShapeFct(PSEUDO_VOIGT);
-    expect(shape.shapeFct(0, 2, 0.2, 0.5, 0)).toBeDeepCloseTo(2, 2);
-    expect(shape.shapeFct(0, 2, 0.2, 0.5, 0.1)).toBeDeepCloseTo(1, 2);
-    expect(shape.shapeFct(0, 2, 0.2, 0.5, 0.1)).toBeDeepCloseTo(
-      shape.shapeFct(0, 2, 0.2, 0.5, -0.1),
+    let shapeFct = getShapeFct(PSEUDO_VOIGT);
+    expect(shapeFct(0, 2, 0.2, 0.5, 0)).toBeDeepCloseTo(2, 2);
+    expect(shapeFct(0, 2, 0.2, 0.5, 0.1)).toBeDeepCloseTo(1, 2);
+    expect(shapeFct(0, 2, 0.2, 0.5, 0.1)).toBeDeepCloseTo(
+      shapeFct(0, 2, 0.2, 0.5, -0.1),
       2,
     );
   });

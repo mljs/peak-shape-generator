@@ -1,33 +1,18 @@
 import { gaussianFct } from './shapes/gaussianFct';
 import { lorentzianFct } from './shapes/lorentzianFct';
 import { pseudovoigtFct } from './shapes/pseudovoigtFct';
-import {
-  GAUSSIAN,
-  LORENTZIAN,
-  PSEUDO_VOIGT,
-  LORENTZIAN_WIDTH_FACTOR,
-  GAUSSIAN_WIDTH_FACTOR,
-} from './util/constants';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from './util/constants';
 import { getKind } from './util/getKind';
 
-export function getShapeFct(kind = GAUSSIAN, options = {}) {
+export function getShapeFct(kind = GAUSSIAN) {
   kind = getKind(kind);
   switch (kind) {
     case GAUSSIAN:
-      return {
-        shapeFct: gaussianFct,
-        factor: options.factor || GAUSSIAN_WIDTH_FACTOR,
-      };
+      return gaussianFct;
     case LORENTZIAN:
-      return {
-        shapeFct: lorentzianFct,
-        factor: options.factor || LORENTZIAN_WIDTH_FACTOR,
-      };
+      return lorentzianFct;
     case PSEUDO_VOIGT:
-      return {
-        shapeFct: pseudovoigtFct,
-        factor: options.factor || LORENTZIAN_WIDTH_FACTOR,
-      };
+      return pseudovoigtFct;
     default:
       throw new Error(`Unknown kind: ${kind}`);
   }

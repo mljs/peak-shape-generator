@@ -37,9 +37,9 @@ describe('gaussan', () => {
   it('fwhm fixed and normalized', () => {
     let shape = gaussian({ fwhm: 50, normalized: true });
     expect(shape.fwhm).toBe(50);
-    expect(shape.data).toHaveLength(301);
+    expect(shape.data).toHaveLength(195);
     let area = shape.data.reduce((a, b) => a + b, 0);
-    expect(area).toBeDeepCloseTo(0.99, 2);
+    expect(area).toBeDeepCloseTo(0.9999, 2);
   });
 
   it('sd fixed', () => {

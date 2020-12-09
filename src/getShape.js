@@ -1,7 +1,7 @@
 import { gaussian } from './gaussian';
 import { lorentzian } from './lorentzian';
 import { pseudoVoigt } from './pseudoVoigt';
-import { GAUSSIAN } from './util/constants';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from './util/constants';
 import { getKind } from './util/getKind';
 
 /**
@@ -17,11 +17,11 @@ import { getKind } from './util/getKind';
 export function getShape(kind = GAUSSIAN, options = {}) {
   kind = getKind(kind);
   switch (kind) {
-    case 1:
+    case GAUSSIAN:
       return gaussian(options);
-    case 2:
+    case LORENTZIAN:
       return lorentzian(options);
-    case 3:
+    case PSEUDO_VOIGT:
       return pseudoVoigt(options);
     default:
       throw new Error(`Unknown shape kind: ${kind}`);

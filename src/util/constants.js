@@ -1,5 +1,8 @@
 export const GAUSSIAN = 1;
 export const LORENTZIAN = 2;
 export const PSEUDO_VOIGT = 3;
-export const LORENTZIAN_WIDTH_FACTOR = 2 * Math.tan(Math.PI * (0.9999 - 0.5));
-export const GAUSSIAN_WIDTH_FACTOR = 6;
+export const GAUSSIAN_EXP_FACTOR = -4 * Math.LN2;
+export const ROOT_PI_OVER_LN2 = Math.sqrt(Math.PI / Math.LN2);
+export const ROOT_THREE = Math.sqrt(3);
+export const ROOT_2LN2 = Math.sqrt(2 * Math.LN2);
+export const ROOT_2LN2_MINUS_ONE = Math.sqrt(2 * Math.LN2) - 1;

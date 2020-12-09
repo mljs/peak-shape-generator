@@ -1,4 +1,9 @@
-import { GAUSSIAN } from './util/constants';
+import {
+  GAUSSIAN,
+  LORENTZIAN,
+  PSEUDO_VOIGT,
+  ROOT_PI_OVER_LN2,
+} from './util/constants';
 import { getKind } from './util/getKind';
 
 /**
@@ -16,17 +21,12 @@ export function getArea(fwhm, kind = GAUSSIAN, options = {}) {
 
   kind = getKind(kind);
   switch (kind) {
-    case 1:
-      return (height * Math.sqrt(Math.PI / Math.LN2) * fwhm) / 2;
-    case 2:
+    case GAUSSIAN:
+      return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
+    case LORENTZIAN:
       return (height * Math.PI * fwhm) / 2;
-    case 3:
-      return (
-        (fwhm *
-          height *
-          (mu * Math.sqrt(Math.PI / Math.LN2) + (1 - mu) * Math.PI)) /
-        2
-      );
+    case PSEUDO_VOIGT:
+      return (fwhm * height * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI)) / 2;
     default:
       throw new Error(`Unknown kind: ${kind}`);
   }

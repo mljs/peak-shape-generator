@@ -9,6 +9,7 @@
     "src"
   ],
   "scripts": {
+    "testA": "jest -i src/__tests__/gaussian.test.js",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "compile": "rollup -c",
@@ -51,6 +52,7 @@
     "rollup": "^2.34.1"
   },
   "dependencies": {
+    "compute-erfinv": "^3.0.1",
     "object-hash": "^2.0.3"
   }
 }

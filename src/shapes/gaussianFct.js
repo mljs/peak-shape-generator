@@ -1,3 +1,4 @@
+import { GAUSSIAN_EXP_FACTOR } from '../util/constants';
 /**
  * Return a parameterized function of a gaussian shape (see README for equation).
  * @param {Number} x - center of the lorentzian function.
@@ -7,7 +8,6 @@
  * @returns {Number} - the y value of gaussian with the current parameters.
  */
 
-const factor = -4 * Math.LN2;
 export function gaussianFct(x, y, width, t) {
-  return y * Math.exp(factor * Math.pow((t - x) / width, 2));
+  return y * Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow((t - x) / width, 2));
 }
