@@ -21,8 +21,8 @@ export class PseudoVoigt {
     this.height =
       options.height === undefined
         ? 1 /
-          ((this.mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) * this.fwhm +
-            ((1 - this.mu) * this.fwhm * Math.PI) / 2)
+        ((this.mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) * this.fwhm +
+          ((1 - this.mu) * this.fwhm * Math.PI) / 2)
         : options.height;
   }
 
@@ -105,6 +105,5 @@ PseudoVoigt.fct = function fct(x, fwhm, mu = 0.5) {
  * @returns {number} width between the inflection points
  */
 PseudoVoigt.fwhmToWidth = function fwhmToWidth(fwhm) {
-  // TODO this should be dependended from mu factor
   return fwhm / (this.mu * ROOT_2LN2_MINUS_ONE + 1);
 };
