@@ -5,7 +5,7 @@ import { pseudoVoigt } from '../pseudoVoigt';
 expect.extend({ toBeDeepCloseTo });
 
 describe('pseudoVoigt', () => {
-  it('height of 5', () => {
+  it.only('height of 5', () => {
     let data = pseudoVoigt({ fwhm: 10, height: 5 }).data;
     let center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeDeepCloseTo(5, 4);
