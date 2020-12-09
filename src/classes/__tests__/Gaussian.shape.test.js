@@ -1,5 +1,6 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
+import { ROOT_PI_OVER_LN2 } from '../../util/constants';
 import { Gaussian } from '../Gaussian';
 
 expect.extend({ toBeDeepCloseTo });
@@ -8,11 +9,11 @@ describe('Gaussian.shape', () => {
   it('height 1', () => {
     let gaussian = new Gaussian({ fwhm: 10, height: 1 });
     let data = gaussian.shape();
-    expect(data).toHaveLength(63663);
+    expect(data).toHaveLength(39);
     const center = (data.length - 1) / 2;
     expect(data[center]).toBe(1);
     let area = data.reduce((a, b) => a + b, 0);
-    expect(area).toBeDeepCloseTo((0.9999 * Math.PI * 10) / 2, 3);
+    expect(area).toBeDeepCloseTo((ROOT_PI_OVER_LN2 * 10) / 2, 3);
   });
 
   it('check gaussian continuous', () => {

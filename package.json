@@ -9,7 +9,6 @@
     "src"
   ],
   "scripts": {
-    "testA": "jest -i src/__tests__/gaussian.test.js",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "compile": "rollup -c",

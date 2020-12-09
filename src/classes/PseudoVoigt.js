@@ -21,8 +21,8 @@ export class PseudoVoigt {
     this.height =
       options.height === undefined
         ? 1 /
-        ((this.mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) * this.fwhm +
-          ((1 - this.mu) * this.fwhm * Math.PI) / 2)
+          ((this.mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) * this.fwhm +
+            ((1 - this.mu) * this.fwhm * Math.PI) / 2)
         : options.height;
   }
 

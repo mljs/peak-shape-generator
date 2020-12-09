@@ -17,8 +17,8 @@ export class Gaussian {
     this.fwhm = options.sd
       ? Gaussian.widthToFWHM(2 * options.sd)
       : options.fwhm
-        ? options.fwhm
-        : 500;
+      ? options.fwhm
+      : 500;
     this.height =
       options.height === undefined
         ? Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI) / this.fwhm

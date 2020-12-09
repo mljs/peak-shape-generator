@@ -8,7 +8,7 @@ describe('lorentzian', () => {
   it('default factor area', () => {
     let lorentzian = new Lorentzian({});
     let data = lorentzian.shape();
-    expect(data.length).toHaveLength(3183099);
+    expect(data).toHaveLength(3183099);
     let area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9999, 5);
   });
