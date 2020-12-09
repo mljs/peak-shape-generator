@@ -1,7 +1,7 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { inflectionPointsWidthToFWHM } from '..';
-import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/constants';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../constants';
+import { inflectionPointsWidthToFWHM } from '../inflectionPointsWidthToFWHM';
 
 expect.extend({ toBeDeepCloseTo });
 

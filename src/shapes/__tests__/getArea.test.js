@@ -1,7 +1,7 @@
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { getArea } from '..';
-import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../util/constants';
+import { getArea } from '../..';
+import { GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT } from '../../util/constants';
 
 expect.extend({ toBeDeepCloseTo });
 
