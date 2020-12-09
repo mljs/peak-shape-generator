@@ -1,12 +1,12 @@
 import { GAUSSIAN_EXP_FACTOR } from '../util/constants';
 /**
  * Return a parameterized function of a linear combination of Gaussian and Lorentzian shapes where the full width at half maximum are the same for both kind of shapes (see README for equation).
- * @param {Number} x - center of the lorentzian function.
- * @param {Number} y - height of the lorentzian shape curve.
- * @param {Number} width - full width at half maximum (FWHM) of the lorentzian function.
- * @param {Number} mu - ratio of gaussian contribution.
- * @param {Number} t - x value to calculate.
- * @returns {Number} - the y value of a pseudo voigt with the current parameters.
+ * @param {number} x - center of the lorentzian function.
+ * @param {number} y - height of the lorentzian shape curve.
+ * @param {number} width - full width at half maximum (FWHM) of the lorentzian function.
+ * @param {number} mu - ratio of gaussian contribution.
+ * @param {number} t - x value to calculate.
+ * @returns {number} - the y value of a pseudo voigt with the current parameters.
  */
 
 export function pseudovoigtFct(x, y, width, mu, t) {

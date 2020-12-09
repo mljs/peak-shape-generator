@@ -6,8 +6,8 @@ import { getFactor } from './util/getFactor';
 /**
  * Calculate a normalized gaussian shape
  * @param {object} [options = {}]
- * @param {Number} [options.height = 1] - maximum value of the curve.
- * @param {Number} [options.normalized = false] - If it's true the area under the curve will be equal to one, ignoring height option.
+ * @param {number} [options.height = 1] - maximum value of the curve.
+ * @param {number} [options.normalized = false] - If it's true the area under the curve will be equal to one, ignoring height option.
  * @param {number} [options.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM.
  * @param {number} [options.sd] - Standard deviation, if it's defined options.fwhm will be ignored and the value will be computed sd * Math.sqrt(8 * Math.LN2);
  * @param {number} [options.factor = 6] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.

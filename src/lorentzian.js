@@ -4,8 +4,8 @@ import { getFactor } from './util/getFactor';
 /**
  * Calculate a lorentzian shape
  * @param {object} [options = {}]
- * @param {Number} [options.height] - maximum value of the curve.
- * @param {Number} [options.normalized] - If it's true the area under the curve will be equal to one, ignoring height option.
+ * @param {number} [options.height] - maximum value of the curve.
+ * @param {number} [options.normalized] - If it's true the area under the curve will be equal to one, ignoring height option.
  * @param {number} [options.fwhm = 500] - Full Width at Half Maximum in number of points.
  * @param {number} [options.factor = Math.tan(Math.PI * (0.9999 - 0.5))] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
  * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
