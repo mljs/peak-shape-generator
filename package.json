@@ -50,8 +50,5 @@
     "jest-matcher-deep-close-to": "^2.0.1",
     "prettier": "^2.2.1",
     "rollup": "^2.34.2"
-  },
-  "dependencies": {
-    "compute-erfinv": "^3.0.1"
   }
 }
