@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.11.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.10.2...v0.11.0) (2020-12-10)
+
+
+### Features
+
+* add getShapeFct ([6792fd7](https://www.github.com/mljs/peak-shape-generator/commit/6792fd71a194a34ad50c689f1b3ed3be1e915b23))
+* add getShapeGenerator function ([ba19753](https://www.github.com/mljs/peak-shape-generator/commit/ba19753360f29448a6eb83f08b740bc6c741668a))
+* interval option to calculate the shape values ([8ad11d9](https://www.github.com/mljs/peak-shape-generator/commit/8ad11d9e1c247811d55881adc5af5bd430d7f8b0))
+* It is possible to have differents fwhm for gaussian and lorentzian contributions in pseudo voigt shape ([a5658a4](https://www.github.com/mljs/peak-shape-generator/commit/a5658a483bd0953eda074dfa89f556802b75c759))
+* refactor and added getArea static function ([240b792](https://www.github.com/mljs/peak-shape-generator/commit/240b792cecf315db8cc3585ac0890c4b578b8eda))
+
+
+### Bug Fixes
+
+* convertion between with between inflection points and FWHM ([3f6657d](https://www.github.com/mljs/peak-shape-generator/commit/3f6657da4f31e21aa5e0a5fa5fd9297c08e489ab))
+
 ### [0.10.2](https://www.github.com/mljs/peak-shape-generator/compare/v0.10.1...v0.10.2) (2020-11-16)
 
 
