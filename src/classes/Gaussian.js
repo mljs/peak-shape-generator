@@ -32,7 +32,7 @@ export class Gaussian {
    * @return {Float64Array} y values
    */
 
-  shape(options = {}) {
+  getData(options = {}) {
     let { length, factor = this.getFactor() } = options;
 
     if (!length) {
@@ -69,15 +69,28 @@ export class Gaussian {
   }
 
   /**
-   * Calculate the area of a specific shape.
-   * @param {number} fwhm - Full width at half maximum.
-   * @param {object} [options = {}] - options.
-   * @param {number} [options.height = 1] - Maximum y value of the shape.
-   * @returns {number} - returns the area of the specific shape and parameters.
+   * Calculate the area of the shape.
+   * @returns {number} - returns the area.
    */
 
-  area() {
-    return (this.height * ROOT_PI_OVER_LN2 * this.fwhm) / 2;
+  getArea() {
+    return Gaussian.getArea(this.fwhm, { height: this.height });
+  }
+
+  /**
+   * set a new full width at half maximum
+   * @param {number} fwhm - full width at half maximum
+   */
+  setFWHM(fwhm) {
+    this.fwhm = fwhm;
+  }
+
+  /**
+   * set a new height
+   * @param {number} height - The maximal intensity of the shape.
+   */
+  setHeight(height) {
+    this.height = height;
   }
 }
 
@@ -109,4 +122,17 @@ Gaussian.widthToFWHM = function widthToFWHM(width) {
  */
 Gaussian.fwhmToWidth = function fwhmToWidth(fwhm) {
   return fwhm / ROOT_2LN2;
+};
+
+/**
+ * Calculate the area of a specific shape.
+ * @param {number} fwhm - Full width at half maximum.
+ * @param {object} [options = {}] - options.
+ * @param {number} [options.height = 1] - Maximum y value of the shape.
+ * @returns {number} - returns the area of the specific shape and parameters.
+ */
+
+Gaussian.getArea = function (fwhm, options = {}) {
+  let { height = 1 } = options;
+  return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
 };

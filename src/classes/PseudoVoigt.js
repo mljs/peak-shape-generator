@@ -34,7 +34,7 @@ export class PseudoVoigt {
    * @return { object } - { fwhm, data<Float64Array>} - An with the number of points at half maximum and the array of y values covering the 99.99 % of the area.
    */
 
-  shape(options = {}) {
+  getData(options = {}) {
     let { length, factor = this.getFactor() } = options;
 
     if (!length) {
@@ -73,18 +73,36 @@ export class PseudoVoigt {
   }
 
   /**
-   * Calculate the area of a specific shape.
-   * @param {number} fwhm - Full width at half maximum.
-   * @param {*} [options = {}] - options.
-   * @param {number} [options.height = 1] - Maximum y value of the shape.
-   * @param {number} [options.mu = 0.5] - ratio of gaussian contribution.
-   * @returns {number} - returns the area of the specific shape and parameters.
+   * Calculate the area of the shape.
+   * @returns {number} - returns the area.
    */
 
-  area(fwhm, options = {}) {
-    let { height = 1, mu = 0.5 } = options;
+  getArea() {
+    return PseudoVoigt.getArea(this.fwhm, { height: this.height, mu: this.mu });
+  }
 
-    return (fwhm * height * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI)) / 2;
+  /**
+   * set a new full width at half maximum
+   * @param {number} fwhm - full width at half maximum
+   */
+  setFWHM(fwhm) {
+    this.fwhm = fwhm;
+  }
+
+  /**
+   * set a new height
+   * @param {number} height - The maximal intensity of the shape.
+   */
+  setHeight(height) {
+    this.height = height;
+  }
+
+  /**
+   * set a new mu
+   * @param {number} mu - ratio of gaussian contribution.
+   */
+  setMu(mu) {
+    this.mu = mu;
   }
 }
 
@@ -106,4 +124,18 @@ PseudoVoigt.fct = function fct(x, fwhm, mu = 0.5) {
  */
 PseudoVoigt.fwhmToWidth = function fwhmToWidth(fwhm) {
   return fwhm / (this.mu * ROOT_2LN2_MINUS_ONE + 1);
+};
+
+/**
+ * Calculate the area of a specific shape.
+ * @param {number} fwhm - Full width at half maximum.
+ * @param {*} [options = {}] - options.
+ * @param {number} [options.height = 1] - Maximum y value of the shape.
+ * @param {number} [options.mu = 0.5] - ratio of gaussian contribution.
+ * @returns {number} - returns the area of the specific shape and parameters.
+ */
+PseudoVoigt.getArea = function (fwhm, options = {}) {
+  let { height = 1, mu = 0.5 } = options;
+
+  return (fwhm * height * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI)) / 2;
 };

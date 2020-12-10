@@ -19,7 +19,7 @@ export class Lorentzian {
    * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
    * @return {Float64Array} y values
    */
-  shape(options = {}) {
+  getData(options = {}) {
     let { length, factor = this.getFactor() } = options;
 
     if (!length) {
@@ -37,9 +37,9 @@ export class Lorentzian {
   }
 
   /**
-   * Return a parameterized function of a gaussian shape (see README for equation).
+   * Return a parameterized function of a lorentzian shape (see README for equation).
    * @param {number} x - x value to calculate.
-   * @returns {number} - the y value of gaussian with the current parameters.
+   * @returns {number} - the y value of lorentzian with the current parameters.
    */
   fct(x) {
     return Lorentzian.fct(x, this.fwhm);
@@ -55,17 +55,28 @@ export class Lorentzian {
   }
 
   /**
-   * Calculate the area of a specific shape.
-   * @param {number} fwhm - Full width at half maximum.
-   * @param {*} [options = {}] - options.
-   * @param {number} [options.height = 1] - Maximum y value of the shape.
-   * @returns {number} - returns the area of the specific shape and parameters.
+   * Calculate the area of the shape.
+   * @returns {number} - returns the area.
    */
 
-  area(fwhm, options = {}) {
-    let { height = 1 } = options;
+  getArea() {
+    return Lorentzian.getArea(this.fwhm, { height: this.height });
+  }
 
-    return (height * Math.PI * fwhm) / 2;
+  /**
+   * set a new full width at half maximum
+   * @param {number} fwhm - full width at half maximum
+   */
+  setFWHM(fwhm) {
+    this.fwhm = fwhm;
+  }
+
+  /**
+   * set a new height
+   * @param {number} height - The maximal intensity of the shape.
+   */
+  setHeight(height) {
+    this.height = height;
   }
 }
 
@@ -97,4 +108,17 @@ Lorentzian.fwhmToWidth = function fwhmToWidth(fwhm) {
 Lorentzian.widthToFWHM = function widthToFWHM(width) {
   //https://mathworld.wolfram.com/LorentzianFunction.html
   return width * ROOT_THREE;
+};
+
+/**
+ * Calculate the area of a specific shape.
+ * @param {number} fwhm - Full width at half maximum.
+ * @param {*} [options = {}] - options.
+ * @param {number} [options.height = 1] - Maximum y value of the shape.
+ * @returns {number} - returns the area of the specific shape and parameters.
+ */
+Lorentzian.getArea = function (fwhm, options = {}) {
+  let { height = 1 } = options;
+
+  return (height * Math.PI * fwhm) / 2;
 };

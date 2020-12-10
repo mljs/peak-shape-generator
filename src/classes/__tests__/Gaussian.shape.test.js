@@ -8,7 +8,7 @@ expect.extend({ toBeDeepCloseTo });
 describe('Gaussian.shape', () => {
   it('height 1', () => {
     let gaussian = new Gaussian({ fwhm: 10, height: 1 });
-    let data = gaussian.shape();
+    let data = gaussian.getData();
     expect(data).toHaveLength(39);
     const center = (data.length - 1) / 2;
     expect(data[center]).toBe(1);
@@ -18,14 +18,14 @@ describe('Gaussian.shape', () => {
 
   it('check gaussian continuous', () => {
     const gaussian = new Gaussian({ fwhm: 5900 });
-    let y = gaussian.shape({ factor: 1 });
+    let y = gaussian.getData({ factor: 1 });
     const nbChanges = getNbChanges(y);
     expect(nbChanges).toBe(2);
   });
 
   it('fwhm fixed and normalized', () => {
     const gaussian = new Gaussian({ fwhm: 50 });
-    let shape = gaussian.shape();
+    let shape = gaussian.getData();
     expect(shape).toHaveLength(195);
     let area = shape.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9999, 2);
@@ -35,7 +35,7 @@ describe('Gaussian.shape', () => {
     const sd = 50;
     const height = 3;
     const gaussian = new Gaussian({ sd, height });
-    let data = gaussian.shape();
+    let data = gaussian.getData();
     let center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeDeepCloseTo(height, 2);
     let area = data.reduce((a, b) => a + b, 0);
@@ -44,7 +44,7 @@ describe('Gaussian.shape', () => {
 
   it('odd fwhm', () => {
     const gaussian = new Gaussian({ fwhm: 101, height: 1 });
-    let data = gaussian.shape({ length: 101 });
+    let data = gaussian.getData({ length: 101 });
     expect(data).toHaveLength(101);
     let lenG = data.length;
     let center = Math.floor((lenG - 1) / 2);
@@ -54,7 +54,7 @@ describe('Gaussian.shape', () => {
   });
   it('even fwhm', () => {
     const gaussian = new Gaussian({ fwhm: 100, height: 1 });
-    let data = gaussian.shape({ length: 100 });
+    let data = gaussian.getData({ length: 100 });
     expect(data).toHaveLength(100);
     let lenG = data.length;
     let center = Math.floor((lenG - 1) / 2);
