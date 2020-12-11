@@ -24,48 +24,34 @@ where
 ## Usage
 
 ```js
-import { gaussian, lorentzian, pseudoVoigt} from 'ml-peak-shape-generator';
+import { Gaussian, Lorentzian, PseudoVoigt} from 'ml-peak-shape-generator';
 
 // It's possible to specify the windows size with factor option
-let {data, fwhm} = gaussian({factor: 3.5, sd: 500});
+let data = new Gaussian({factor: 3.5, sd: 500}).getData();
 // or fix the number of points as Full Width at Half Maximum
-let {data, fwhm} = gaussian({factor: 3.5, fwhm: 500});
+let data = new Gaussian({factor: 3.5, fwhm: 500}).getData();
 
 // It's possible to specify the windows size with factor option
-let {data, fwhm} = loretzian({factor: 5, fwhm: 500});
+let data = new Loretzian({factor: 5, fwhm: 500}).getData();
 
 // It's possible to specify the windows size with factor option
-let {data, fwhm} = pseudoVoigt({{factor: 5, fwhm: 500}});
+let data = new PseudoVoigt({{factor: 5, fwhm: 500}}).getData();
 ```
 
 ```js
-import { getShape, GAUSSIAN, LORENTZIAN, PSEUDO_VOIGT} from 'ml-peak-shape-generator';
+import { getShapeGenerator } from 'ml-peak-shape-generator';
 
-// If you want to dynamically select a shape you can use the `getShape` method.
-let {data, fwhm} = getShape(LORENTZIAN, {factor: 3.5, sd: 500});
+// If you want to dynamically select a shape you can use the `getShapeGenerator` method. It returns a instance of required kind of shape.
+let shapeGenerator = getShapeGenerator('lorentzian', {factor: 3.5, sd: 500});
 
 ```
 
 It is also possible to get a function that allows to calculate y for any x
 
 ```js
-import { gaussianFct} from 'ml-peak-shape-generator';
-const func = gaussianFct({ x: 0, y: 2, width: 0.2 });
+import { Gaussian } from 'ml-peak-shape-generator';
+const func = Gaussian.fct(x - mean, fwhm);
 
-```
-
-You can create a class as well and add many peaks
-```js
-const peakShapeGenerator = new PeakShapeGenerator({cacheSize:20});
-
-let shape = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 500 });
-let shape2 = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 500 });
-// shape===shape2 true
-
-let shape3 = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 100 });
-// shape===shape3 false
-let shape4 = peakShapeGenerator.getShape(GAUSSIAN, { fwhm: 100 });
-// shape3===shape4 true
 ```
 
 
