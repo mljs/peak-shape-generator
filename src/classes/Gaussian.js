@@ -64,7 +64,7 @@ export class Gaussian {
    * @returns {number}
    */
   getFactor(area = 0.9999) {
-    return Math.sqrt(2) * erfinv(area);
+    return Gaussian.getFactor(area);
   }
 
   /**
@@ -74,6 +74,27 @@ export class Gaussian {
 
   getArea() {
     return Gaussian.getArea(this.fwhm, { height: this.height });
+  }
+
+  /**
+   * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
+   * //https://mathworld.wolfram.com/GaussianFunction.html
+   * @param {number} width - Width between the inflection points
+   * @returns {number} fwhm
+   */
+  widthToFWHM(width) {
+    //https://mathworld.wolfram.com/GaussianFunction.html
+    return Gaussian.widthToFWHM(width);
+  }
+
+  /**
+   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+   * //https://mathworld.wolfram.com/GaussianFunction.html
+   * @param {number} fwhm - Full Width at Half Maximum.
+   * @returns {number} width
+   */
+  fwhmToWidth(fwhm = this.fwhm) {
+    return Gaussian.fwhmToWidth(fwhm);
   }
 
   /**
@@ -104,18 +125,18 @@ Gaussian.fct = function fct(x, fwhm = 500) {
 };
 
 /**
- * Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.
+ * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
+ * //https://mathworld.wolfram.com/GaussianFunction.html
  * @param {number} width - Width between the inflection points
  * @returns {number} fwhm
  */
-
 Gaussian.widthToFWHM = function widthToFWHM(width) {
-  //https://mathworld.wolfram.com/GaussianFunction.html
   return width * ROOT_2LN2;
 };
 
 /**
- * Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).
+ * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+ * //https://mathworld.wolfram.com/GaussianFunction.html
  * @param {number} fwhm - Full Width at Half Maximum.
  * @returns {number} width
  */
@@ -131,7 +152,16 @@ Gaussian.fwhmToWidth = function fwhmToWidth(fwhm) {
  * @returns {number} - returns the area of the specific shape and parameters.
  */
 
-Gaussian.getArea = function (fwhm, options = {}) {
+Gaussian.getArea = function getArea(fwhm, options = {}) {
   let { height = 1 } = options;
   return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
+};
+
+/**
+ * Calculate the number of times FWHM allows to reach a specific area coverage.
+ * @param {number} [area=0.9999]
+ * @returns {number}
+ */
+Gaussian.getFactor = function getFactor(area = 0.9999) {
+  return Math.sqrt(2) * erfinv(area);
 };

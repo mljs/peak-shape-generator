@@ -51,7 +51,7 @@ export class Lorentzian {
    * @returns {number}
    */
   getFactor(area = 0.9999) {
-    return 2 * Math.tan(Math.PI * (area - 0.5));
+    return Lorentzian.getFactor(area);
   }
 
   /**
@@ -63,6 +63,25 @@ export class Lorentzian {
     return Lorentzian.getArea(this.fwhm, { height: this.height });
   }
 
+  /**
+   * Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).
+   * //https://mathworld.wolfram.com/LorentzianFunction.html
+   * @param {number} [fwhm] - Full Width at Half Maximum.
+   * @returns {number} width between the inflection points
+   */
+  fwhmToWidth(fwhm = this.fwhm) {
+    return Lorentzian.fwhmToWidth(fwhm);
+  }
+
+  /**
+   * Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.
+   * //https://mathworld.wolfram.com/LorentzianFunction.html
+   * @param {number} [width] Width between the inflection points
+   * @returns {number} fwhm
+   */
+  widthToFWHM(width) {
+    return Lorentzian.widthToFWHM(width);
+  }
   /**
    * set a new full width at half maximum
    * @param {number} fwhm - full width at half maximum
@@ -93,6 +112,7 @@ Lorentzian.fct = function fct(x, fwhm) {
 
 /**
  * Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).
+ * //https://mathworld.wolfram.com/LorentzianFunction.html
  * @param {number} [fwhm] - Full Width at Half Maximum.
  * @returns {number} width between the inflection points
  */
@@ -102,11 +122,11 @@ Lorentzian.fwhmToWidth = function fwhmToWidth(fwhm) {
 
 /**
  * Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.
+ * //https://mathworld.wolfram.com/LorentzianFunction.html
  * @param {number} [width] Width between the inflection points
  * @returns {number} fwhm
  */
 Lorentzian.widthToFWHM = function widthToFWHM(width) {
-  //https://mathworld.wolfram.com/LorentzianFunction.html
   return width * ROOT_THREE;
 };
 
@@ -117,8 +137,17 @@ Lorentzian.widthToFWHM = function widthToFWHM(width) {
  * @param {number} [options.height = 1] - Maximum y value of the shape.
  * @returns {number} - returns the area of the specific shape and parameters.
  */
-Lorentzian.getArea = function (fwhm, options = {}) {
+Lorentzian.getArea = function getArea(fwhm, options = {}) {
   let { height = 1 } = options;
 
   return (height * Math.PI * fwhm) / 2;
+};
+
+/**
+ * Calculate the number of times FWHM allows to reach a specific area coverage
+ * @param {number} [area=0.9999]
+ * @returns {number}
+ */
+Lorentzian.getFactor = function getFactor(area = 0.9999) {
+  return 2 * Math.tan(Math.PI * (area - 0.5));
 };

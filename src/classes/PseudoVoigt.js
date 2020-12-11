@@ -36,7 +36,6 @@ export class PseudoVoigt {
 
   getData(options = {}) {
     let { length, factor = this.getFactor() } = options;
-
     if (!length) {
       length = Math.ceil(this.fwhm * factor);
       if (length % 2 === 0) length++;
@@ -69,16 +68,34 @@ export class PseudoVoigt {
    * @returns {number}
    */
   getFactor(area = 0.9999) {
-    return 2 * Math.tan(Math.PI * (area - 0.5));
+    return PseudoVoigt.getFactor(area);
   }
 
   /**
    * Calculate the area of the shape.
    * @returns {number} - returns the area.
    */
-
   getArea() {
     return PseudoVoigt.getArea(this.fwhm, { height: this.height, mu: this.mu });
+  }
+
+  /**
+   * Compute the value of Full Width at Half Maximum (FMHM) from width between the inflection points.
+   * @param {number} width - width between the inflection points
+   * @param {number} [mu = 0.5] - ratio of gaussian contribution.
+   * @returns {number} Full Width at Half Maximum (FMHM).
+   */
+  widthToFWHM(width, mu) {
+    return PseudoVoigt.widthToFWHM(width, mu);
+  }
+  /**
+   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+   * @param {number} fwhm - Full Width at Half Maximum.
+   * @param {number} [mu] - ratio of gaussian contribution.
+   * @returns {number} width between the inflection points.
+   */
+  fwhmToWidth(fwhm = this.fwhm, mu = this.mu) {
+    return PseudoVoigt.fwhmToWidth(fwhm, mu);
   }
 
   /**
@@ -118,12 +135,22 @@ PseudoVoigt.fct = function fct(x, fwhm, mu = 0.5) {
 };
 
 /**
- * Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).
- * @param {number} fwhm - Full Width at Half Maximum.
- * @returns {number} width between the inflection points
+ * Compute the value of Full Width at Half Maximum (FMHM) from width between the inflection points.
+ * @param {number} width - width between the inflection points
+ * @param {number} [mu = 0.5] - ratio of gaussian contribution.
+ * @returns {number} Full Width at Half Maximum (FMHM).
  */
-PseudoVoigt.fwhmToWidth = function fwhmToWidth(fwhm) {
-  return fwhm / (this.mu * ROOT_2LN2_MINUS_ONE + 1);
+PseudoVoigt.widthToFWHM = function widthToFWHM(width, mu = 0.5) {
+  return width * (mu * ROOT_2LN2_MINUS_ONE + 1);
+};
+/**
+ * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+ * @param {number} fwhm - Full Width at Half Maximum.
+ * @param {number} [mu = 0.5] - ratio of gaussian contribution.
+ * @returns {number} width between the inflection points.
+ */
+PseudoVoigt.fwhmToWidth = function fwhmToWidth(fwhm, mu = 0.5) {
+  return fwhm / (mu * ROOT_2LN2_MINUS_ONE + 1);
 };
 
 /**
@@ -134,8 +161,16 @@ PseudoVoigt.fwhmToWidth = function fwhmToWidth(fwhm) {
  * @param {number} [options.mu = 0.5] - ratio of gaussian contribution.
  * @returns {number} - returns the area of the specific shape and parameters.
  */
-PseudoVoigt.getArea = function (fwhm, options = {}) {
+PseudoVoigt.getArea = function getArea(fwhm, options = {}) {
   let { height = 1, mu = 0.5 } = options;
-
   return (fwhm * height * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI)) / 2;
+};
+
+/**
+ * Calculate the number of times FWHM allows to reach a specific area coverage.
+ * @param {number} [area=0.9999]
+ * @returns {number}
+ */
+PseudoVoigt.getFactor = function getFactor(area = 0.9999) {
+  return Lorentzian.getFactor(area)
 };
