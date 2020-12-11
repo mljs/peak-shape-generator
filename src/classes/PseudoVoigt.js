@@ -64,11 +64,12 @@ export class PseudoVoigt {
 
   /**
    * Calculate the number of times FWHM allows to reach a specific area coverage
-   * @param {number} [area=0.9999]
+   * @param {number} [area=0.9999] - required area to be coverage
+   * @param {number} [mu=this.mu] - ratio of gaussian contribution.
    * @returns {number}
    */
-  getFactor(area = 0.9999) {
-    return PseudoVoigt.getFactor(area);
+  getFactor(area = 0.9999, mu = this.mu) {
+    return PseudoVoigt.getFactor(area, mu);
   }
 
   /**
@@ -167,10 +168,11 @@ PseudoVoigt.getArea = function getArea(fwhm, options = {}) {
 };
 
 /**
- * Calculate the number of times FWHM allows to reach a specific area coverage.
- * @param {number} [area=0.9999]
+ * Calculate the number of times FWHM allows to reach a specific area coverage
+ * @param {number} [area=0.9999] - required area to be coverage
+ * @param {number} [mu=this.mu] - ratio of gaussian contribution.
  * @returns {number}
  */
-PseudoVoigt.getFactor = function getFactor(area = 0.9999) {
-  return Lorentzian.getFactor(area)
+PseudoVoigt.getFactor = function getFactor(area = 0.9999, mu = 0.5) {
+  return mu < 1 ? Lorentzian.getFactor(area) : Gaussian.getFactor(area);
 };
