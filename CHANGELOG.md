@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.12.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.11.0...v0.12.0) (2020-12-11)
+
+
+### Features
+
+* add fwhmToWidth, widthToFWHM and getFactor static function for each kind of shape ([0bc6807](https://www.github.com/mljs/peak-shape-generator/commit/0bc6807da60d3777d80a751a0220f2ad3fd18ae3))
+* implement internal erfinv code ([13b1e7a](https://www.github.com/mljs/peak-shape-generator/commit/13b1e7a328f3b1d713da4d0625463b89feb9135b))
+
+
+### Bug Fixes
+
+* avoid a big factor for mu=1 in pseudoVoigt shape ([20a79a1](https://www.github.com/mljs/peak-shape-generator/commit/20a79a136341f0ee59c8daff5bd1cbcfde10cbc5)), closes [#35](https://www.github.com/mljs/peak-shape-generator/issues/35)
+
 ## [0.11.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.10.2...v0.11.0) (2020-12-10)
 
 
