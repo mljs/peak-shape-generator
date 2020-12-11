@@ -1,6 +1,7 @@
+import erfinv from 'compute-erfinv';
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { ROOT_PI_OVER_LN2 } from '../../util/constants';
+import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../util/constants';
 import { Gaussian } from '../Gaussian';
 
 expect.extend({ toBeDeepCloseTo });
@@ -25,10 +26,12 @@ describe('Gaussian.shape', () => {
 
   it('fwhm fixed and normalized', () => {
     const gaussian = new Gaussian({ fwhm: 50 });
-    let shape = gaussian.getData();
-    expect(shape).toHaveLength(195);
-    let area = shape.reduce((a, b) => a + b, 0);
+    let data = gaussian.getData();
+    expect(data).toHaveLength(195);
+    let area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeDeepCloseTo(0.9999, 2);
+    let computedArea = gaussian.getArea();
+    expect(computedArea).toBeDeepCloseTo(1, 2);
   });
 
   it('sd fixed', () => {
@@ -60,6 +63,35 @@ describe('Gaussian.shape', () => {
     let center = Math.floor((lenG - 1) / 2);
     expect(data[center]).toBeDeepCloseTo(data[center + 1], 4);
     expect(data[0]).toBeDeepCloseTo(data[data.length - 1], 4);
+  });
+  it('width To fwhm', () => {
+    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    const width = 20;
+    expect(gaussian.widthToFWHM(width)).toBe(width * ROOT_2LN2);
+    expect(gaussian.widthToFWHM(width)).toBe(Gaussian.widthToFWHM(width));
+  });
+  it('fwhm to width', () => {
+    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    const fwhm = 20;
+    expect(gaussian.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
+    gaussian.setFWHM(fwhm);
+    expect(gaussian.fwhmToWidth()).toBe(Gaussian.fwhmToWidth(fwhm));
+  });
+  it('change height should change area', () => {
+    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    const area = gaussian.getArea();
+    gaussian.setHeight(2);
+    expect(gaussian.getArea()).toBeDeepCloseTo(2 * area, 4);
+  });
+  it('factor should be close', () => {
+    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    for (let i = 1; i < 11; i++) {
+      let area = i * 0.1;
+      expect(gaussian.getFactor(area)).toBeDeepCloseTo(
+        Math.sqrt(2) * erfinv(area),
+        1,
+      );
+    }
   });
 });
 
