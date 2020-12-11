@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>ml-peak-shape-generator 0.11.0 | Documentation</title>
+  <title>ml-peak-shape-generator 0.12.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>ml-peak-shape-generator</h3>
-          <div class='mb1'><code>0.11.0</code></div>
+          <div class='mb1'><code>0.12.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -41,6 +41,16 @@
                   href='#fct'
                   class="">
                   fct
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fwhmtowidth'
+                  class="">
+                  fwhmToWidth
                   
                 </a>
                 
@@ -98,6 +108,16 @@
               
                 
                 <li><a
+                  href='#widthtofwhm'
+                  class="">
+                  widthToFWHM
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#fct'
                   class="">
                   fct
@@ -128,6 +148,16 @@
               
                 
                 <li><a
+                  href='#getfactor'
+                  class="">
+                  getFactor
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#widthtofwhm'
                   class="">
                   widthToFWHM
@@ -151,6 +181,16 @@
                   href='#fct'
                   class="">
                   fct
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fwhmtowidth'
+                  class="">
+                  fwhmToWidth
                   
                 </a>
                 
@@ -218,6 +258,16 @@
               
                 
                 <li><a
+                  href='#widthtofwhm'
+                  class="">
+                  widthToFWHM
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#fct'
                   class="">
                   fct
@@ -248,6 +298,26 @@
               
                 
                 <li><a
+                  href='#getfactor'
+                  class="">
+                  getFactor
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#widthtofwhm'
+                  class="">
+                  widthToFWHM
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#constructor'
                   class="">
                   constructor
@@ -261,6 +331,16 @@
                   href='#fct'
                   class="">
                   fct
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fwhmtowidth'
+                  class="">
+                  fwhmToWidth
                   
                 </a>
                 
@@ -318,6 +398,16 @@
               
                 
                 <li><a
+                  href='#widthtofwhm'
+                  class="">
+                  widthToFWHM
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#fct'
                   class="">
                   fct
@@ -341,6 +431,16 @@
                   href='#getarea'
                   class="">
                   getArea
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getfactor'
+                  class="">
+                  getFactor
                   
                 </a>
                 
@@ -376,7 +476,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L10-L14'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L10-L14'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -492,7 +592,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L44-L46'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L44-L46'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -563,12 +663,90 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='fwhmtowidth'>
+      fwhmToWidth
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L72-L74'>
+      <span>src/classes/Lorentzian.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).
+//<a href="https://mathworld.wolfram.com/LorentzianFunction.html">https://mathworld.wolfram.com/LorentzianFunction.html</a></p>
+
+    <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fwhm</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?
+            = <code>this.fwhm</code>)</code>
+	    Full Width at Half Maximum.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        width between the inflection points
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='getarea'>
       getArea
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L62-L64'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L62-L64'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -630,7 +808,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L22-L37'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L22-L37'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -744,7 +922,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L53-L55'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L53-L55'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -820,7 +998,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L70-L72'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L89-L91'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -888,7 +1066,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L78-L80'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L97-L99'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -951,12 +1129,89 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='widthtofwhm'>
+      widthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L82-L84'>
+      <span>src/classes/Lorentzian.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.
+//<a href="https://mathworld.wolfram.com/LorentzianFunction.html">https://mathworld.wolfram.com/LorentzianFunction.html</a></p>
+
+    <div class='pre p1 fill-light mt0'>widthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?)</code>
+	    Width between the inflection points
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        fwhm
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='fct'>
       fct
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L89-L92'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L108-L111'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -1041,14 +1296,15 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L99-L101'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L119-L121'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
   </div>
   
 
-  <p>Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).</p>
+  <p>Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).
+//<a href="https://mathworld.wolfram.com/LorentzianFunction.html">https://mathworld.wolfram.com/LorentzianFunction.html</a></p>
 
     <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
@@ -1117,7 +1373,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L120-L124'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L140-L144'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
@@ -1225,19 +1481,96 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='widthtofwhm'>
-      widthToFWHM
+    <h3 class='fl m0' id='getfactor'>
+      getFactor
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Lorentzian.js#L108-L111'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L151-L153'>
       <span>src/classes/Lorentzian.js</span>
       </a>
     
   </div>
   
 
-  <p>Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.</p>
+  <p>Calculate the number of times FWHM allows to reach a specific area coverage</p>
+
+    <div class='pre p1 fill-light mt0'>getFactor(area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>area</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>0.9999</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='widthtofwhm'>
+      widthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Lorentzian.js#L129-L131'>
+      <span>src/classes/Lorentzian.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.
+//<a href="https://mathworld.wolfram.com/LorentzianFunction.html">https://mathworld.wolfram.com/LorentzianFunction.html</a></p>
 
     <div class='pre p1 fill-light mt0'>widthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
@@ -1306,7 +1639,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L18-L27'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L18-L27'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1422,7 +1755,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L62-L64'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L61-L63'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1493,12 +1826,99 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='fwhmtowidth'>
+      fwhmToWidth
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L98-L100'>
+      <span>src/classes/PseudoVoigt.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).</p>
+
+    <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fwhm</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>this.fwhm</code>)</code>
+	    Full Width at Half Maximum.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?
+            = <code>this.mu</code>)</code>
+	    ratio of gaussian contribution.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        width between the inflection points.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='getarea'>
       getArea
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L80-L82'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L79-L81'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1560,7 +1980,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L37-L54'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L37-L53'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1676,7 +2096,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L71-L73'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L71-L73'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1685,7 +2105,7 @@
 
   <p>Calculate the number of times FWHM allows to reach a specific area coverage</p>
 
-    <div class='pre p1 fill-light mt0'>getFactor(area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+    <div class='pre p1 fill-light mt0'>getFactor(area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
   
 
@@ -1704,7 +2124,18 @@
           <div>
             <span class='code bold'>area</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
             = <code>0.9999</code>)</code>
-	    
+	    required area to be coverage
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>this.mu</code>)</code>
+	    ratio of gaussian contribution.
+
           </div>
           
         </div>
@@ -1752,7 +2183,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L88-L90'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L106-L108'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1820,7 +2251,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L96-L98'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L114-L116'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1888,7 +2319,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L104-L106'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L122-L124'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -1951,12 +2382,98 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='widthtofwhm'>
+      widthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L89-L91'>
+      <span>src/classes/PseudoVoigt.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FMHM) from width between the inflection points.</p>
+
+    <div class='pre p1 fill-light mt0'>widthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    width between the inflection points
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>0.5</code>)</code>
+	    ratio of gaussian contribution.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        Full Width at Half Maximum (FMHM).
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='fct'>
       fct
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L116-L118'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L134-L136'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -2051,16 +2568,16 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L125-L127'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L153-L155'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
   </div>
   
 
-  <p>Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).</p>
+  <p>Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).</p>
 
-    <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+    <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
   
 
@@ -2084,6 +2601,16 @@
           
         </div>
       
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>0.5</code>)</code>
+	    ratio of gaussian contribution.
+
+          </div>
+          
+        </div>
+      
     </div>
   
 
@@ -2093,7 +2620,7 @@
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
-        width between the inflection points
+        width between the inflection points.
 
       
     
@@ -2127,7 +2654,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/PseudoVoigt.js#L137-L141'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L165-L168'>
       <span>src/classes/PseudoVoigt.js</span>
       </a>
     
@@ -2246,12 +2773,185 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='getfactor'>
+      getFactor
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L176-L178'>
+      <span>src/classes/PseudoVoigt.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Calculate the number of times FWHM allows to reach a specific area coverage</p>
+
+    <div class='pre p1 fill-light mt0'>getFactor(area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>area</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>0.9999</code>)</code>
+	    required area to be coverage
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>this.mu</code>)</code>
+	    ratio of gaussian contribution.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='widthtofwhm'>
+      widthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/PseudoVoigt.js#L144-L146'>
+      <span>src/classes/PseudoVoigt.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FMHM) from width between the inflection points.</p>
+
+    <div class='pre p1 fill-light mt0'>widthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, mu: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    width between the inflection points
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>mu</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>0.5</code>)</code>
+	    ratio of gaussian contribution.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        Full Width at Half Maximum (FMHM).
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='constructor'>
       constructor
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L16-L26'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L15-L25'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2367,7 +3067,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L58-L60'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L57-L59'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2438,12 +3138,90 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='fwhmtowidth'>
+      fwhmToWidth
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L96-L98'>
+      <span>src/classes/Gaussian.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+//<a href="https://mathworld.wolfram.com/GaussianFunction.html">https://mathworld.wolfram.com/GaussianFunction.html</a></p>
+
+    <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fwhm</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>this.fwhm</code>)</code>
+	    Full Width at Half Maximum.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        width
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='getarea'>
       getArea
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L76-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L75-L77'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2505,7 +3283,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L35-L51'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L34-L50'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2619,7 +3397,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L67-L69'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L66-L68'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2695,7 +3473,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L84-L86'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L104-L106'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2763,7 +3541,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L92-L94'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L112-L114'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2826,12 +3604,89 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='widthtofwhm'>
+      widthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L85-L88'>
+      <span>src/classes/Gaussian.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
+//<a href="https://mathworld.wolfram.com/GaussianFunction.html">https://mathworld.wolfram.com/GaussianFunction.html</a></p>
+
+    <div class='pre p1 fill-light mt0'>widthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Width between the inflection points
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        fwhm
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='fct'>
       fct
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L103-L105'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L123-L125'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -2917,14 +3772,15 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L123-L125'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L143-L145'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
   </div>
   
 
-  <p>Compute the value of width between the inflection points of a specific shape from Full Width at Half Maximum (FWHM).</p>
+  <p>Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+//<a href="https://mathworld.wolfram.com/GaussianFunction.html">https://mathworld.wolfram.com/GaussianFunction.html</a></p>
 
     <div class='pre p1 fill-light mt0'>fwhmToWidth(fwhm: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
@@ -2993,7 +3849,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L135-L138'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L155-L158'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
@@ -3101,19 +3957,96 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='widthtofwhm'>
-      widthToFWHM
+    <h3 class='fl m0' id='getfactor'>
+      getFactor
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/de812bf16f28967ee26991c0b5badaa9d4a806f4/src/classes/Gaussian.js#L113-L116'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L165-L167'>
       <span>src/classes/Gaussian.js</span>
       </a>
     
   </div>
   
 
-  <p>Compute the value of Full Width at Half Maximum (FWHM) of a specific shape from the width between the inflection points.</p>
+  <p>Calculate the number of times FWHM allows to reach a specific area coverage.</p>
+
+    <div class='pre p1 fill-light mt0'>getFactor(area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>area</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>0.9999</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='widthtofwhm'>
+      widthToFWHM
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/mljs/peak-shape-generator/blob/9b91a138012b16552ec7c9d178be53bd7e7e0498/src/classes/Gaussian.js#L133-L135'>
+      <span>src/classes/Gaussian.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
+//<a href="https://mathworld.wolfram.com/GaussianFunction.html">https://mathworld.wolfram.com/GaussianFunction.html</a></p>
 
     <div class='pre p1 fill-light mt0'>widthToFWHM(width: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
