@@ -1,13 +1,13 @@
 import erfinv from 'compute-erfinv';
 import { toBeDeepCloseTo } from 'jest-matcher-deep-close-to';
 
-import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../util/constants';
+import { ROOT_2LN2 } from '../../util/constants';
 import { Gaussian2D } from '../Gaussian2D';
 
 expect.extend({ toBeDeepCloseTo });
 
 describe('Gaussian2D.shape', () => {
-  it.only('height 1', () => {
+  it('height 1', () => {
     let gaussian2D = new Gaussian2D({
       x: { fwhm: 10 },
       y: { fwhm: 10 },
@@ -23,14 +23,14 @@ describe('Gaussian2D.shape', () => {
     expect(volume).toBeDeepCloseTo((100 * Math.PI) / Math.LN2 / 4, 3);
   });
 
-  it.only('check gaussian2D continuous', () => {
+  it('check gaussian2D continuous', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 5900 });
     let y = gaussian2D.getData({ factor: 1 });
     const nbChanges = getNbChanges(y[(y.length - 1) / 2]);
     expect(nbChanges).toBe(2);
   });
 
-  it.only('fwhm fixed and normalized', () => {
+  it('fwhm fixed and normalized', () => {
     const gaussian2D = new Gaussian2D({ x: { fwhm: 50 }, y: { fwhm: 50 } });
     let data = gaussian2D.getData();
     expect(data).toHaveLength(195);
@@ -40,7 +40,7 @@ describe('Gaussian2D.shape', () => {
     expect(computedVolume).toBeDeepCloseTo(1, 2);
   });
 
-  it.only('sd fixed', () => {
+  it('sd fixed', () => {
     const sd = 50;
     const height = 3;
     const gaussian2D = new Gaussian2D({ x: { sd }, y: { sd }, height });
@@ -48,21 +48,23 @@ describe('Gaussian2D.shape', () => {
     let center = Math.floor((data.length - 1) / 2);
     expect(data[center][center]).toBeDeepCloseTo(height, 2);
     let volume = getVolume(data);
-    console.log(volume)
     expect(volume).toBeDeepCloseTo(height * 2 * Math.PI * sd * sd, 2);
   });
 
-  it.only('odd fwhm', () => {
+  it('odd fwhm', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 101, height: 1 });
     let data = gaussian2D.getData({ length: 101 });
     expect(data).toHaveLength(101);
     let lenG = data.length;
     let center = Math.floor((lenG - 1) / 2);
     expect(data[center][center]).toBeDeepCloseTo(1, 4);
-    expect(data[center - 1][center]).toBeDeepCloseTo(data[center + 1][center], 4);
+    expect(data[center - 1][center]).toBeDeepCloseTo(
+      data[center + 1][center],
+      4,
+    );
     expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
   });
-  it.only('even fwhm', () => {
+  it('even fwhm', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
     let data = gaussian2D.getData({ length: 100 });
     expect(data).toHaveLength(100);
@@ -71,20 +73,20 @@ describe('Gaussian2D.shape', () => {
     expect(data[center][center]).toBeDeepCloseTo(data[center + 1][center], 4);
     expect(data[0][center]).toBeDeepCloseTo(data[data.length - 1][center], 4);
   });
-  it.only('width To fwhm', () => {
+  it('width To fwhm', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
     const width = 20;
     expect(gaussian2D.widthToFWHM(width)).toBe(width * ROOT_2LN2);
     expect(gaussian2D.widthToFWHM(width)).toBe(Gaussian2D.widthToFWHM(width));
   });
-  it.only('fwhm to width', () => {
+  it('fwhm to width', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
     const fwhm = 20;
     expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
     gaussian2D.setFWHM(fwhm);
     expect(gaussian2D.fwhmToWidth()).toBe(Gaussian2D.fwhmToWidth(fwhm));
   });
-  it.only('change height should change area', () => {
+  it('change height should change area', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
     const volume = gaussian2D.getVolume();
     gaussian2D.setHeight(2);

@@ -1,10 +1,5 @@
-import {
-  ROOT_2LN2,
-  GAUSSIAN_EXP_FACTOR,
-  ROOT_PI_OVER_LN2,
-} from '../util/constants';
+import { ROOT_2LN2, GAUSSIAN_EXP_FACTOR } from '../util/constants';
 import erfinv from '../util/erfinv';
-import assignDeep from 'assign-deep';
 
 let axis = ['x', 'y'];
 
@@ -29,8 +24,8 @@ export class Gaussian2D {
         fwhm = globalFWHM;
       } else {
         fwhm = options[i].sd
-        ? Gaussian2D.widthToFWHM(2 * options[i].sd)
-        : options[i].fwhm || globalFWHM;
+          ? Gaussian2D.widthToFWHM(2 * options[i].sd)
+          : options[i].fwhm || globalFWHM;
       }
       this[i] = { fwhm };
     }
@@ -141,13 +136,18 @@ export class Gaussian2D {
   /**
    * set a new full width at half maximum
    * @param {number} fwhm - full width at half maximum
+   * @param {string|Array<string>} axisLabel - label of axis, if it is undefined fwhm is set to both axis.
    */
-  setFWHM(axis, fwhm) {
-    let axisName = axis.toLowerCase();
-    if (axisName !== 'y' && axisName !== 'x') {
-      throw new Error('axis name should be x or y');
+  setFWHM(fwhm, axisLabel) {
+    if (!axisLabel) axisLabel = axis;
+    if (!Array.isArray(axisLabel)) axisLabel = [axisLabel];
+    for (let i of axisLabel) {
+      let axisName = i.toLowerCase();
+      if (axisName !== 'y' && axisName !== 'x') {
+        throw new Error('axis label should be x or y');
+      }
+      this[axisName].fwhm = fwhm;
     }
-    this[axisName].fwhm = fwhm;
   }
 
   /**
