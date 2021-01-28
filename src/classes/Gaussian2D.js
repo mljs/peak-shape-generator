@@ -4,6 +4,9 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../util/constants';
 import erfinv from '../util/erfinv';
+import assignDeep from 'assign-deep';
+
+let axis = ['x', 'y'];
 
 export class Gaussian2D {
   /**
@@ -15,15 +18,23 @@ export class Gaussian2D {
    * @param {object} [options.y] - Options for y axis.
    * @param {number} [options.y.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM for y axis.
    * @param {number} [options.y.sd] - Standard deviation for y axis, if it's defined options.y.fwhm will be ignored and the value will be computed sd * Math.sqrt(8 * Math.LN2);
+   * @param {number} [options.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM used if x or y has not the fwhm property.
    */
   constructor(options = {}) {
-    options = assignDeep({}, options, { x: { fwhm: 500 }, y: { fwhm: 500 } });
-    this.x.fwhm = options.x.sd
-      ? Gaussian2D.widthToFWHM(2 * options.x.sd)
-      : options.x.fwhm;
-    this.y.fwhm = options.y.sd
-      ? Gaussian2D.widthToFWHM(2 * options.y.sd)
-      : options.y.fwhm;
+    let { fwhm: globalFWHM = 500 } = options;
+
+    for (let i of axis) {
+      let fwhm;
+      if (!options[i]) {
+        fwhm = globalFWHM;
+      } else {
+        fwhm = options[i].sd
+        ? Gaussian2D.widthToFWHM(2 * options[i].sd)
+        : options[i].fwhm || globalFWHM;
+      }
+      this[i] = { fwhm };
+    }
+
     this.height =
       options.height === undefined
         ? -GAUSSIAN_EXP_FACTOR / Math.PI / this.x.fwhm / this.y.fwhm
@@ -32,35 +43,44 @@ export class Gaussian2D {
   /**
    * Calculate a Gaussian2D shape
    * @param {object} [options = {}]
-   * @param {number} [options.factor = 6] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
-   * @param {number} [options.length = fwhm * factor + 1] - total number of points to calculate
+   * @param {number} [options.factor
+   *  = 6] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
+   * @param {object} [options.x] - parameter for x axis.
+   * @param {number} [options.x.length = xFWHW * xFactor + 1] - length on x axis.
+   * @param {number} [options.x.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
+   * @param {object} [options.y] - parameter for y axis.
+   * @param {number} [options.y.length = xFWHM * factor + 1] - length on y axis.
+   * @param {number} [options.y.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
    * @return {Float64Array} y values
    */
 
   getData(options = {}) {
-    let { x = {}, y = {}, factor = this.getFactor() } = options;
+    let { x = {}, y = {}, factor, length } = options;
 
-    let xLength = x.length;
+    let xLength = x.length || length;
     if (!xLength) {
-      xLength = Math.min(Math.ceil(this.x.fwhm * factor), Math.pow(2, 25) - 1);
+      let { factor: xFactor = factor || this.getFactor() } = x;
+      xLength = Math.min(Math.ceil(this.x.fwhm * xFactor), Math.pow(2, 25) - 1);
       if (xLength % 2 === 0) xLength++;
     }
 
-    let yLength = y.length;
+    let yLength = y.length || length;
     if (!yLength) {
-      yLength = Math.min(Math.ceil(this.y.fwhm * factor), Math.pow(2, 25) - 1);
+      let { factor: yFactor = factor || this.getFactor() } = y;
+      yLength = Math.min(Math.ceil(this.y.fwhm * yFactor), Math.pow(2, 25) - 1);
       if (yLength % 2 === 0) yLength++;
     }
 
     const xCenter = (xLength - 1) / 2;
     const yCenter = (yLength - 1) / 2;
     const data = new Array(xLength);
-
-    for (let i = 0; i <= xCenter; i++) {
+    for (let i = 0; i < xLength; i++) {
       data[i] = new Float64Array(yLength);
-      for (let j = 0; j <= yCenter; j++) {
+    }
+
+    for (let i = 0; i < xLength; i++) {
+      for (let j = 0; j < yLength; j++) {
         data[i][j] = this.fct(i - xCenter, j - yCenter) * this.height;
-        data[xLength - 1 - i][yLength - 1 - j] = data[i][j];
       }
     }
 
@@ -68,7 +88,7 @@ export class Gaussian2D {
   }
 
   /**
-   * Return a parameterized function of a Gaussian2D shape (see README for equation).
+   * Return the intensity value of a 2D gaussian shape (see README for equation).
    * @param {number} x - x value to calculate.
    * @param {number} y - y value to calculate.
    * @returns {number} - the z value of bi-dimensional gaussian with the current parameters.
@@ -78,21 +98,23 @@ export class Gaussian2D {
   }
 
   /**
-   * Calculate the number of times FWHM allows to reach a specific area coverage
-   * @param {number} [area=0.9999]
+   * Calculate the number of times FWHM allows to reach a specific volume coverage.
+   * @param {number} [volume=0.9999]
    * @returns {number}
    */
-  getFactor(area = 0.9999) {
-    return Gaussian2D.getFactor(area);
+  getFactor(volume = 0.9999) {
+    return Gaussian2D.getFactor(volume);
   }
 
-  /**@TODO
-   * Calculate the area of the shape.
-   * @returns {number} - returns the area.
+  /**
+   * Calculate the volume of the shape.
+   * @returns {number} - returns the volume.
    */
 
-  getArea() {
-    return Gaussian2D.getArea(this.fwhm, { height: this.height });
+  getVolume() {
+    return Gaussian2D.getVolume(this.x.fwhm, this.y.fwhm, {
+      height: this.height,
+    });
   }
 
   /**
@@ -172,23 +194,24 @@ Gaussian2D.fwhmToWidth = function fwhmToWidth(fwhm) {
 };
 
 /**
- * Calculate the area of a specific shape.
- * @param {number} fwhm - Full width at half maximum.
+ * Calculate the volume of a specific shape.
+ * @param {number} xFWHM - Full width at half maximum for x axis.
+ * @param {number} yFWHM - Full width at half maximum for y axis.
  * @param {object} [options = {}] - options.
- * @param {number} [options.height = 1] - Maximum y value of the shape.
+ * @param {number} [options.height = 1] - Maximum z value of the shape.
  * @returns {number} - returns the area of the specific shape and parameters.
  */
 
-Gaussian2D.getArea = function getArea(fwhm, options = {}) {
+Gaussian2D.getVolume = function getVolume(xFWHM, yFWHM, options = {}) {
   let { height = 1 } = options;
-  return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
+  return (height * Math.PI * xFWHM * yFWHM) / Math.LN2 / 4;
 };
 
-/**
- * Calculate the number of times FWHM allows to reach a specific area coverage.
- * @param {number} [area=0.9999]
+/**@TODO look for a better factor
+ * Calculate the number of times FWHM allows to reach a specific volume coverage.
+ * @param {number} [volume=0.9999]
  * @returns {number}
  */
-Gaussian2D.getFactor = function getFactor(area = 0.9999) {
-  return Math.sqrt(2) * erfinv(area);
+Gaussian2D.getFactor = function getFactor(volume = 0.9999) {
+  return Math.sqrt(2) * erfinv(volume);
 };
