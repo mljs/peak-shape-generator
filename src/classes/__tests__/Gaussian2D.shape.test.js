@@ -45,10 +45,14 @@ describe('Gaussian2D.shape', () => {
     const height = 3;
     const gaussian2D = new Gaussian2D({ x: { sd }, y: { sd }, height });
     let data = gaussian2D.getData();
-    let center = Math.floor((data.length - 1) / 2);
+    let center = (data.length - 1) / 2;
+    expect(data[center][center]).toBeDeepCloseTo(3, 3);
+    expect(data[center][0]).toBeDeepCloseTo(
+      gaussian2D.fct(0, -center) * height,
+    );
     expect(data[center][center]).toBeDeepCloseTo(height, 2);
     let volume = getVolume(data);
-    expect(volume).toBeDeepCloseTo(height * 2 * Math.PI * sd * sd, 2);
+    expect(volume).toBeDeepCloseTo(height * 2 * Math.PI * sd * sd, 0);
   });
 
   it('odd fwhm', () => {

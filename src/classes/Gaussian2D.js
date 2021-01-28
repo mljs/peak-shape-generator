@@ -38,30 +38,29 @@ export class Gaussian2D {
   /**
    * Calculate a Gaussian2D shape
    * @param {object} [options = {}]
-   * @param {number} [options.factor
-   *  = 6] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
+   * @param {number} [options.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
    * @param {object} [options.x] - parameter for x axis.
    * @param {number} [options.x.length = xFWHW * xFactor + 1] - length on x axis.
    * @param {number} [options.x.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
    * @param {object} [options.y] - parameter for y axis.
    * @param {number} [options.y.length = xFWHM * factor + 1] - length on y axis.
    * @param {number} [options.y.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
-   * @return {Float64Array} y values
+   * @return {Array<Float64Array>} - z values.
    */
 
   getData(options = {}) {
-    let { x = {}, y = {}, factor, length } = options;
+    let { x = {}, y = {}, factor = this.getFactor(), length } = options;
 
     let xLength = x.length || length;
     if (!xLength) {
-      let { factor: xFactor = factor || this.getFactor() } = x;
+      let { factor: xFactor = factor } = x;
       xLength = Math.min(Math.ceil(this.x.fwhm * xFactor), Math.pow(2, 25) - 1);
       if (xLength % 2 === 0) xLength++;
     }
 
     let yLength = y.length || length;
     if (!yLength) {
-      let { factor: yFactor = factor || this.getFactor() } = y;
+      let { factor: yFactor = factor } = y;
       yLength = Math.min(Math.ceil(this.y.fwhm * yFactor), Math.pow(2, 25) - 1);
       if (yLength % 2 === 0) yLength++;
     }
@@ -70,7 +69,7 @@ export class Gaussian2D {
     const yCenter = (yLength - 1) / 2;
     const data = new Array(xLength);
     for (let i = 0; i < xLength; i++) {
-      data[i] = new Float64Array(yLength);
+      data[i] = new Array(yLength);
     }
 
     for (let i = 0; i < xLength; i++) {
