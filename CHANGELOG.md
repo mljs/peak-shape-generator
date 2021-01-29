@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.12.0...v0.13.0) (2021-01-29)
+
+
+### Features
+
+* add gaussian2D class ([#37](https://www.github.com/mljs/peak-shape-generator/issues/37)) ([39ba7d9](https://www.github.com/mljs/peak-shape-generator/commit/39ba7d967690a51b4fb9482bf0338b652ec8bd2b))
+
 ## [0.12.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.11.0...v0.12.0) (2020-12-11)
 
 
