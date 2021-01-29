@@ -3,7 +3,7 @@ import { ROOT_THREE } from '../util/constants';
 export class Lorentzian {
   /**
    * @param {object} [options = {}]
-   * @param {number} [options.height=x] Define the height of the peak, by default area=1 (normalized)
+   * @param {number} [options.height=2/(PI*FWHM)] Define the height of the peak, by default area=1 (normalized)
    * @param {number} [options.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM.
    * @param {number} [options.sd] - Standard deviation, if it's defined options.fwhm will be ignored and the value will be computed sd * Math.sqrt(8 * Math.LN2);
    */

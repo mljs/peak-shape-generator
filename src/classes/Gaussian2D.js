@@ -6,14 +6,14 @@ let axis = ['x', 'y'];
 export class Gaussian2D {
   /**
    * @param {object} [options = {}]
-   * @param {number} [options.height=x] Define the height of the peak, by default area=1 (normalized).
+   * @param {number} [options.height=4*LN2/(PI*xFWHM*yFWHM)] Define the height of the peak, by default area=1 (normalized).
+   * @param {number} [options.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM used if x or y has not the fwhm property.
    * @param {object} [options.x] - Options for x axis.
-   * @param {number} [options.x.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM for x axis.
+   * @param {number} [options.x.fwhm = fwhm] - Full Width at Half Maximum in the number of points in FWHM for x axis.
    * @param {number} [options.x.sd] - Standard deviation for x axis, if it's defined options.x.fwhm will be ignored and the value will be computed sd * Math.sqrt(8 * Math.LN2);
    * @param {object} [options.y] - Options for y axis.
-   * @param {number} [options.y.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM for y axis.
+   * @param {number} [options.y.fwhm = fwhm] - Full Width at Half Maximum in the number of points in FWHM for y axis.
    * @param {number} [options.y.sd] - Standard deviation for y axis, if it's defined options.y.fwhm will be ignored and the value will be computed sd * Math.sqrt(8 * Math.LN2);
-   * @param {number} [options.fwhm = 500] - Full Width at Half Maximum in the number of points in FWHM used if x or y has not the fwhm property.
    */
   constructor(options = {}) {
     let { fwhm: globalFWHM = 500 } = options;
@@ -40,11 +40,11 @@ export class Gaussian2D {
    * @param {object} [options = {}]
    * @param {number} [options.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
    * @param {object} [options.x] - parameter for x axis.
-   * @param {number} [options.x.length = xFWHW * xFactor + 1] - length on x axis.
-   * @param {number} [options.x.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
+   * @param {number} [options.x.length=fwhm*factor+1] - length on x axis.
+   * @param {number} [options.x.factor=factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
    * @param {object} [options.y] - parameter for y axis.
-   * @param {number} [options.y.length = xFWHM * factor + 1] - length on y axis.
-   * @param {number} [options.y.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
+   * @param {number} [options.y.length=fwhm*factor+1] - length on y axis.
+   * @param {number} [options.y.factor=factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
    * @return {Array<Float64Array>} - z values.
    */
 

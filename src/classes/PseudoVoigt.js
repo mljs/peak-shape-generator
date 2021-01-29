@@ -10,7 +10,7 @@ import { Lorentzian } from './Lorentzian';
 export class PseudoVoigt {
   /**
    * @param {object} [options={}]
-   * @param {number} [options.height=x] Define the height of the peak, by default area=1 (normalized)
+   * @param {number} [options.height=1/(mu*FWHM/sqrt(4*LN2/PI)+(1-mu)*fwhm*PI*0.5)] Define the height of the peak, by default area=1 (normalized)
    * @param {number} [options.fwhm=500] - Full Width at Half Maximum in the number of points in FWHM.
    * @param {number} [options.mu=0.5] - ratio of gaussian contribution.
    */
