@@ -1,4 +1,5 @@
 import { Gaussian } from '../classes/Gaussian';
+import { Gaussian2D } from '../classes/Gaussian2D';
 import { Lorentzian } from '../classes/Lorentzian';
 import { PseudoVoigt } from '../classes/PseudoVoigt';
 
@@ -11,6 +12,8 @@ export function getShapeGenerator(options) {
       return new Lorentzian(shapeOptions);
     case 'pseudovoigt':
       return new PseudoVoigt(shapeOptions);
+    case 'gaussian2d':
+      return new Gaussian2D(shapeOptions);
     default:
       throw new Error(`Unknown kind: ${kind}`);
   }
