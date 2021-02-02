@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.13.0...v0.14.0) (2021-02-02)
+
+
+### Features
+
+* fix getShapeGenerator for gaussian2D ([68d8271](https://www.github.com/mljs/peak-shape-generator/commit/68d827151db69d9b54fe7afc2a913f81b110ba03))
+
 ## [0.13.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.12.0...v0.13.0) (2021-01-29)
 
 
