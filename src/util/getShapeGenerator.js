@@ -5,7 +5,7 @@ import { PseudoVoigt } from '../classes/PseudoVoigt';
 
 export function getShapeGenerator(options) {
   let { kind = 'Gaussian', options: shapeOptions } = options;
-  switch (kind.toLowerCase().replace(/[^a-z]/g, '')) {
+  switch (kind.toLowerCase().replace(/[^a-z^0-9]/g, '')) {
     case 'gaussian':
       return new Gaussian(shapeOptions);
     case 'lorentzian':
