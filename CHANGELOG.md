@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.14.0...v1.0.0) (2021-03-24)
+
+
+### Bug Fixes
+
+* update readme ([a31c51b](https://www.github.com/mljs/peak-shape-generator/commit/a31c51ba010619b5230bac8b9e76b8bd9b79d5a3))
+
 ## [0.14.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.13.0...v0.14.0) (2021-02-02)
 
 

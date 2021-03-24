@@ -1,6 +1,6 @@
 {
   "name": "ml-peak-shape-generator",
-  "version": "0.14.0",
+  "version": "1.0.0",
   "description": "Generate various peak shapes",
   "main": "lib/index.js",
   "module": "src/index.js",
