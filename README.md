@@ -4,7 +4,9 @@
 [![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
 
-Peak shape generator, the current kind of shapes supported are:
+Generate various peak shapes.
+
+The current supported kinds of shapes:
 
 | Name         |                                                                                                                            Equation                                                                                                                             | 
 | ------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -53,9 +55,6 @@ import { Gaussian } from 'ml-peak-shape-generator';
 const func = Gaussian.fct(x - mean, fwhm);
 
 ```
-
-
-
 
 ## [API Documentation](https://mljs.github.io/peak-shape-generator/)
 
