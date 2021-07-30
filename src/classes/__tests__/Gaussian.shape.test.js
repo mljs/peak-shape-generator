@@ -34,7 +34,7 @@ describe('Gaussian.shape', () => {
     expect(computedArea).toBeDeepCloseTo(1, 2);
   });
 
-  it('sd fixed', () => {
+  it.only('sd fixed', () => {
     const sd = 50;
     const height = 3;
     const gaussian = new Gaussian({ sd, height });
