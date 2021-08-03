@@ -2,8 +2,10 @@
 
 [![NPM version][npm-image]][npm-url]
 [![build status][ci-image]][ci-url]
+[![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
+.
 Generate various peak shapes.
 
 The current supported kinds of shapes:
@@ -26,18 +28,18 @@ where
 ## Usage
 
 ```js
-import { Gaussian, Lorentzian, PseudoVoigt} from 'ml-peak-shape-generator';
+import { gaussian, lorentzian, pseudoVoigt} from 'ml-peak-shape-generator';
 
 // It's possible to specify the windows size with factor option
-let data = new Gaussian({factor: 3.5, sd: 500}).getData();
+let data = gaussian.getData({factor: 3.5, sd: 500});
 // or fix the number of points as Full Width at Half Maximum
-let data = new Gaussian({factor: 3.5, fwhm: 500}).getData();
+let data = gaussian.getData({factor: 3.5, fwhm: 500});
 
 // It's possible to specify the windows size with factor option
-let data = new Loretzian({factor: 5, fwhm: 500}).getData();
+let data = loretzian.getData({factor: 5, fwhm: 500});
 
 // It's possible to specify the windows size with factor option
-let data = new PseudoVoigt({{factor: 5, fwhm: 500}}).getData();
+let data = pseudoVoigt.getData({factor: 5, fwhm: 500});
 ```
 
 ```js
@@ -51,8 +53,8 @@ let shapeGenerator = getShapeGenerator('lorentzian', {factor: 3.5, sd: 500});
 It is also possible to get a function that allows to calculate y for any x
 
 ```js
-import { Gaussian } from 'ml-peak-shape-generator';
-const func = Gaussian.fct(x - mean, fwhm);
+import { gaussian } from 'ml-peak-shape-generator';
+const func = gaussian.fct(fwhm, x - mean);
 
 ```
 
@@ -64,7 +66,9 @@ const func = Gaussian.fct(x - mean, fwhm);
 
 [npm-image]: https://img.shields.io/npm/v/ml-peak-shape-generator.svg
 [npm-url]: https://www.npmjs.com/package/ml-peak-shape-generator
-[ci-image]: https://github.com/mljs/peak-shape-generator/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-image]: https://github.com/mljs/peak-shape-generator/workflows/Node.js%20CI/badge.svg?branch=main
 [ci-url]: https://github.com/mljs/peak-shape-generator/actions?query=workflow%3A%22Node.js+CI%22
+[codecov-image]: https://img.shields.io/codecov/c/github/mljs/peak-shape-generator.svg
+[codecov-url]: https://codecov.io/gh/mljs/peak-shape-generator
 [download-image]: https://img.shields.io/npm/dm/ml-peak-shape-generator.svg
 [download-url]: https://www.npmjs.com/package/ml-peak-shape-generator
