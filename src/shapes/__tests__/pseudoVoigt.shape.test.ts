@@ -1,6 +1,6 @@
 import { ROOT_2LN2_MINUS_ONE, GAUSSIAN_EXP_FACTOR } from '../../util/constants';
-import * as lorentzian from '../lorentzian';
 import * as gaussian from '../gaussian';
+import * as lorentzian from '../lorentzian';
 import * as pseudoVoigt from '../pseudoVoigt';
 
 describe('PseudoVoigt', () => {

@@ -1,6 +1,5 @@
-import erfinv from '../../util/erfinv';
-
 import { ROOT_2LN2, GAUSSIAN_EXP_FACTOR } from '../../util/constants';
+import erfinv from '../../util/erfinv';
 import * as gaussian2D from '../gaussian2D';
 
 describe('Gaussian2D.shape', () => {
@@ -56,10 +55,7 @@ describe('Gaussian2D.shape', () => {
     let lenG = data.length;
     let center = Math.floor((lenG - 1) / 2);
     expect(data[center][center]).toBeCloseTo(1, 4);
-    expect(data[center - 1][center]).toBeCloseTo(
-      data[center + 1][center],
-      4,
-    );
+    expect(data[center - 1][center]).toBeCloseTo(data[center + 1][center], 4);
     expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
   });
   it('even fwhm', () => {
@@ -80,7 +76,10 @@ describe('Gaussian2D.shape', () => {
   });
   it('change height should change area', () => {
     const volume = gaussian2D.getVolume({ fwhm: 100, height: 1 });
-    expect(gaussian2D.getVolume({ fwhm: 100, height: 2 })).toBeCloseTo(2 * volume, 4);
+    expect(gaussian2D.getVolume({ fwhm: 100, height: 2 })).toBeCloseTo(
+      2 * volume,
+      4,
+    );
   });
   it('factor should be close', () => {
     for (let i = 1; i < 11; i++) {
@@ -95,9 +94,9 @@ describe('Gaussian2D.shape', () => {
 
 function getVolume(data: Array<Float64Array>) {
   let volume = 0;
-  for (let i = 0; i < data.length; i++) {
+  for (const row of data) {
     for (let j = 0; j < data[0].length; j++) {
-      volume += data[i][j];
+      volume += row[j];
     }
   }
   return volume;

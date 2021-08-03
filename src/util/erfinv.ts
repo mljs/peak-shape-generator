@@ -3,7 +3,7 @@
 
 // If needed a better implementation using polynomial can be found on https://en.wikipedia.org/wiki/Error_function#Inverse_functions
 
-export default function erfinv(x) {
+export default function erfinv(x: number): number {
   let a = 0.147;
   if (x === 0) return 0;
   let ln1MinusXSqrd = Math.log(1 - x * x);

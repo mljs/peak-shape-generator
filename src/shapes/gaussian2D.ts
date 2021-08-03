@@ -1,7 +1,10 @@
-import { check } from 'prettier';
 import { GAUSSIAN_EXP_FACTOR } from '../util/constants';
 import erfinv from '../util/erfinv';
+
 import { widthToFWHM } from './gaussian';
+
+export { widthToFWHM } from './gaussian';
+export { fwhmToWidth } from './gaussian';
 
 export interface xyNumber {
   [index: string]: number;
@@ -9,16 +12,45 @@ export interface xyNumber {
   y: number;
 }
 
-interface GetDataOpt {
+export interface GetDataOptions {
+  /**
+   * number of points along an specific axis.
+   * Could specify the value for each axis by a xy object or the same value by a number
+   * @default 'fwhm[axis] * factor[axis]'
+   */
   length?: number | xyNumber;
+  /**
+   * Number of time to take fwhm to calculate length.
+   * @default 'covers 99.99 % of volume'
+   */
   factor?: number | xyNumber;
+  /**
+   * The maximum z value of the shape
+   */
   height?: number;
+  /**
+   * Full width at half maximum.
+   * Could specify the value for each axis by a xy object or both by a number.
+   * @default 50
+   */
   fwhm?: number | xyNumber;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
   sd?: number | xyNumber;
 }
 
-interface GetVolumeOpt {
+export interface GetVolumeOptions {
+  /**
+   * The maximum intensity value of the shape
+   * @default 1
+   */
   height?: number;
+  /**
+   * Full width at half maximum.
+   * Could specify the value for each axis by a xy object or both by a number.
+   */
   fwhm?: number | xyNumber;
 }
 
@@ -31,8 +63,8 @@ interface GetVolumeOpt {
  * @returns - the z value of bi-dimensional gaussian with the current parameters.
  */
 export function fct(
-  xFWHM: number = 500,
-  yFWHM: number = 500,
+  xFWHM: number,
+  yFWHM: number,
   x: number,
   y: number,
 ) {
@@ -41,20 +73,13 @@ export function fct(
   );
 }
 
+
 /**
- * Calculate a Gaussian2D shape
- * @param [options = {}]
- * @param [options.factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
- * @param [options.x] - parameter for x axis.
- * @param [options.x.length=fwhm*factor+1] - length on x axis.
- * @param [options.x.factor=factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
- * @param [options.y] - parameter for y axis.
- * @param [options.y.length=fwhm*factor+1] - length on y axis.
- * @param [options.y.factor=factor] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
- * @return z values.
+ * Calculate the intensity matrix of a gaussian shape.
+ * @returns z values.
  */
 
-export function getData(options: GetDataOpt = {}) {
+export function getData(options: GetDataOptions = {}) {
   let { fwhm = 50, factor = getFactor(), height } = options;
 
   let sd: any = options.sd ? options.sd : null;
@@ -100,41 +125,22 @@ function checkObject(input: number | xyNumber) {
   return result;
 }
 
-/**@TODO look for a better factor
+/**
  * Calculate the number of times FWHM allows to reach a specific volume coverage.
- * @param {number} [volume=0.9999]
+ * @param {number} [volume=0.9999] Expected volume to be covered.
  * @returns {number}
  */
 export function getFactor(volume = 0.9999) {
   return Math.sqrt(2) * erfinv(volume);
 }
 
-/**
- * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
- * //https://mathworld.wolfram.com/Gaussian2DFunction.html
- * @param {number} width - Width between the inflection points
- * @returns {number} fwhm
- */
-export { widthToFWHM } from './gaussian';
-
-/**
- * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
- * //https://mathworld.wolfram.com/Gaussian2DFunction.html
- * @param {number} fwhm - Full Width at Half Maximum.
- * @returns {number} width
- */
-export { fwhmToWidth } from './gaussian';
 
 /**
  * Calculate the volume of a specific shape.
- * @param {number} xFWHM - Full width at half maximum for x axis.
- * @param {number} yFWHM - Full width at half maximum for y axis.
- * @param {object} [options = {}] - options.
- * @param {number} [options.height = 1] - Maximum z value of the shape.
- * @returns {number} - returns the area of the specific shape and parameters.
+ * @returns The volume of the specific shape and parameters.
  */
 
-export function getVolume(options: GetVolumeOpt = {}) {
+export function getVolume(options: GetVolumeOptions = {}) {
   let { fwhm = 50, height = 1 } = options;
 
   if (typeof fwhm !== 'object') fwhm = { x: fwhm, y: fwhm };

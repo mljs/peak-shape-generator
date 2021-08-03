@@ -5,34 +5,62 @@ import {
 } from '../util/constants';
 import erfinv from '../util/erfinv';
 
-interface GetDataOpt {
+export interface GetDataOptions {
+  /**
+   * number of points of the shape.
+   * @default 'fwhm * factor'
+   */
   length?: number;
+  /**
+   * Number of times of fwhm to calculate length..
+   * @default 'covers 99.99 % of volume'
+   */
   factor?: number;
+  /**
+   * The maximum value of the shape
+   */
   height?: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
   fwhm?: number;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
   sd?: number;
 }
 
-interface GetAreaOpt {
+export interface GetAreaOptions {
+  /**
+   * The maximum intensity value of the shape
+   * @default 1
+   */
   height?: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
   fwhm?: number;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
   sd?: number;
 }
 
 /**
  * Return a parameterized function of a gaussian shape (see README for equation).
- * @param x - x value to calculate.
- * @param fwhm - full width half maximum
  * @returns - the y value of gaussian with the current parameters.
  */
-export function fct(fwhm: number = 500, x: number) {
+export function fct(fwhm: number, x: number) {
   return Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow(x / fwhm, 2));
 }
 
 /**
  * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
- * //https://mathworld.wolfram.com/GaussianFunction.html
- * @param width - Width between the inflection points
+ * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
  * @returns fwhm
  */
 export function widthToFWHM(width: number) {
@@ -41,9 +69,9 @@ export function widthToFWHM(width: number) {
 
 /**
  * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
- * //https://mathworld.wolfram.com/GaussianFunction.html
- * @param fwhm - Full Width at Half Maximum.
- * @returns width
+ * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
+ * @param {number} fwhm - Full Width at Half Maximum.
+ * @returns {number} width
  */
 export function fwhmToWidth(fwhm: number) {
   return fwhm / ROOT_2LN2;
@@ -51,18 +79,16 @@ export function fwhmToWidth(fwhm: number) {
 
 /**
  * Calculate the area of a specific shape.
- * @param fwhm - Full width at half maximum.
- * @param [height = 1] - Maximum y value of the shape.
  * @returns returns the area of the specific shape and parameters.
  */
 
-export function getArea(options: GetAreaOpt) {
+export function getArea(options: GetAreaOptions) {
   let { fwhm, sd, height = 1 } = options;
 
   if (sd) fwhm = widthToFWHM(2 * sd);
 
-  if (fwhm == undefined) {
-      throw new Error('should pass fwhm or sd parameters');
+  if (fwhm === undefined) {
+    throw new Error('should pass fwhm or sd parameters');
   }
 
   return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
@@ -70,22 +96,19 @@ export function getArea(options: GetAreaOpt) {
 
 /**
  * Calculate the number of times FWHM allows to reach a specific area coverage.
- * @param [area=0.9999]
+ * @param [area=0.9999] Expected area to be covered.
  * @returns
  */
-export function getFactor(area: number = 0.9999) {
+export function getFactor(area = 0.9999) {
   return Math.sqrt(2) * erfinv(area);
 }
 
 /**
- * Calculate a gaussian shape
- * @param [options = {}]
- * @param [options.factor = 6] - Number of time to take fwhm to calculate length. Default covers 99.99 % of area.
- * @param [options.length = fwhm * factor + 1] - total number of points to calculate
- * @return {Float64Array} y values
+ * Calculate intensity array of a gaussian shape.
+ * @return {Float64Array} Intensity values.
  */
 
-export function getData(options: GetDataOpt = {}) {
+export function getData(options: GetDataOptions = {}) {
   let { length, factor = getFactor(), fwhm = 500, sd, height } = options;
   if (sd) fwhm = widthToFWHM(2 * sd);
 
