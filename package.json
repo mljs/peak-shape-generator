@@ -35,7 +35,7 @@
   "bugs": {
     "url": "https://github.com/mljs/peak-shape-generator/issues"
   },
-  "homepage": "https://github.com/mljs/peak-shape-generator#readme",
+  "homepage": "https://github.com/mljs/peak-shape-generator#readme",  
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"

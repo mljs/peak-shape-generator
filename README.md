@@ -5,7 +5,7 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
-.
+
 Generate various peak shapes.
 
 The current supported kinds of shapes:

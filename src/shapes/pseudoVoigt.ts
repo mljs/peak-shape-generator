@@ -7,6 +7,19 @@ import {
 import { fct as gaussian } from './gaussian';
 import { fct as lorentzian } from './lorentzian';
 
+export interface curryOptions {
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+  fwhm?: number;
+  /**
+   * Ratio of gaussian contribution in the shape
+   * @default 0.5
+   */
+  mu?: number;
+}
+
 export interface GetDataOptions {
   /**
    * number of points of the shape.
@@ -134,4 +147,13 @@ export function getData(options: GetDataOptions = {}) {
   }
 
   return data;
+}
+
+/**
+ * export the pseudo voigt function that expect just the x value;
+ */
+
+ export function curry(options: curryOptions = {}) {
+  let { fwhm = 500, mu = 0.5 } = options;
+  return fct.bind({}, fwhm, mu);
 }

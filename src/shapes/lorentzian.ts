@@ -1,5 +1,13 @@
 import { ROOT_THREE } from '../util/constants';
 
+export interface curryOptions {
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+   fwhm?: number;
+}
+
 export interface GetDataOptions {
   /**
    * number of points of the shape.
@@ -114,4 +122,13 @@ export function getData(options: GetDataOptions = {}) {
   }
 
   return data;
+}
+
+/**
+ * export the lorentzian function that expect just the x value;
+ */
+
+ export function curry(options: curryOptions = {}) {
+  let { fwhm = 500 } = options;
+  return fct.bind({}, fwhm);
 }

@@ -12,6 +12,20 @@ export interface xyNumber {
   y: number;
 }
 
+export interface curryOptions {
+  /**
+   * Full width at half maximum.
+   * Could specify the value for each axis by a xy object or both by a number.
+   * @default 50
+   */
+  fwhm?: number | xyNumber;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
+  sd?: number;
+}
+
 export interface GetDataOptions {
   /**
    * number of points along an specific axis.
@@ -62,17 +76,11 @@ export interface GetVolumeOptions {
  * @param fwhmY - full width half maximum in the y axis.
  * @returns - the z value of bi-dimensional gaussian with the current parameters.
  */
-export function fct(
-  xFWHM: number,
-  yFWHM: number,
-  x: number,
-  y: number,
-) {
+export function fct(xFWHM: number, yFWHM: number, x: number, y: number) {
   return Math.exp(
     GAUSSIAN_EXP_FACTOR * (Math.pow(x / xFWHM, 2) + Math.pow(y / yFWHM, 2)),
   );
 }
-
 
 /**
  * Calculate the intensity matrix of a gaussian shape.
@@ -120,11 +128,6 @@ export function getData(options: GetDataOptions = {}) {
   return data;
 }
 
-function checkObject(input: number | xyNumber) {
-  let result = typeof input !== 'object' ? { x: input, y: input } : input;
-  return result;
-}
-
 /**
  * Calculate the number of times FWHM allows to reach a specific volume coverage.
  * @param {number} [volume=0.9999] Expected volume to be covered.
@@ -133,7 +136,6 @@ function checkObject(input: number | xyNumber) {
 export function getFactor(volume = 0.9999) {
   return Math.sqrt(2) * erfinv(volume);
 }
-
 
 /**
  * Calculate the volume of a specific shape.
@@ -146,4 +148,19 @@ export function getVolume(options: GetVolumeOptions = {}) {
   if (typeof fwhm !== 'object') fwhm = { x: fwhm, y: fwhm };
 
   return (height * Math.PI * fwhm.y * fwhm.x) / Math.LN2 / 4;
+}
+
+/**
+ * export the gaussian function that expect just the x value;
+ */
+
+export function curry(options: curryOptions = {}) {
+  let { fwhm = 500 } = options;
+  fwhm = checkObject(fwhm);
+  return fct.bind({}, fwhm.x, fwhm.y);
+}
+
+function checkObject(input: number | xyNumber) {
+  let result = typeof input !== 'object' ? { x: input, y: input } : input;
+  return result;
 }

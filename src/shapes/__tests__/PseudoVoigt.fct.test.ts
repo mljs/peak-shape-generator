@@ -40,4 +40,9 @@ describe('pseudoVoigt function', () => {
       2,
     );
   });
+  
+  it('curry', () => {
+    let fct = pseudoVoigt.curry({fwhm: 50});
+    expect(pseudoVoigt.fct(50, 0.5, 1)).toBe(fct(1));
+  })
 });

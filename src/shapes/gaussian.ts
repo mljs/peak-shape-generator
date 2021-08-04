@@ -32,6 +32,19 @@ export interface GetDataOptions {
   sd?: number;
 }
 
+export interface curryOptions {
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+   fwhm?: number;
+   /**
+    * The halft width between the inflection points or standard deviation.
+    * If it is defined the fwhm would be re-assigned.
+    */
+   sd?: number;
+}
+
 export interface GetAreaOptions {
   /**
    * The maximum intensity value of the shape
@@ -129,4 +142,14 @@ export function getData(options: GetDataOptions = {}) {
   }
 
   return data;
+}
+
+/**
+ * export the gaussian function that expect just the x value;
+ */
+
+export function curry(options: curryOptions = {}) {
+  let { fwhm = 500, sd } = options;
+  if (sd) fwhm = widthToFWHM(2 * sd);
+  return fct.bind({}, fwhm);
 }
