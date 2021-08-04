@@ -2,11 +2,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: $default-branch
+    branches:
+      - master
   pull_request:
 
 env:
-  NODE_VERSION: 14.x
+  NODE_VERSION: 16.x
 
 jobs:
   lint:
@@ -20,11 +21,13 @@ jobs:
         run: npm install
       - name: Run ESLint
         run: npm run eslint
+      - name: Run Prettier
+        run: npm run prettier 
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [12.x, 14.x, 16.x]
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -37,4 +40,4 @@ jobs:
       - name: Run tests
         run: npm run test-coverage
       - name: Send coverage report to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
