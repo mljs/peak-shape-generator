@@ -1,4 +1,3 @@
-
 import * as gaussian from '../gaussian';
 
 describe('Gaussian function', () => {
@@ -8,7 +7,7 @@ describe('Gaussian function', () => {
   });
 
   it('gaussian.curry', () => {
-    let fct = gaussian.curry({fwhm: 50});
+    let fct = gaussian.curry({ fwhm: 50 });
     expect(gaussian.fct(50, 1)).toBe(fct(1));
-  })
+  });
 });

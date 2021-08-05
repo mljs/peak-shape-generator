@@ -37,12 +37,12 @@ export interface curryOptions {
    * Full width at half maximum.
    * @default 500
    */
-   fwhm?: number;
-   /**
-    * The halft width between the inflection points or standard deviation.
-    * If it is defined the fwhm would be re-assigned.
-    */
-   sd?: number;
+  fwhm?: number;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
+  sd?: number;
 }
 
 export interface GetAreaOptions {

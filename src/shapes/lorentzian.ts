@@ -5,7 +5,7 @@ export interface curryOptions {
    * Full width at half maximum.
    * @default 500
    */
-   fwhm?: number;
+  fwhm?: number;
 }
 
 export interface GetDataOptions {
@@ -128,7 +128,7 @@ export function getData(options: GetDataOptions = {}) {
  * export the lorentzian function that expect just the x value;
  */
 
- export function curry(options: curryOptions = {}) {
+export function curry(options: curryOptions = {}) {
   let { fwhm = 500 } = options;
   return fct.bind({}, fwhm);
 }

@@ -7,7 +7,7 @@ describe('Lorentzian function', () => {
   });
 
   it('curry', () => {
-    let fct = lorentzian.curry({fwhm: 50});
+    let fct = lorentzian.curry({ fwhm: 50 });
     expect(lorentzian.fct(50, 1)).toBe(fct(1));
-  })
+  });
 });

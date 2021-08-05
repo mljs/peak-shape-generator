@@ -29,7 +29,7 @@ describe('lorentzian', () => {
   it('odd fwhm', () => {
     let data = lorentzian.getData({ fwhm: 11, height: 2, length: 11 });
     let lenG = data.length;
-    let center = Math.floor((lenG - 1) / 2)
+    let center = Math.floor((lenG - 1) / 2);
     expect(data[center]).toBeCloseTo(2, 4);
     expect(data[center - 1]).toBeCloseTo(data[center + 1], 4);
     expect(data[center]).toBeGreaterThan(data[center + 1]);
@@ -51,6 +51,9 @@ describe('lorentzian', () => {
   });
   it('change height should change area', () => {
     const area = lorentzian.getArea({ fwhm: 100, height: 1 });
-    expect(lorentzian.getArea({ fwhm: 100, height: 2 })).toBeCloseTo(2 * area, 4);
+    expect(lorentzian.getArea({ fwhm: 100, height: 2 })).toBeCloseTo(
+      2 * area,
+      4,
+    );
   });
 });

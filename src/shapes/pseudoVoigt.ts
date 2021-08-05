@@ -153,7 +153,7 @@ export function getData(options: GetDataOptions = {}) {
  * export the pseudo voigt function that expect just the x value;
  */
 
- export function curry(options: curryOptions = {}) {
+export function curry(options: curryOptions = {}) {
   let { fwhm = 500, mu = 0.5 } = options;
   return fct.bind({}, fwhm, mu);
 }
