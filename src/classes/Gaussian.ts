@@ -156,7 +156,7 @@ export function getFactor(area = 0.9999) {
 
 /**
  * Calculate intensity array of a gaussian shape.
- * @return {Float64Array} Intensity values.
+ * @returns {Float64Array} Intensity values.
  */
 
 export function getData(options: GetDataOptions = {}) {

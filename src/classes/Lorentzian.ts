@@ -143,7 +143,7 @@ export function getFactor(area = 0.9999) {
 
 /**
  * Calculate intensity array of a lorentzian shape.
- * @return {Float64Array} y values
+ * @returns {Float64Array} y values
  */
 
 export function getData(options: GetDataOptions = {}) {
