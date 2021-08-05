@@ -9,7 +9,7 @@ import * as pseudoVoigt from '../shapes/pseudoVoigt';
  * @returns
  */
 
-export function getShapeGenerator(kind: string = 'gaussian') {
+export function getShapeGenerator(kind = 'gaussian') {
   switch (kind.toLowerCase().replace(/[^a-z^0-9]/g, '')) {
     case 'gaussian':
       return gaussian;
