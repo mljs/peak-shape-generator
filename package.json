@@ -5,7 +5,13 @@
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
   "types": "./lib/index.d.ts",
-  "keywords": ["gaussian", "shape", "generator", "lorentzian", "gaussian 2D"],
+  "keywords": [
+    "gaussian",
+    "shape",
+    "generator",
+    "lorentzian",
+    "gaussian 2D"
+  ],
   "author": "Luc Patiny",
   "contributors": [
     "J. Alejandro Bolaños A. <jobo322>"
@@ -38,7 +44,7 @@
   "bugs": {
     "url": "https://github.com/mljs/peak-shape-generator/issues"
   },
-  "homepage": "https://github.com/mljs/peak-shape-generator#readme",  
+  "homepage": "https://github.com/mljs/peak-shape-generator#readme",
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
@@ -52,6 +58,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
+    "compute-erfinv": "^3.0.1",
     "eslint": "^7.32.0",
     "eslint-config-cheminfo-typescript": "^8.0.9",
     "jest": "^27.0.6",
@@ -59,5 +66,8 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "jest-matcher-deep-close-to": "^2.0.1"
   }
 }

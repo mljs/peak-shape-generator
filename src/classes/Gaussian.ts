@@ -9,17 +9,17 @@ export interface GaussianClassOptions {
   /**
    * The maximum value of the shape
    */
-   height?: number;
-   /**
-    * Full width at half maximum.
-    * @default 500
-    */
-   fwhm?: number;
-   /**
-    * The halft width between the inflection points or standard deviation.
-    * If it is defined the fwhm would be re-assigned.
-    */
-   sd?: number;
+  height?: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+  fwhm?: number;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
+  sd?: number;
 }
 
 export interface GetDataOptions extends GaussianClassOptions {
@@ -54,8 +54,15 @@ export interface GetAreaOptions {
 }
 
 export class Gaussian {
-  private height: number;
-  private fwhm: number;
+  /**
+   * The maximum value of the shape
+   */
+  public height: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+  public fwhm: number;
 
   public constructor(options: GaussianClassOptions = {}) {
     this.fwhm = options.sd
@@ -89,23 +96,9 @@ export class Gaussian {
     return getFactor(area);
   }
 
-  public getData() {
-    return getData({ fwhm: this.fwhm, height: this.height });
-  }
-
-  /**
-   * Set a new Full width at half maximum.
-   * @default 500
-   */
-  public setFWHM(fwhm: number) {
-    this.fwhm = fwhm;
-  }
-
-  /**
-   * set a new height.
-   */
-  public setHeight(height: number) {
-    this.height = height;
+  public getData(options: GetDataOptions = {}) {
+    const { length, factor } = options;
+    return getData({ fwhm: this.fwhm, height: this.height, factor, length });
   }
 }
 /**
@@ -182,7 +175,7 @@ export function getData(options: GetDataOptions = {}) {
   const center = (length - 1) / 2;
   const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    data[i] = fct(fwhm, i - center) * height;
+    data[i] = fct(i - center, fwhm) * height;
     data[length - 1 - i] = data[i];
   }
 

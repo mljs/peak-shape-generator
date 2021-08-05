@@ -1,22 +1,16 @@
-import gaussian from 'ml-peak-shape-generator';
+// this code can be executed with `node -r esm examples/example.js``
 
-const currifiedGaussian = curry(gaussian.fct);
+import { writeFileSync } from 'fs';
+import { join } from 'path';
 
-const gaussianFct = currifiedGaussian(10);
+import { Gaussian, Lorentzian } from '../src';
 
-console.log(currifiedGaussian(10, 0));
-console.log(gaussianFct(0));
-consoel.log(gaussian.fct(10, 0));
+let myFct = new Gaussian();
+let ys = myFct.shape();
+let xs = new Array(ys.length).fill(0).map((a, index) => index);
 
-
-function curry(fn) {
-  const arity = fn.length;
-
-  return function $curry(...args) {
-    if (args.length < arity) {
-      return $curry.bind({}, ...args);
-    }
-
-    return fn.call({}, ...args);
-  };
-}
+writeFileSync(
+    join(__dirname, 'data.json'),
+    JSON.stringify({ x: xs, y: Array.from(ys) }),
+    'utf8',
+);
