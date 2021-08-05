@@ -62,7 +62,8 @@ export class Gaussian2D {
    * Could specify the value for each axis by a xy object or both by a number.
    * @default 50
    */
-  public fwhm: xyNumber;
+  public fwhmX: number;
+  public fwhmY: number;
   /**
    * The maximum z value of the shape, default keep surface equal 1.
    */
@@ -80,7 +81,10 @@ export class Gaussian2D {
       fwhm = { ...fwhm, ...sdObject };
     }
 
-    this.fwhm = checkObject(fwhm);
+    fwhm = checkObject(fwhm);
+
+    this.fwhmX = fwhm.x;
+    this.fwhmY = fwhm.y;
     this.height =
       height === undefined
         ? -GAUSSIAN_EXP_FACTOR / Math.PI / fwhm.y / fwhm.x
@@ -88,12 +92,17 @@ export class Gaussian2D {
   }
 
   public fct(x: number, y: number) {
-    return fct(x, y, this.fwhm.x, this.fwhm.y);
+    return fct(x, y, this.fwhmX, this.fwhmY);
   }
 
   public getData(options: GetDataOptions = {}) {
     const { factor, length } = options;
-    return getData({ fwhm: this.fwhm, height: this.height, factor, length });
+    return getData({
+      fwhm: { x: this.fwhmY, y: this.fwhmY },
+      height: this.height,
+      factor,
+      length,
+    });
   }
 
   public getFactor(surface: number) {
@@ -101,7 +110,10 @@ export class Gaussian2D {
   }
 
   public getSurface() {
-    return getSurface({ fwhm: this.fwhm, height: this.height });
+    return getSurface({
+      fwhm: { x: this.fwhmY, y: this.fwhmY },
+      height: this.height,
+    });
   }
 
   public widthToFWHM(width: number) {
@@ -110,6 +122,12 @@ export class Gaussian2D {
 
   public fwhmToWidth(fwhm: number) {
     return fwhmToWidth(fwhm);
+  }
+
+  public set fwhm(fwhm: number | xyNumber) {
+    fwhm = checkObject(fwhm);
+    this.fwhmX = fwhm.x;
+    this.fwhmY = fwhm.y;
   }
 }
 

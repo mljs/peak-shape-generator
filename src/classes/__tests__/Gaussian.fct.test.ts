@@ -1,9 +1,9 @@
-import { Gaussian } from '../Gaussian';
+import { Gaussian, fct as gaussianFct } from '../Gaussian';
 
 describe('Gaussian function', () => {
   it('Gaussian.fct', () => {
-    expect(Gaussian.fct(0, 0.2)).toBeCloseTo(1);
-    expect(Gaussian.fct(0.1, 0.2)).toBeCloseTo(0.5);
+    expect(gaussianFct(0, 0.2)).toBeCloseTo(1);
+    expect(gaussianFct(0.1, 0.2)).toBeCloseTo(0.5);
   });
 
   it('new Gaussian() gaussian.fct', () => {

@@ -78,7 +78,7 @@ describe('Gaussian2D.shape', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
     const fwhm = 20;
     expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
-    gaussian2D.fwhm = { x: fwhm, y: fwhm };
+    gaussian2D.fwhm = fwhm;
     expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhmToWidth(fwhm));
   });
   it('change height should change area', () => {
