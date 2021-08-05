@@ -1,5 +1,5 @@
-export * as gaussian from './shapes/gaussian';
-export * as lorentzian from './shapes/lorentzian';
-export * as pseudoVoigt from './shapes/pseudoVoigt';
-export * as gaussian2D from './shapes/gaussian2D';
+export * as gaussian from './classes/Gaussian';
+export * as lorentzian from './classes/Lorentzian';
+export * as pseudoVoigt from './classes/PseudoVoigt';
+export * as gaussian2D from './classes/Gaussian2D';
 export * from './util/getShapeGenerator';

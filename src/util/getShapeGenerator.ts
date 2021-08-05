@@ -1,24 +1,26 @@
-import * as gaussian from '../shapes/gaussian';
-import * as gaussian2D from '../shapes/gaussian2D';
-import * as lorentzian from '../shapes/lorentzian';
-import * as pseudoVoigt from '../shapes/pseudoVoigt';
+import { Gaussian } from '../classes/Gaussian';
+import { Gaussian2D } from '../classes/Gaussian2D';
+import { Lorentzian } from '../classes/Lorentzian';
+import { PseudoVoigt } from '../classes/PseudoVoigt';
 
 /**
- * Get the complete set of function for a specific kind of shape.
- * @param [kind='gaussian'] kind of shape.
- * @returns
+ * kind of shape
  */
+type shapeKind = 'gaussian' | 'gaussian2D' | 'lorentzian' | 'pseudoVoigt';
 
-export function getShapeGenerator(kind = 'gaussian') {
+/**
+ * Generate a instance of a specific kind of shape.
+ */
+export function getShapeGenerator(kind: shapeKind, shapeOptions = {}) {
   switch (kind.toLowerCase().replace(/[^a-z^0-9]/g, '')) {
     case 'gaussian':
-      return gaussian;
+      return new Gaussian(shapeOptions);
     case 'lorentzian':
-      return lorentzian;
+      return new Lorentzian(shapeOptions);
     case 'pseudovoigt':
-      return pseudoVoigt;
+      return new PseudoVoigt(shapeOptions);
     case 'gaussian2d':
-      return gaussian2D;
+      return new Gaussian2D(shapeOptions);
     default:
       throw new Error(`Unknown kind: ${kind}`);
   }
