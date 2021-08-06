@@ -5,7 +5,7 @@ import { widthToFWHM, fwhmToWidth } from './Gaussian';
 
 export { widthToFWHM, fwhmToWidth } from './Gaussian';
 
-export interface xyNumber {
+export interface XYNumber {
   [index: string]: number;
   x: number;
   y: number;
@@ -21,12 +21,12 @@ export interface Gaussian2DOptions {
    * Could specify the value for each axis by a xy object or both by a number.
    * @default 50
    */
-  fwhm?: number | xyNumber;
+  fwhm?: number | XYNumber;
   /**
    * The halft width between the inflection points or standard deviation.
    * If it is defined the fwhm would be re-assigned.
    */
-  sd?: number | xyNumber;
+  sd?: number | XYNumber;
 }
 
 export interface GetDataOptions extends Gaussian2DOptions {
@@ -35,12 +35,12 @@ export interface GetDataOptions extends Gaussian2DOptions {
    * Could specify the value for each axis by a xy object or the same value by a number
    * @default 'fwhm[axis] * factor[axis]'
    */
-  length?: number | xyNumber;
+  length?: number | XYNumber;
   /**
    * Number of time to take fwhm to calculate length.
    * @default 'covers 99.99 % of volume'
    */
-  factor?: number | xyNumber;
+  factor?: number | XYNumber;
 }
 
 export interface GetVolumeOptions {
@@ -53,7 +53,7 @@ export interface GetVolumeOptions {
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
    */
-  fwhm?: number | xyNumber;
+  fwhm?: number | XYNumber;
 }
 
 export class Gaussian2D {
@@ -72,16 +72,16 @@ export class Gaussian2D {
   public constructor(options: Gaussian2DOptions = {}) {
     let { fwhm = 50, sd, height } = options;
 
-    fwhm = checkObject(fwhm);
+    fwhm = ensureXYNumber(fwhm);
     if (sd) {
-      let sdObject = checkObject(sd);
+      let sdObject = ensureXYNumber(sd);
       ['x', 'y'].forEach(
         (axis) => (sdObject[axis] = widthToFWHM(2 * sdObject[axis])),
       );
       fwhm = { ...fwhm, ...sdObject };
     }
 
-    fwhm = checkObject(fwhm);
+    fwhm = ensureXYNumber(fwhm);
 
     this.fwhmX = fwhm.x;
     this.fwhmY = fwhm.y;
@@ -124,8 +124,8 @@ export class Gaussian2D {
     return fwhmToWidth(fwhm);
   }
 
-  public set fwhm(fwhm: number | xyNumber) {
-    fwhm = checkObject(fwhm);
+  public set fwhm(fwhm: number | XYNumber) {
+    fwhm = ensureXYNumber(fwhm);
     this.fwhmX = fwhm.x;
     this.fwhmY = fwhm.y;
   }
@@ -156,11 +156,11 @@ export function getData(options: GetDataOptions = {}) {
   let sd: any = options.sd ? options.sd : null;
   let length: any = options.length ? options.length : {};
 
-  fwhm = checkObject(fwhm);
-  factor = checkObject(factor);
+  fwhm = ensureXYNumber(fwhm);
+  factor = ensureXYNumber(factor);
 
-  if (sd) sd = checkObject(sd);
-  if (length) length = checkObject(length);
+  if (sd) sd = ensureXYNumber(sd);
+  if (length) length = ensureXYNumber(length);
 
   if (!height) {
     height = -GAUSSIAN_EXP_FACTOR / Math.PI / fwhm.y / fwhm.x;
@@ -213,7 +213,7 @@ export function getSurface(options: GetVolumeOptions = {}) {
   return (height * Math.PI * fwhm.y * fwhm.x) / Math.LN2 / 4;
 }
 
-function checkObject(input: number | xyNumber): xyNumber {
+function ensureXYNumber(input: number | XYNumber): XYNumber {
   let result = typeof input !== 'object' ? { x: input, y: input } : input;
   return result;
 }
