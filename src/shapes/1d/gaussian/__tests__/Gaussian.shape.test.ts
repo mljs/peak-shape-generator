@@ -1,7 +1,7 @@
 import erfinv from 'compute-erfinv';
 
-import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../../util/constants';
-import { Gaussian, widthToFWHM, fwhmToWidth } from '../gaussian/Gaussian';
+import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../../../util/constants';
+import { Gaussian, widthToFWHM, fwhmToWidth } from '../Gaussian';
 
 describe('Gaussian.shape', () => {
   it('height 1', () => {

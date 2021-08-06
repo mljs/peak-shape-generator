@@ -1,14 +1,10 @@
 import {
   ROOT_2LN2_MINUS_ONE,
   GAUSSIAN_EXP_FACTOR,
-} from '../../../util/constants';
-import * as gaussian from '../gaussian/Gaussian';
-import * as lorentzian from '../lorentzian/Lorentzian';
-import {
-  PseudoVoigt,
-  widthToFWHM,
-  fwhmToWidth,
-} from '../pseudoVoigt/PseudoVoigt';
+} from '../../../../util/constants';
+import * as gaussian from '../../gaussian/Gaussian';
+import * as lorentzian from '../../lorentzian/Lorentzian';
+import { PseudoVoigt, widthToFWHM, fwhmToWidth } from '../PseudoVoigt';
 
 describe('PseudoVoigt', () => {
   it('height of 5', () => {

@@ -2,9 +2,9 @@ import {
   ROOT_2LN2,
   ROOT_PI_OVER_LN2,
   GAUSSIAN_EXP_FACTOR,
-} from '../../../util/constants';
-import erfinv from '../../../util/erfinv';
-import * as gaussian from '../gaussian/Gaussian';
+} from '../../../../util/constants';
+import erfinv from '../../../../util/erfinv';
+import * as gaussian from '../Gaussian';
 
 describe('Gaussian.shape', () => {
   it('height 1', () => {

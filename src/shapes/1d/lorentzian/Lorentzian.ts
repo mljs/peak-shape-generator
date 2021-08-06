@@ -1,4 +1,4 @@
-import { ROOT_THREE } from '../util/constants';
+import { ROOT_THREE } from '../../../util/constants';
 
 export interface LorentzianClassOptions {
   /**
