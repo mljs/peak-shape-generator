@@ -142,15 +142,14 @@ export function fct(x: number, y: number, xFWHM: number, yFWHM: number) {
  */
 
 export function getData(options: GetDataOptions = {}) {
-  let { fwhm = 50, factor = getFactor(), height } = options;
+  let { fwhm = 50, factor = getFactor(), height, sd } = options;
 
-  let sd: any = options.sd ? options.sd : null;
+  fwhm = ensureFWHM2D(fwhm, sd);
+
   let length: any = options.length ? options.length : {};
 
-  fwhm = ensureXYNumber(fwhm);
   factor = ensureXYNumber(factor);
 
-  if (sd) sd = ensureXYNumber(sd);
   if (length) length = ensureXYNumber(length);
 
   if (!height) {
@@ -158,7 +157,6 @@ export function getData(options: GetDataOptions = {}) {
   }
 
   for (const axis of ['x', 'y'] as const) {
-    if (sd) fwhm[axis] = widthToFWHM(2 * sd[axis]);
     if (!length[axis]) {
       length[axis] = Math.min(
         Math.ceil(fwhm[axis] * factor[axis]),
