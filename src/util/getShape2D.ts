@@ -6,25 +6,17 @@ import { Gaussian2D } from '../shapes/2d/gaussian2D/Gaussian2D';
 /**
  * kind of shape
  */
-export type ShapeKind =
-  | 'gaussian'
-  | 'gaussian2D'
-  | 'lorentzian'
-  | 'pseudoVoigt';
+export type Shape2DKind = 'gaussian2D';
 
 /**
  * Generate a instance of a specific kind of shape.
  */
-export function getShapeGenerator(kind: ShapeKind, shapeOptions = {}) {
+export function getShape2D(kind: Shape2DKind, shapeOptions = {}) {
   switch (kind) {
-    case 'gaussian':
-      return new Gaussian(shapeOptions);
-    case 'lorentzian':
-      return new Lorentzian(shapeOptions);
-    case 'pseudoVoigt':
-      return new PseudoVoigt(shapeOptions);
     case 'gaussian2D':
       return new Gaussian2D(shapeOptions);
     default:
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      throw new Error(`getShape2D: unknown shape kind: ${kind}`);
   }
 }
