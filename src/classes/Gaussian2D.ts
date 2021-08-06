@@ -142,15 +142,19 @@ export function fct(x: number, y: number, xFWHM: number, yFWHM: number) {
  */
 
 export function getData(options: GetDataOptions = {}) {
-  let { fwhm = 50, factor = getFactor(), height, sd } = options;
+  let {
+    fwhm = 50,
+    factor = getFactor(),
+    height,
+    sd,
+    length = { x: 0, y: 0 },
+  } = options;
 
   fwhm = ensureFWHM2D(fwhm, sd);
 
-  let length: any = options.length ? options.length : {};
-
   factor = ensureXYNumber(factor);
 
-  if (length) length = ensureXYNumber(length);
+  length = ensureXYNumber(length);
 
   if (!height) {
     height = -GAUSSIAN_EXP_FACTOR / Math.PI / fwhm.y / fwhm.x;
