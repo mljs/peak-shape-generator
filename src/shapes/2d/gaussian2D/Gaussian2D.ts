@@ -1,6 +1,7 @@
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
 import { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
+import { Shape2D } from '../Shape2D';
 
 export { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
 
@@ -54,7 +55,7 @@ export interface GetVolumeOptions {
   fwhm?: number | XYNumber;
 }
 
-export class Gaussian2D {
+export class Gaussian2D extends Shape2D {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -68,6 +69,7 @@ export class Gaussian2D {
   public height: number;
 
   public constructor(options: Gaussian2DOptions = {}) {
+    super();
     let { fwhm = 50, sd, height } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);

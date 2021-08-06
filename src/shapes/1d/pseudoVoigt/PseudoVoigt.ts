@@ -3,6 +3,7 @@ import {
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
+import { Shape1D } from '../Shape1D';
 import {
   fct as gaussian,
   getFactor as getFactorGaussian,
@@ -60,7 +61,7 @@ export interface GetAreaOptions {
   mu?: number;
 }
 
-export class PseudoVoigt {
+export class PseudoVoigt extends Shape1D {
   /**
    * The maximum value of the shape
    */
@@ -77,6 +78,7 @@ export class PseudoVoigt {
   public mu: number;
 
   public constructor(options: PseudoVoigtClassOptions = {}) {
+    super();
     const { fwhm = 500, height, mu = 0.5 } = options;
 
     this.mu = mu;

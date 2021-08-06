@@ -1,4 +1,5 @@
 import { ROOT_THREE } from '../../../util/constants';
+import { Shape1D } from '../Shape1D';
 
 export interface LorentzianClassOptions {
   /**
@@ -43,7 +44,7 @@ export interface GetAreaOptions {
   fwhm?: number;
 }
 
-export class Lorentzian {
+export class Lorentzian extends Shape1D {
   /**
    * The maximum value of the shape
    */
@@ -55,6 +56,7 @@ export class Lorentzian {
   public fwhm: number;
 
   public constructor(options: LorentzianClassOptions = {}) {
+    super();
     const { fwhm = 500, height } = options;
 
     this.fwhm = fwhm;

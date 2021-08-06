@@ -4,6 +4,7 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
+import { Shape1D } from '../Shape1D';
 
 export interface GaussianClassOptions {
   /**
@@ -53,7 +54,7 @@ export interface GetAreaOptions {
   sd?: number;
 }
 
-export class Gaussian {
+export class Gaussian extends Shape1D {
   /**
    * The maximum value of the shape
    */
@@ -65,6 +66,7 @@ export class Gaussian {
   public fwhm: number;
 
   public constructor(options: GaussianClassOptions = {}) {
+    super();
     const { fwhm = 500, sd, height } = options;
 
     this.fwhm = sd ? widthToFWHM(2 * sd) : fwhm;
