@@ -6,7 +6,6 @@ import { widthToFWHM, fwhmToWidth } from './Gaussian';
 export { widthToFWHM, fwhmToWidth } from './Gaussian';
 
 export interface XYNumber {
-  [index: string]: number;
   x: number;
   y: number;
 }
@@ -72,22 +71,19 @@ export class Gaussian2D {
   public constructor(options: Gaussian2DOptions = {}) {
     let { fwhm = 50, sd, height } = options;
 
-    fwhm = ensureXYNumber(fwhm);
     if (sd) {
       let sdObject = ensureXYNumber(sd);
-      Object.keys(sdObject).forEach(
-        (axis) => (sdObject[axis] = widthToFWHM(2 * sdObject[axis])),
-      );
-      fwhm = { ...fwhm, ...sdObject };
+      this.fwhmX = widthToFWHM(2 * sdObject.x);
+      this.fwhmY = widthToFWHM(2 * sdObject.y);
+    } else {
+      fwhm = ensureXYNumber(fwhm);
+      this.fwhmX = fwhm.x;
+      this.fwhmY = fwhm.y;
     }
 
-    fwhm = ensureXYNumber(fwhm);
-
-    this.fwhmX = fwhm.x;
-    this.fwhmY = fwhm.y;
     this.height =
       height === undefined
-        ? -GAUSSIAN_EXP_FACTOR / Math.PI / fwhm.y / fwhm.x
+        ? -GAUSSIAN_EXP_FACTOR / Math.PI / this.fwhmY / this.fwhmX
         : height;
   }
 
@@ -166,7 +162,7 @@ export function getData(options: GetDataOptions = {}) {
     height = -GAUSSIAN_EXP_FACTOR / Math.PI / fwhm.y / fwhm.x;
   }
 
-  for (const axis of ['x', 'y']) {
+  for (const axis of ['x', 'y'] as const) {
     if (sd) fwhm[axis] = widthToFWHM(2 * sd[axis]);
     if (!length[axis]) {
       length[axis] = Math.min(
@@ -214,6 +210,5 @@ export function getSurface(options: GetVolumeOptions = {}) {
 }
 
 function ensureXYNumber(input: number | XYNumber): XYNumber {
-  let result = typeof input !== 'object' ? { x: input, y: input } : input;
-  return result;
+  return typeof input !== 'object' ? { x: input, y: input } : { ...input };
 }
