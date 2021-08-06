@@ -2,8 +2,8 @@ import {
   ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,
   ROOT_PI_OVER_LN2,
-} from '../util/constants';
-import erfinv from '../util/erfinv';
+} from '../../../util/constants';
+import erfinv from '../../../util/erfinv';
 
 export interface GaussianClassOptions {
   /**

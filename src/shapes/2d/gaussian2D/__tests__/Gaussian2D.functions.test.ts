@@ -1,5 +1,5 @@
-import { ROOT_2LN2, GAUSSIAN_EXP_FACTOR } from '../../util/constants';
-import erfinv from '../../util/erfinv';
+import { ROOT_2LN2, GAUSSIAN_EXP_FACTOR } from '../../../../util/constants';
+import erfinv from '../../../../util/erfinv';
 import * as gaussian2D from '../Gaussian2D';
 
 describe('Gaussian2D.shape', () => {

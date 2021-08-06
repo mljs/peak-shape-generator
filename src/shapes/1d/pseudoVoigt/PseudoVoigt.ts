@@ -1,14 +1,16 @@
 import {
+  fct as gaussian,
+  getFactor as getFactorGaussian,
+} from '../gaussian/Gaussian';
+import {
+  fct as lorentzian,
+  getFactor as getFactorLorentzian,
+} from '../lorentzian/Lorentzian';
+import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../util/constants';
-
-import { fct as gaussian, getFactor as getFactorGaussian } from './Gaussian';
-import {
-  fct as lorentzian,
-  getFactor as getFactorLorentzian,
-} from './Lorentzian';
 
 export interface PseudoVoigtClassOptions {
   /**

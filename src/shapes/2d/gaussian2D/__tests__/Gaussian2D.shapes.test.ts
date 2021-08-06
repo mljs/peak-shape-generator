@@ -1,6 +1,6 @@
 import erfinv from 'compute-erfinv';
 
-import { ROOT_2LN2 } from '../../util/constants';
+import { ROOT_2LN2 } from '../../../../util/constants';
 import { Gaussian2D, fwhmToWidth, widthToFWHM } from '../Gaussian2D';
 
 describe('Gaussian2D.shape', () => {

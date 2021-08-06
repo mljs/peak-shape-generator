@@ -1,9 +1,8 @@
-import { GAUSSIAN_EXP_FACTOR } from '../util/constants';
-import erfinv from '../util/erfinv';
+import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
+import erfinv from '../../../util/erfinv';
+import { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
 
-import { widthToFWHM, fwhmToWidth } from './Gaussian';
-
-export { widthToFWHM, fwhmToWidth } from './Gaussian';
+export { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
 
 export interface XYNumber {
   x: number;

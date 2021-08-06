@@ -1,5 +1,5 @@
-import * as gaussian from '../Gaussian';
-import * as lorentzian from '../Lorentzian';
+import * as gaussian from '../../gaussian/Gaussian';
+import * as lorentzian from '../../lorentzian/Lorentzian';
 import * as pseudoVoigt from '../PseudoVoigt';
 
 describe('pseudoVoigt function', () => {
