@@ -42,20 +42,49 @@ let data = loretzian.getData({factor: 5, fwhm: 500});
 let data = pseudoVoigt.getData({factor: 5, fwhm: 500});
 ```
 
+It is also possible to take an instance of each kind of shape:
+
 ```js
-import { getShapeGenerator } from 'ml-peak-shape-generator';
+import { gaussian, gaussian2D } from 'ml-peak-shape-shape';
+
+const gaussianShape = new gaussian.Gaussian({ fwhm: 500, factor: 3.5, height: 1});
+// It is possible to set a new value for fwhm and height
+gaussianShape.fwhm = 300;
+gaussianShape.height = 2;
+
+// By default the height value ensure a surface/area equal 1.
+const gaussian2DShape = new gaussian2D.Gaussian2D({ fwhm: 500, factor: 3.5});
+
+// It is possible to set values for sd, fwhm and factor for each axes.
+const gaussian2DShape = new gaussian2D.Gaussian2D({ fwhm: { x: 300, y: 500 }, factor: 3.5});
+
+// It is possible to set new value for fwhm by:
+gaussian2D.fwhm = { x: 300, y: 500 };
+// or set the same value for both axes.
+gaussian2D.fwhm = 400;
+
+//An instance of any shape has the same methods accessible for each 
+//shape e.g. fct or getData, but these use the internal parameters. e.g:
+
+const gaussianShape = new gaussian.Gaussian({ fwhm: 500 });
+gaussianShape.fct(5);
+gaussian.fct(5, 500);
+```
+
+```js
+import { getShape1D, getShape2D } from 'ml-peak-shape-generator';
 
 // If you want to dynamically select a shape you can use the `getShapeGenerator` method. It returns a instance of required kind of shape.
-let shapeGenerator = getShapeGenerator('lorentzian', {factor: 3.5, sd: 500});
 
+let shapeGenerator = getShape1D('lorentzian', {factor: 3.5, sd: 500});
+let shapeGenerator = getShape2D('gaussian2D', {factor: 3.5, sd: 500});
 ```
 
 It is also possible to get a function that allows to calculate y for any x
 
 ```js
 import { gaussian } from 'ml-peak-shape-generator';
-const func = gaussian.fct(fwhm, x - mean);
-
+const func = gaussian.fct(x - mean, fwhm);
 ```
 
 ## [API Documentation](https://mljs.github.io/peak-shape-generator/)
