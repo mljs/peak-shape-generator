@@ -6,13 +6,13 @@ import { PseudoVoigt } from '../classes/PseudoVoigt';
 /**
  * kind of shape
  */
-type shapeKind = 'gaussian' | 'gaussian2D' | 'lorentzian' | 'pseudoVoigt';
+type ShapeKind = 'gaussian' | 'gaussian2D' | 'lorentzian' | 'pseudoVoigt';
 
 /**
  * Generate a instance of a specific kind of shape.
  */
 export function getShapeGenerator(kind: shapeKind, shapeOptions = {}) {
-  switch (kind.toLowerCase().replace(/[^a-z^0-9]/g, '')) {
+  switch (kind) {
     case 'gaussian':
       return new Gaussian(shapeOptions);
     case 'lorentzian':
