@@ -123,7 +123,7 @@ export function fwhmToWidth(fwhm: number) {
  */
 
 export function getArea(options: GetAreaOptions) {
-  let { fwhm, height = 1 } = options;
+  const { fwhm, height = 1 } = options;
 
   if (fwhm === undefined) {
     throw new Error('should pass fwhm or sd parameters');

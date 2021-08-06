@@ -75,7 +75,7 @@ export class Gaussian2D {
     fwhm = ensureXYNumber(fwhm);
     if (sd) {
       let sdObject = ensureXYNumber(sd);
-      ['x', 'y'].forEach(
+      Object.keys(sdObject).forEach(
         (axis) => (sdObject[axis] = widthToFWHM(2 * sdObject[axis])),
       );
       fwhm = { ...fwhm, ...sdObject };

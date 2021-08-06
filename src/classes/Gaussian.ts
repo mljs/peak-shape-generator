@@ -65,15 +65,13 @@ export class Gaussian {
   public fwhm: number;
 
   public constructor(options: GaussianClassOptions = {}) {
-    this.fwhm = options.sd
-      ? widthToFWHM(2 * options.sd)
-      : options.fwhm
-      ? options.fwhm
-      : 500;
+    const { fwhm = 500, sd, height } = options;
+
+    this.fwhm = sd ? widthToFWHM(2 * sd) : fwhm;
     this.height =
-      options.height === undefined
+      height === undefined
         ? Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI) / this.fwhm
-        : options.height;
+        : height;
   }
 
   public fwhmToWidth(fwhm = this.fwhm) {
@@ -121,8 +119,8 @@ export function widthToFWHM(width: number) {
 /**
  * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
  * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
- * @param {number} fwhm - Full Width at Half Maximum.
- * @returns {number} width
+ * @param fwhm - Full Width at Half Maximum.
+ * @returns width
  */
 export function fwhmToWidth(fwhm: number) {
   return fwhm / ROOT_2LN2;

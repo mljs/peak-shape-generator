@@ -5,66 +5,66 @@ import { Gaussian2D, fwhmToWidth, widthToFWHM } from '../Gaussian2D';
 
 describe('Gaussian2D.shape', () => {
   it('height 1', () => {
-    let gaussian2D = new Gaussian2D({
+    const gaussian2D = new Gaussian2D({
       fwhm: 10,
       height: 1,
     });
-    let data = gaussian2D.getData();
+    const data = gaussian2D.getData();
     expect(data).toHaveLength(39);
     const xCenter = (data.length - 1) / 2;
     const yCenter = (data[0].length - 1) / 2;
     expect(data[xCenter][yCenter]).toBe(1);
 
-    let surface = getSurface(data);
+    const surface = getSurface(data);
     expect(surface).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
   });
 
   it('check gaussian2D continuous', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 5900 });
-    let y = gaussian2D.getData({ factor: 1 });
+    const y = gaussian2D.getData({ factor: 1 });
     const nbChanges = getNbChanges(y[(y.length - 1) / 2]);
     expect(nbChanges).toBe(2);
   });
 
   it('fwhm fixed and normalized', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 50 });
-    let data = gaussian2D.getData();
+    const data = gaussian2D.getData();
     expect(data).toHaveLength(195);
-    let surface = getSurface(data);
+    const surface = getSurface(data);
     expect(surface).toBeCloseTo(0.9999, 2);
-    let computedVolume = gaussian2D.getSurface();
-    expect(computedVolume).toBeCloseTo(1, 2);
+    const computeSurface = gaussian2D.getSurface();
+    expect(computeSurface).toBeCloseTo(1, 2);
   });
 
   it('sd fixed', () => {
     const sd = 50;
     const height = 3;
     const gaussian2D = new Gaussian2D({ sd, height });
-    let data = gaussian2D.getData();
-    let center = (data.length - 1) / 2;
+    const data = gaussian2D.getData();
+    const center = (data.length - 1) / 2;
     expect(data[center][center]).toBeCloseTo(3, 3);
     expect(data[center][0]).toBeCloseTo(gaussian2D.fct(0, -center) * height);
     expect(data[center][center]).toBeCloseTo(height, 2);
-    let surface = getSurface(data);
+    const surface = getSurface(data);
     expect(surface).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
   });
 
   it('odd fwhm', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 101, height: 1 });
-    let data = gaussian2D.getData({ length: 101 });
+    const data = gaussian2D.getData({ length: 101 });
     expect(data).toHaveLength(101);
-    let lenG = data.length;
-    let center = Math.floor((lenG - 1) / 2);
+    const lenG = data.length;
+    const center = Math.floor((lenG - 1) / 2);
     expect(data[center][center]).toBeCloseTo(1, 4);
     expect(data[center - 1][center]).toBeCloseTo(data[center + 1][center], 4);
     expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
   });
   it('even fwhm', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
-    let data = gaussian2D.getData({ length: 100 });
+    const data = gaussian2D.getData({ length: 100 });
     expect(data).toHaveLength(100);
-    let lenG = data.length;
-    let center = Math.floor((lenG - 1) / 2);
+    const lenG = data.length;
+    const center = Math.floor((lenG - 1) / 2);
     expect(data[center][center]).toBeCloseTo(data[center + 1][center], 4);
     expect(data[0][center]).toBeCloseTo(data[data.length - 1][center], 4);
   });
@@ -90,7 +90,7 @@ describe('Gaussian2D.shape', () => {
   it('factor should be close', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100, height: 1 });
     for (let i = 1; i < 11; i++) {
-      let surface: number = i * 0.1;
+      const surface: number = i * 0.1;
       expect(gaussian2D.getFactor(surface)).toBeCloseTo(
         Math.sqrt(2) * erfinv(surface),
         1,

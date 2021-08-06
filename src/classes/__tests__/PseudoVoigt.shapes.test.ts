@@ -5,28 +5,30 @@ import { PseudoVoigt, widthToFWHM, fwhmToWidth } from '../PseudoVoigt';
 
 describe('PseudoVoigt', () => {
   it('height of 5', () => {
-    let data = new PseudoVoigt({ fwhm: 10, height: 5 }).getData();
-    let center = Math.floor((data.length - 1) / 2);
+    const data = new PseudoVoigt({ fwhm: 10, height: 5 }).getData();
+    const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(5, 4);
   });
   it('area with fix fwhm', () => {
-    let shape = new PseudoVoigt({ fwhm: 50, mu: 0.5 });
-    let data = shape.getData();
-    let area = data.reduce((a, b) => a + b, 0);
+    const shape = new PseudoVoigt({ fwhm: 50, mu: 0.5 });
+    const data = shape.getData();
+    const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo(0.9999, 2);
-    let computedArea = shape.getArea();
+    const computedArea = shape.getArea();
     expect(computedArea).toBeCloseTo(1, 2);
   });
   it('odd fwhm', () => {
-    let data = new PseudoVoigt({ fwhm: 11, height: 1 }).getData({ length: 11 });
-    let center = Math.floor((data.length - 1) / 2);
+    const data = new PseudoVoigt({ fwhm: 11, height: 1 }).getData({
+      length: 11,
+    });
+    const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(1, 4);
     expect(data[center - 1]).toBeCloseTo(data[center + 1], 4);
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    let data = new PseudoVoigt({ fwhm: 10 }).getData({ length: 10 });
-    let center = Math.floor((data.length - 1) / 2);
+    const data = new PseudoVoigt({ fwhm: 10 }).getData({ length: 10 });
+    const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(data[center + 1], 4);
     expect(data[0]).toBeCloseTo(data[data.length - 1], 4);
   });
@@ -70,15 +72,15 @@ describe('PseudoVoigt', () => {
   it('A change in mu should keep the same area', () => {
     const pseudoVoigt = new PseudoVoigt({ fwhm: 5, mu: 0 });
     for (let i = 0; i < 11; i++) {
-      let mu = i * 0.1;
+      const mu = i * 0.1;
       pseudoVoigt.mu = mu;
       pseudoVoigt.height =
         1 /
         ((pseudoVoigt.mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) *
           pseudoVoigt.fwhm +
           ((1 - pseudoVoigt.mu) * pseudoVoigt.fwhm * Math.PI) / 2);
-      let data = pseudoVoigt.getData();
-      let area = data.reduce((a, b) => a + b, 0);
+      const data = pseudoVoigt.getData();
+      const area = data.reduce((a, b) => a + b, 0);
       expect(area).toBeCloseTo(0.9999, 3);
     }
   });

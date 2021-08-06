@@ -3,44 +3,44 @@ import { Lorentzian, fwhmToWidth, widthToFWHM } from '../Lorentzian';
 
 describe('lorentzian', () => {
   it('default factor area', () => {
-    let lorentzian = new Lorentzian({});
-    let data = lorentzian.getData();
+    const lorentzian = new Lorentzian({});
+    const data = lorentzian.getData();
     expect(data).toHaveLength(3183099);
-    let area = data.reduce((a, b) => a + b, 0);
+    const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo(0.9999, 5);
-    let computedArea = lorentzian.getArea();
+    const computedArea = lorentzian.getArea();
     expect(computedArea).toBeCloseTo(1, 2);
   });
   it('default factor', () => {
-    let lorentzian = new Lorentzian({ fwhm: 10, height: 1 });
-    let data = lorentzian.getData();
+    const lorentzian = new Lorentzian({ fwhm: 10, height: 1 });
+    const data = lorentzian.getData();
     expect(data).toHaveLength(63663);
     const center = (data.length - 1) / 2;
     expect(data[center]).toBe(1);
-    let area = data.reduce((a, b) => a + b, 0);
+    const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo((0.9999 * Math.PI * 10) / 2, 3);
   });
   it('fwhm 10, factor 500', () => {
-    let lorentzian = new Lorentzian({ fwhm: 10 });
-    let data = lorentzian.getData({ length: 5000 });
+    const lorentzian = new Lorentzian({ fwhm: 10 });
+    const data = lorentzian.getData({ length: 5000 });
     expect(data).toHaveLength(5000);
-    let area = data.reduce((a, b) => a + b, 0);
+    const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo(1, 2);
   });
   it('odd fwhm', () => {
-    let lorentzian = new Lorentzian({ fwhm: 11, height: 2 });
-    let data = lorentzian.getData({ length: 11 });
-    let lenG = data.length;
-    let center = Math.floor((lenG - 1) / 2);
+    const lorentzian = new Lorentzian({ fwhm: 11, height: 2 });
+    const data = lorentzian.getData({ length: 11 });
+    const lenG = data.length;
+    const center = Math.floor((lenG - 1) / 2);
     expect(data[center]).toBeCloseTo(2, 4);
     expect(data[center - 1]).toBeCloseTo(data[center + 1], 4);
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    let lorentzian = new Lorentzian({ fwhm: 10, height: 1 });
-    let data = lorentzian.getData({ length: 10 });
-    let lenG = data.length;
-    let center = Math.floor((lenG - 1) / 2);
+    const lorentzian = new Lorentzian({ fwhm: 10, height: 1 });
+    const data = lorentzian.getData({ length: 10 });
+    const lenG = data.length;
+    const center = Math.floor((lenG - 1) / 2);
     expect(data[center]).toBeCloseTo(data[center + 1], 4);
     expect(data[0]).toBeCloseTo(data[data.length - 1], 4);
   });
