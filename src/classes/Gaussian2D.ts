@@ -71,15 +71,10 @@ export class Gaussian2D {
   public constructor(options: Gaussian2DOptions = {}) {
     let { fwhm = 50, sd, height } = options;
 
-    if (sd) {
-      let sdObject = ensureXYNumber(sd);
-      this.fwhmX = widthToFWHM(2 * sdObject.x);
-      this.fwhmY = widthToFWHM(2 * sdObject.y);
-    } else {
-      fwhm = ensureXYNumber(fwhm);
-      this.fwhmX = fwhm.x;
-      this.fwhmY = fwhm.y;
-    }
+    fwhm = ensureFWHM2D(fwhm, sd);
+
+    this.fwhmX = fwhm.x;
+    this.fwhmY = fwhm.y;
 
     this.height =
       height === undefined
@@ -211,4 +206,31 @@ export function getSurface(options: GetVolumeOptions = {}) {
 
 function ensureXYNumber(input: number | XYNumber): XYNumber {
   return typeof input !== 'object' ? { x: input, y: input } : { ...input };
+}
+
+function ensureFWHM2D(
+  fwhm: number | XYNumber,
+  sd?: number | XYNumber,
+): XYNumber;
+
+function ensureFWHM2D(
+  fwhm: number | XYNumber | undefined,
+  sd: number | XYNumber,
+): XYNumber;
+
+function ensureFWHM2D(
+  fwhm: number | XYNumber | undefined,
+  sd: number | XYNumber | undefined,
+) {
+  if (sd !== undefined) {
+    let sdObject = ensureXYNumber(sd);
+    return {
+      x: widthToFWHM(2 * sdObject.x),
+      y: widthToFWHM(2 * sdObject.y),
+    };
+  } else if (fwhm !== undefined) {
+    return ensureXYNumber(fwhm);
+  } else {
+    throw new Error('ensureFWHM2D must have either fwhm or sd defined');
+  }
 }
