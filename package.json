@@ -66,8 +66,5 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
-  },
-  "dependencies": {
-    "jest-matcher-deep-close-to": "^2.0.1"
   }
 }
