@@ -11,17 +11,16 @@ type ShapeKind = 'gaussian' | 'gaussian2D' | 'lorentzian' | 'pseudoVoigt';
 /**
  * Generate a instance of a specific kind of shape.
  */
-export function getShapeGenerator(kind: shapeKind, shapeOptions = {}) {
+export function getShapeGenerator(kind: ShapeKind, shapeOptions = {}) {
   switch (kind) {
     case 'gaussian':
       return new Gaussian(shapeOptions);
     case 'lorentzian':
       return new Lorentzian(shapeOptions);
-    case 'pseudovoigt':
+    case 'pseudoVoigt':
       return new PseudoVoigt(shapeOptions);
-    case 'gaussian2d':
+    case 'gaussian2D':
       return new Gaussian2D(shapeOptions);
     default:
-      throw new Error(`Unknown kind: ${kind}`);
   }
 }

@@ -97,7 +97,7 @@ function getNbChanges(y: Float64Array | number[]) {
   for (let i = 1; i < yPrime.length; i++) {
     let diff = yPrime[i] - yPrime[i - 1];
 
-    if (diff > 0 && ! positive) {
+    if (diff > 0 && !positive) {
       positive = true;
       nbChanges++;
     }
