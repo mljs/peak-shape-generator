@@ -6,7 +6,11 @@ import { PseudoVoigt } from '../classes/PseudoVoigt';
 /**
  * kind of shape
  */
-type ShapeKind = 'gaussian' | 'gaussian2D' | 'lorentzian' | 'pseudoVoigt';
+export type ShapeKind =
+  | 'gaussian'
+  | 'gaussian2D'
+  | 'lorentzian'
+  | 'pseudoVoigt';
 
 /**
  * Generate a instance of a specific kind of shape.
