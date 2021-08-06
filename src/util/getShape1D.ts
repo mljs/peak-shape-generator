@@ -1,7 +1,6 @@
 import { Gaussian } from '../shapes/1d/gaussian/Gaussian';
 import { Lorentzian } from '../shapes/1d/lorentzian/Lorentzian';
 import { PseudoVoigt } from '../shapes/1d/pseudoVoigt/PseudoVoigt';
-import { Gaussian2D } from '../shapes/2d/gaussian2D/Gaussian2D';
 
 /**
  * kind of shape
