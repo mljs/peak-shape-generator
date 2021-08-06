@@ -175,7 +175,7 @@ export function getData(options: GetDataOptions = {}) {
   const yCenter = (length.y - 1) / 2;
   const data = new Array(length.x);
   for (let i = 0; i < length.x; i++) {
-    data[i] = new Array(length.y);
+    data[i] = new Float64Array(length.y);
   }
   for (let i = 0; i < length.x; i++) {
     for (let j = 0; j < length.y; j++) {

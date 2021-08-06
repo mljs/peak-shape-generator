@@ -11,6 +11,6 @@ export abstract class Shape1D {
   abstract widthToFWHM(width: number): number;
   abstract fct(x: number): number;
   abstract getArea(): number;
-  abstract getFactor(area: number): number;
+  abstract getFactor(area?: number): number;
   abstract getData(options: GetDataOptions): Float64Array;
 }
