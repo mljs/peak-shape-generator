@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/mljs/peak-shape-generator/compare/v1.0.0...v1.1.0) (2021-08-06)
+
+
+### Features
+
+* classes extend Shape1D or Shape2D ([99dc46c](https://www.github.com/mljs/peak-shape-generator/commit/99dc46c4b95748a017da175cbc659893f61e7384))
+* typescript migration ([#45](https://www.github.com/mljs/peak-shape-generator/issues/45)) ([f546490](https://www.github.com/mljs/peak-shape-generator/commit/f546490c897039e7ec5790acecc0227644b726d3))
+
+
+### Bug Fixes
+
+* workflows master branch is now 'main' ([69dc7a0](https://www.github.com/mljs/peak-shape-generator/commit/69dc7a05e9ccd54f9dde7fb012d3a674bf0982f3))
+
 ## [1.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v0.14.0...v1.0.0) (2021-03-24)
 
 
