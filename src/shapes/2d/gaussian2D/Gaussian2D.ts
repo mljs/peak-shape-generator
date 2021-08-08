@@ -3,14 +3,14 @@ import erfinv from '../../../util/erfinv';
 import { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
 import { Shape2D } from '../Shape2D';
 
-export { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
-
 export interface XYNumber {
   x: number;
   y: number;
 }
 
-export interface Gaussian2DOptions {
+export { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
+
+export interface Gaussian2DClassOptions {
   /**
    * The maximum z value of the shape
    */
@@ -28,7 +28,7 @@ export interface Gaussian2DOptions {
   sd?: number | XYNumber;
 }
 
-export interface GetDataOptions extends Gaussian2DOptions {
+export interface GetDataOptions extends Gaussian2DClassOptions {
   /**
    * number of points along an specific axis.
    * Could specify the value for each axis by a xy object or the same value by a number
@@ -68,7 +68,7 @@ export class Gaussian2D extends Shape2D {
    */
   public height: number;
 
-  public constructor(options: Gaussian2DOptions = {}) {
+  public constructor(options: Gaussian2DClassOptions = {}) {
     super();
     let { fwhm = 50, sd, height } = options;
 
