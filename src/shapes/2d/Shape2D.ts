@@ -1,6 +1,6 @@
 import { XYNumber } from './gaussian2D/Gaussian2D';
 
-export interface GetDat2DOptions {
+export interface GetData2DOptions {
   length?: number | XYNumber;
   factor?: number | XYNumber;
 }
@@ -15,5 +15,5 @@ export abstract class Shape2D {
   abstract fct(x: number, y: number): number;
   abstract getSurface(): number;
   abstract getFactor(area?: number): number;
-  abstract getData(options: GetDat2DOptions): Float64Array[];
+  abstract getData(options: GetData2DOptions): Float64Array[];
 }

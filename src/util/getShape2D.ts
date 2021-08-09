@@ -12,8 +12,10 @@ export function getShape2D(kind: Shape2DKind, shapeOptions = {}) {
   switch (kind) {
     case 'gaussian':
       return new Gaussian2D(shapeOptions);
-    default:
+    default: {
+      const unHandled: never = kind;
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      throw new Error(`getShape2D: unknown shape kind: ${kind}`);
+      throw Error(`Unknown distribution ${unHandled}`);
+    }
   }
 }
