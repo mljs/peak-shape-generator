@@ -18,10 +18,10 @@ export function getShape1D(kind: ShapeKind, shapeOptions = {}) {
       return new Lorentzian(shapeOptions);
     case 'pseudoVoigt':
       return new PseudoVoigt(shapeOptions);
-    default:
-      // eslint-disable-next-line no-case-declarations
+    default: {
       const unHandled: never = kind;
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw Error(`Unknown distribution ${unHandled}`);
+    }
   }
 }
