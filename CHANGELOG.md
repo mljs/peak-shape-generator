@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.1](https://www.github.com/mljs/peak-shape-generator/compare/v2.0.0...v2.0.1) (2021-08-09)
+
+
+### Bug Fixes
+
+* exhaustive switch and export interfaces ([#48](https://www.github.com/mljs/peak-shape-generator/issues/48)) ([590fbaa](https://www.github.com/mljs/peak-shape-generator/commit/590fbaa976de614fc637e208f46917cc023f657e))
+
 ## [2.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v1.0.0...v2.0.0) (2021-08-06)
 
 
