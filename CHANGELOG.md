@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.0.2](https://www.github.com/mljs/peak-shape-generator/compare/v2.0.1...v2.0.2) (2021-08-12)
+
+
+### Bug Fixes
+
+* avoid import/named eslint error ([3345373](https://www.github.com/mljs/peak-shape-generator/commit/3345373aa3ab5ceffeffc596886d21cec82efeb9))
+
 ### [2.0.1](https://www.github.com/mljs/peak-shape-generator/compare/v2.0.0...v2.0.1) (2021-08-09)
 
 
