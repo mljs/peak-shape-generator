@@ -1,5 +1,5 @@
 import { ROOT_THREE } from '../../../util/constants';
-import { Shape1D } from '../Shape1D';
+import { Shape1DClass } from '../Shape1DClass';
 
 export interface LorentzianClassOptions {
   /**
@@ -13,7 +13,7 @@ export interface LorentzianClassOptions {
   fwhm?: number;
 }
 
-export interface GetDataOptions extends LorentzianClassOptions {
+export interface LorentzianGetDataOptions extends LorentzianClassOptions {
   /**
    * number of points of the shape.
    * @default 'fwhm * factor'
@@ -39,7 +39,7 @@ export interface GetAreaOptions {
   fwhm?: number;
 }
 
-export class Lorentzian extends Shape1D {
+export class Lorentzian extends Shape1DClass {
   /**
    * The maximum value of the shape
    */
@@ -78,7 +78,7 @@ export class Lorentzian extends Shape1D {
     return getFactor(area);
   }
 
-  public getData(options: GetDataOptions = {}) {
+  public getData(options: LorentzianGetDataOptions = {}) {
     const { length, factor } = options;
     return getData({ fwhm: this.fwhm, height: this.height, factor, length });
   }
@@ -143,7 +143,7 @@ export function getFactor(area = 0.9999) {
  * @returns {Float64Array} y values
  */
 
-export function getData(options: GetDataOptions = {}) {
+export function getData(options: LorentzianGetDataOptions = {}) {
   let { length, factor = getFactor(), fwhm = 500, height } = options;
 
   if (!height) {

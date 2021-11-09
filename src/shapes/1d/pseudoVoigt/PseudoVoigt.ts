@@ -3,7 +3,7 @@ import {
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
-import { Shape1D } from '../Shape1D';
+import { Shape1DClass } from '../Shape1DClass';
 import {
   fct as gaussian,
   getFactor as getFactorGaussian,
@@ -30,7 +30,7 @@ export interface PseudoVoigtClassOptions {
   mu?: number;
 }
 
-export interface GetDataOptions extends PseudoVoigtClassOptions {
+export interface PseudovoigtGetDataOptions extends PseudoVoigtClassOptions {
   /**
    * number of points of the shape.
    * @default 'fwhm * factor'
@@ -61,7 +61,7 @@ export interface GetAreaOptions {
   mu?: number;
 }
 
-export class PseudoVoigt extends Shape1D {
+export class PseudoVoigt extends Shape1DClass {
   /**
    * The maximum value of the shape
    */
@@ -111,7 +111,7 @@ export class PseudoVoigt extends Shape1D {
     return getFactor(area);
   }
 
-  public getData(options: GetDataOptions = {}) {
+  public getData(options: PseudovoigtGetDataOptions = {}) {
     const { length, factor } = options;
     return getData({
       fwhm: this.fwhm,
@@ -181,7 +181,7 @@ export function getFactor(area = 0.9999, mu = 0.5) {
  * @returns {Float64Array} y values
  */
 
-export function getData(options: GetDataOptions = {}) {
+export function getData(options: PseudovoigtGetDataOptions = {}) {
   let { length, factor = getFactor(), fwhm = 500, height, mu = 0.5 } = options;
 
   if (!height) {

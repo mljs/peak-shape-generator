@@ -4,7 +4,7 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
-import { Shape1D } from '../Shape1D';
+import { Shape1DClass } from '../Shape1DClass';
 
 export interface GaussianClassOptions {
   /**
@@ -23,7 +23,7 @@ export interface GaussianClassOptions {
   sd?: number;
 }
 
-export interface GetDataOptions extends GaussianClassOptions {
+export interface GaussianGetDataOptions extends GaussianClassOptions {
   /**
    * number of points of the shape.
    * @default 'fwhm * factor'
@@ -54,7 +54,7 @@ export interface GetAreaOptions {
   sd?: number;
 }
 
-export class Gaussian extends Shape1D {
+export class Gaussian extends Shape1DClass {
   /**
    * The maximum value of the shape
    */
@@ -96,7 +96,7 @@ export class Gaussian extends Shape1D {
     return getFactor(area);
   }
 
-  public getData(options: GetDataOptions = {}) {
+  public getData(options: GaussianGetDataOptions = {}) {
     const { length, factor } = options;
     return getData({ fwhm: this.fwhm, height: this.height, factor, length });
   }
@@ -159,7 +159,7 @@ export function getFactor(area = 0.9999) {
  * @returns {Float64Array} Intensity values.
  */
 
-export function getData(options: GetDataOptions = {}) {
+export function getData(options: GaussianGetDataOptions = {}) {
   let { length, factor = getFactor(), fwhm = 500, sd, height } = options;
   if (sd) fwhm = widthToFWHM(2 * sd);
 

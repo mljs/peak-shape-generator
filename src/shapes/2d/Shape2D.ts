@@ -10,10 +10,10 @@ export abstract class Shape2D {
   public abstract fwhmY: number;
   public abstract height: number;
 
-  abstract fwhmToWidth(fwhm: number): number;
-  abstract widthToFWHM(width: number): number;
-  abstract fct(x: number, y: number): number;
-  abstract getSurface(): number;
-  abstract getFactor(area?: number): number;
-  abstract getData(options: GetData2DOptions): Float64Array[];
+  public abstract fwhmToWidth(fwhm: number): number;
+  public abstract widthToFWHM(width: number): number;
+  public abstract fct(x: number, y: number): number;
+  public abstract getSurface(): number;
+  public abstract getFactor(area?: number): number;
+  public abstract getData(options: GetData2DOptions): Float64Array[];
 }
