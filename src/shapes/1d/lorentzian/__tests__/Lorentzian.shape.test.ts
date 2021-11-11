@@ -3,7 +3,7 @@ import { Lorentzian, fwhmToWidth, widthToFWHM } from '../Lorentzian';
 
 describe('lorentzian', () => {
   it('default factor area', () => {
-    const lorentzian = new Lorentzian({});
+    const lorentzian = new Lorentzian();
     const data = lorentzian.getData();
     expect(data).toHaveLength(3183099);
     const area = data.reduce((a, b) => a + b, 0);

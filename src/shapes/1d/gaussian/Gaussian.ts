@@ -23,7 +23,7 @@ export interface GaussianClassOptions {
   sd?: number;
 }
 
-export interface GaussianGetDataOptions extends GaussianClassOptions {
+export interface GetDataOptions {
   /**
    * number of points of the shape.
    * @default 'fwhm * factor'
@@ -34,24 +34,6 @@ export interface GaussianGetDataOptions extends GaussianClassOptions {
    * @default 'covers 99.99 % of volume'
    */
   factor?: number;
-}
-
-export interface GetAreaOptions {
-  /**
-   * The maximum intensity value of the shape
-   * @default 1
-   */
-  height?: number;
-  /**
-   * Full width at half maximum.
-   * @default 500
-   */
-  fwhm?: number;
-  /**
-   * The halft width between the inflection points or standard deviation.
-   * If it is defined the fwhm would be re-assigned.
-   */
-  sd?: number;
 }
 
 export class Gaussian extends Shape1DClass {
@@ -96,9 +78,8 @@ export class Gaussian extends Shape1DClass {
     return getFactor(area);
   }
 
-  public getData(options: GaussianGetDataOptions = {}) {
-    const { length, factor } = options;
-    return getData({ fwhm: this.fwhm, height: this.height, factor, length });
+  public getData(options: GetDataOptions = {}) {
+    return getData(this, options);
   }
 }
 /**
@@ -133,6 +114,24 @@ export function fwhmToWidth(fwhm: number) {
  * @returns returns the area of the specific shape and parameters.
  */
 
+export interface GetAreaOptions {
+  /**
+   * The maximum intensity value of the shape
+   * @default 1
+   */
+  height?: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+  fwhm?: number;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
+  sd?: number;
+}
+
 export function getArea(options: GetAreaOptions) {
   let { fwhm, sd, height = 1 } = options;
 
@@ -159,8 +158,12 @@ export function getFactor(area = 0.9999) {
  * @returns {Float64Array} Intensity values.
  */
 
-export function getData(options: GaussianGetDataOptions = {}) {
-  let { length, factor = getFactor(), fwhm = 500, sd, height } = options;
+export function getData(
+  shape: GaussianClassOptions = {},
+  options: GetDataOptions = {},
+) {
+  let { length, factor = getFactor() } = options;
+  let { fwhm = 500, sd, height } = shape;
   if (sd) fwhm = widthToFWHM(2 * sd);
 
   if (!height) {

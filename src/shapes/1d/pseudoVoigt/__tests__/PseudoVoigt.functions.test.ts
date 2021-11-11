@@ -26,14 +26,14 @@ describe('PseudoVoigt', () => {
     expect(computedArea).toBeCloseTo(1, 2);
   });
   it('odd fwhm', () => {
-    const data = pseudoVoigt.getData({ length: 11, fwhm: 11, height: 1 });
+    const data = pseudoVoigt.getData({ height: 1, fwhm: 11 }, { length: 11 });
     const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(1, 4);
     expect(data[center - 1]).toBeCloseTo(data[center + 1], 4);
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    const data = pseudoVoigt.getData({ fwhm: 10, length: 10 });
+    const data = pseudoVoigt.getData({ fwhm: 10 }, { length: 10 });
     const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(data[center + 1], 4);
     expect(data[0]).toBeCloseTo(data[data.length - 1], 4);

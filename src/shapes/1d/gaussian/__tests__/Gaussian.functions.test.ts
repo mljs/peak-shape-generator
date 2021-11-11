@@ -17,7 +17,7 @@ describe('Gaussian.shape', () => {
   });
 
   it('check gaussian continuous', () => {
-    const y = gaussian.getData({ fwhm: 5900, factor: 1 });
+    const y = gaussian.getData({ fwhm: 5900 }, { factor: 1 });
     const nbChanges = getNbChanges(y);
     expect(nbChanges).toBe(2);
   });
@@ -44,7 +44,7 @@ describe('Gaussian.shape', () => {
   });
 
   it('odd fwhm', () => {
-    const data = gaussian.getData({ length: 101, fwhm: 101, height: 1 });
+    const data = gaussian.getData({ fwhm: 101, height: 1 }, { length: 101 });
     expect(data).toHaveLength(101);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
@@ -53,7 +53,7 @@ describe('Gaussian.shape', () => {
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    const data = gaussian.getData({ length: 100, fwhm: 100, height: 1 });
+    const data = gaussian.getData({ fwhm: 100, height: 1 }, { length: 100 });
     expect(data).toHaveLength(100);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);

@@ -1,35 +1,10 @@
+import { GetData1DOptions } from '../../../types/GetDataOptions';
 import { ROOT_THREE } from '../../../util/constants';
 import { Shape1DClass } from '../Shape1DClass';
 
 export interface LorentzianClassOptions {
   /**
    * The maximum value of the shape
-   */
-  height?: number;
-  /**
-   * Full width at half maximum.
-   * @default 500
-   */
-  fwhm?: number;
-}
-
-export interface LorentzianGetDataOptions extends LorentzianClassOptions {
-  /**
-   * number of points of the shape.
-   * @default 'fwhm * factor'
-   */
-  length?: number;
-  /**
-   * Number of times of fwhm to calculate length..
-   * @default 'covers 99.99 % of volume'
-   */
-  factor?: number;
-}
-
-export interface GetAreaOptions {
-  /**
-   * The maximum intensity value of the shape
-   * @default 1
    */
   height?: number;
   /**
@@ -78,9 +53,8 @@ export class Lorentzian extends Shape1DClass {
     return getFactor(area);
   }
 
-  public getData(options: LorentzianGetDataOptions = {}) {
-    const { length, factor } = options;
-    return getData({ fwhm: this.fwhm, height: this.height, factor, length });
+  public getData(options: GetData1DOptions = {}) {
+    return getData(this, options);
   }
 }
 
@@ -119,6 +93,19 @@ export function fwhmToWidth(fwhm: number) {
  * @returns returns the area of the specific shape and parameters.
  */
 
+export interface GetAreaOptions {
+  /**
+   * The maximum intensity value of the shape
+   * @default 1
+   */
+  height?: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+  fwhm?: number;
+}
+
 export function getArea(options: GetAreaOptions) {
   const { fwhm, height = 1 } = options;
 
@@ -143,8 +130,12 @@ export function getFactor(area = 0.9999) {
  * @returns {Float64Array} y values
  */
 
-export function getData(options: LorentzianGetDataOptions = {}) {
-  let { length, factor = getFactor(), fwhm = 500, height } = options;
+export function getData(
+  shape: LorentzianClassOptions = {},
+  options: GetData1DOptions = {},
+) {
+  let { fwhm = 500, height } = shape;
+  let { length, factor = getFactor() } = options;
 
   if (!height) {
     height = 2 / Math.PI / fwhm;

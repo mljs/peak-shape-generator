@@ -21,13 +21,13 @@ describe('lorentzian', () => {
     expect(area).toBeCloseTo((0.9999 * Math.PI * 10) / 2, 3);
   });
   it('fwhm 10, factor 500', () => {
-    const data = lorentzian.getData({ fwhm: 10, length: 5000 });
+    const data = lorentzian.getData({ fwhm: 10 }, { length: 5000 });
     expect(data).toHaveLength(5000);
     const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo(1, 2);
   });
   it('odd fwhm', () => {
-    const data = lorentzian.getData({ fwhm: 11, height: 2, length: 11 });
+    const data = lorentzian.getData({ fwhm: 11, height: 2 }, { length: 11 });
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
     expect(data[center]).toBeCloseTo(2, 4);
@@ -35,7 +35,7 @@ describe('lorentzian', () => {
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    const data = lorentzian.getData({ fwhm: 10, height: 1, length: 10 });
+    const data = lorentzian.getData({ fwhm: 10, height: 1 }, { length: 10 });
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
     expect(data[center]).toBeCloseTo(data[center + 1], 4);

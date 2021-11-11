@@ -1,3 +1,4 @@
+import { GetData1DOptions } from '../../../types/GetDataOptions';
 import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
@@ -16,37 +17,6 @@ import {
 export interface PseudoVoigtClassOptions {
   /**
    * The maximum value of the shape
-   */
-  height?: number;
-  /**
-   * Full width at half maximum.
-   * @default 500
-   */
-  fwhm?: number;
-  /**
-   * Ratio of gaussian contribution in the shape
-   * @default 0.5
-   */
-  mu?: number;
-}
-
-export interface PseudovoigtGetDataOptions extends PseudoVoigtClassOptions {
-  /**
-   * number of points of the shape.
-   * @default 'fwhm * factor'
-   */
-  length?: number;
-  /**
-   * Number of times of fwhm to calculate length..
-   * @default 'covers 99.99 % of volume'
-   */
-  factor?: number;
-}
-
-export interface GetAreaOptions {
-  /**
-   * The maximum intensity value of the shape
-   * @default 1
    */
   height?: number;
   /**
@@ -111,15 +81,9 @@ export class PseudoVoigt extends Shape1DClass {
     return getFactor(area);
   }
 
-  public getData(options: PseudovoigtGetDataOptions = {}) {
+  public getData(options: GetData1DOptions = {}) {
     const { length, factor } = options;
-    return getData({
-      fwhm: this.fwhm,
-      height: this.height,
-      mu: this.mu,
-      factor,
-      length,
-    });
+    return getData(this, { factor, length });
   }
 }
 
@@ -158,6 +122,24 @@ export function fwhmToWidth(fwhm: number, mu = 0.5) {
  * @returns returns the area of the specific shape and parameters.
  */
 
+export interface GetAreaOptions {
+  /**
+   * The maximum intensity value of the shape
+   * @default 1
+   */
+  height?: number;
+  /**
+   * Full width at half maximum.
+   * @default 500
+   */
+  fwhm?: number;
+  /**
+   * Ratio of gaussian contribution in the shape
+   * @default 0.5
+   */
+  mu?: number;
+}
+
 export function getArea(options: GetAreaOptions) {
   const { fwhm, height = 1, mu = 0.5 } = options;
   if (fwhm === undefined) {
@@ -181,8 +163,12 @@ export function getFactor(area = 0.9999, mu = 0.5) {
  * @returns {Float64Array} y values
  */
 
-export function getData(options: PseudovoigtGetDataOptions = {}) {
-  let { length, factor = getFactor(), fwhm = 500, height, mu = 0.5 } = options;
+export function getData(
+  shape: PseudoVoigtClassOptions = {},
+  options: GetData1DOptions = {},
+) {
+  let { fwhm = 500, height, mu = 0.5 } = shape;
+  let { length, factor = getFactor() } = options;
 
   if (!height) {
     height =
