@@ -1,7 +1,7 @@
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
 import { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
-import { Shape2D } from '../Shape2D';
+import { Shape2DClass } from '../Shape2DClass';
 
 export interface XYNumber {
   x: number;
@@ -55,7 +55,7 @@ export interface GetVolumeOptions {
   fwhm?: number | XYNumber;
 }
 
-export class Gaussian2D extends Shape2D {
+export class Gaussian2D extends Shape2DClass {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -88,13 +88,13 @@ export class Gaussian2D extends Shape2D {
   }
 
   public getData(options: GetDataOptions = {}) {
-    const { factor, length } = options;
-    return getData({
-      fwhm: { x: this.fwhmY, y: this.fwhmY },
-      height: this.height,
-      factor,
-      length,
-    });
+    return getData(
+      {
+        fwhm: { x: this.fwhmX, y: this.fwhmY },
+        height: this.height,
+      },
+      options,
+    );
   }
 
   public getFactor(surface: number) {
@@ -142,14 +142,12 @@ export function fct(x: number, y: number, xFWHM: number, yFWHM: number) {
  * @returns z values.
  */
 
-export function getData(options: GetDataOptions = {}) {
-  let {
-    fwhm = 50,
-    factor = getFactor(),
-    height,
-    sd,
-    length = { x: 0, y: 0 },
-  } = options;
+export function getData(
+  shape: Gaussian2DClassOptions,
+  options: GetDataOptions = {},
+) {
+  let { fwhm = 50, height, sd } = shape;
+  let { factor = getFactor(), length = { x: 0, y: 0 } } = options;
 
   fwhm = ensureFWHM2D(fwhm, sd);
 

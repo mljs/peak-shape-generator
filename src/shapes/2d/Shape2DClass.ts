@@ -5,7 +5,7 @@ export interface GetData2DOptions {
   factor?: number | XYNumber;
 }
 
-export abstract class Shape2D {
+export abstract class Shape2DClass {
   public abstract fwhmX: number;
   public abstract fwhmY: number;
   public abstract height: number;

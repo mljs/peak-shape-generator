@@ -1,17 +1,14 @@
 import { Gaussian2D } from '../shapes/2d/gaussian2D/Gaussian2D';
-
-/**
- * kind of shape
- */
-export type Shape2DKind = 'gaussian';
+import type { Shape2D } from '../types/Shape2D'
 
 /**
  * Generate a instance of a specific kind of shape.
  */
-export function getShape2D(kind: Shape2DKind, shapeOptions = {}) {
+export function getShape2D(shape: Shape2D) {
+  const { kind } = shape;
   switch (kind) {
     case 'gaussian':
-      return new Gaussian2D(shapeOptions);
+      return new Gaussian2D(shape);
     default: {
       const unHandled: never = kind;
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
