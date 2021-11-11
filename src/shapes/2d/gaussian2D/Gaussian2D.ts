@@ -1,3 +1,4 @@
+import type { GetData2DOptions } from '../../../types/GetData2DOptions';
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
 import { widthToFWHM, fwhmToWidth } from '../../1d/gaussian/Gaussian';
@@ -28,32 +29,7 @@ export interface Gaussian2DClassOptions {
   sd?: number | XYNumber;
 }
 
-export interface GetDataOptions extends Gaussian2DClassOptions {
-  /**
-   * number of points along an specific axis.
-   * Could specify the value for each axis by a xy object or the same value by a number
-   * @default 'fwhm[axis] * factor[axis]'
-   */
-  length?: number | XYNumber;
-  /**
-   * Number of time to take fwhm to calculate length.
-   * @default 'covers 99.99 % of volume'
-   */
-  factor?: number | XYNumber;
-}
 
-export interface GetVolumeOptions {
-  /**
-   * The maximum intensity value of the shape
-   * @default 1
-   */
-  height?: number;
-  /**
-   * Full width at half maximum.
-   * Could specify the value for each axis by a xy object or both by a number.
-   */
-  fwhm?: number | XYNumber;
-}
 
 export class Gaussian2D extends Shape2DClass {
   /**
@@ -87,7 +63,7 @@ export class Gaussian2D extends Shape2DClass {
     return fct(x, y, this.fwhmX, this.fwhmY);
   }
 
-  public getData(options: GetDataOptions = {}) {
+  public getData(options: GetData2DOptions = {}) {
     return getData(
       {
         fwhm: { x: this.fwhmX, y: this.fwhmY },
@@ -144,7 +120,7 @@ export function fct(x: number, y: number, xFWHM: number, yFWHM: number) {
 
 export function getData(
   shape: Gaussian2DClassOptions,
-  options: GetDataOptions = {},
+  options: GetData2DOptions = {},
 ) {
   let { fwhm = 50, height, sd } = shape;
   let { factor = getFactor(), length = { x: 0, y: 0 } } = options;
@@ -196,6 +172,18 @@ export function getFactor(surface = 0.9999) {
  * Calculate the surface of gaussian shape.
  * @returns The surface of the specific shape and parameters.
  */
+ export interface GetVolumeOptions {
+  /**
+   * The maximum intensity value of the shape
+   * @default 1
+   */
+  height?: number;
+  /**
+   * Full width at half maximum.
+   * Could specify the value for each axis by a xy object or both by a number.
+   */
+  fwhm?: number | XYNumber;
+}
 
 export function getSurface(options: GetVolumeOptions = {}) {
   let { fwhm = 50, height = 1 } = options;

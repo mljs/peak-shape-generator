@@ -1,3 +1,4 @@
+import type { GetData1DOptions } from '../../../types/GetData1DOptions';
 import {
   ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,
@@ -21,19 +22,6 @@ export interface GaussianClassOptions {
    * If it is defined the fwhm would be re-assigned.
    */
   sd?: number;
-}
-
-export interface GetDataOptions {
-  /**
-   * number of points of the shape.
-   * @default 'fwhm * factor'
-   */
-  length?: number;
-  /**
-   * Number of times of fwhm to calculate length..
-   * @default 'covers 99.99 % of volume'
-   */
-  factor?: number;
 }
 
 export class Gaussian extends Shape1DClass {
@@ -78,7 +66,7 @@ export class Gaussian extends Shape1DClass {
     return getFactor(area);
   }
 
-  public getData(options: GetDataOptions = {}) {
+  public getData(options: GetData1DOptions = {}) {
     return getData(this, options);
   }
 }
@@ -160,7 +148,7 @@ export function getFactor(area = 0.9999) {
 
 export function getData(
   shape: GaussianClassOptions = {},
-  options: GetDataOptions = {},
+  options: GetData1DOptions = {},
 ) {
   let { length, factor = getFactor() } = options;
   let { fwhm = 500, sd, height } = shape;

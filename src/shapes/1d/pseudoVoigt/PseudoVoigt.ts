@@ -1,4 +1,4 @@
-import { GetData1DOptions } from '../../../types/GetDataOptions';
+import { GetData1DOptions } from '../../../types/GetData1DOptions';
 import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,

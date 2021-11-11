@@ -1,7 +1,4 @@
-export interface GetDataOptions {
-  length?: number;
-  factor?: number;
-}
+import { GetData1DOptions } from "../../types/GetData1DOptions";
 
 export abstract class Shape1DClass
  {
@@ -13,5 +10,5 @@ export abstract class Shape1DClass
   public abstract fct(x: number): number;
   public abstract getArea(): number;
   public abstract getFactor(area?: number): number;
-  public abstract getData(options: GetDataOptions): Float64Array;
+  public abstract getData(options: GetData1DOptions): Float64Array;
 }

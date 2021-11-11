@@ -1,4 +1,4 @@
-import { GetData1DOptions } from '../../../types/GetDataOptions';
+import { GetData1DOptions } from '../../../types/GetData1DOptions';
 import { ROOT_THREE } from '../../../util/constants';
 import { Shape1DClass } from '../Shape1DClass';
 
