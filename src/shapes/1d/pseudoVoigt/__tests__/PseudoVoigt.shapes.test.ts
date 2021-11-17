@@ -1,14 +1,11 @@
-import {
-  ROOT_2LN2_MINUS_ONE,
-  GAUSSIAN_EXP_FACTOR,
-} from '../../../../util/constants';
-import * as gaussian from '../../gaussian/Gaussian';
-import * as lorentzian from '../../lorentzian/Lorentzian';
-import { PseudoVoigt, widthToFWHM, fwhmToWidth } from '../PseudoVoigt';
+import { ROOT_2LN2_MINUS_ONE } from '../../../../util/constants';
+import { Gaussian } from '../../gaussian/Gaussian';
+import { Lorentzian } from '../../lorentzian/Lorentzian';
+import { PseudoVoigt } from '../PseudoVoigt';
 
 describe('PseudoVoigt', () => {
   it('height of 5', () => {
-    const data = new PseudoVoigt({ fwhm: 10, height: 5 }).getData();
+    const data = new PseudoVoigt({ fwhm: 10 }).getData({ height: 5 });
     const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(5, 4);
   });
@@ -17,12 +14,14 @@ describe('PseudoVoigt', () => {
     const data = shape.getData();
     const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo(0.9999, 2);
-    const computedArea = shape.getArea();
+    const height = shape.calculateHeight();
+    const computedArea = shape.getArea(height);
     expect(computedArea).toBeCloseTo(1, 2);
   });
   it('odd fwhm', () => {
-    const data = new PseudoVoigt({ fwhm: 11, height: 1 }).getData({
+    const data = new PseudoVoigt({ fwhm: 11 }).getData({
       length: 11,
+      height: 1,
     });
     const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(1, 4);
@@ -36,39 +35,38 @@ describe('PseudoVoigt', () => {
     expect(data[0]).toBeCloseTo(data[data.length - 1], 4);
   });
   it('width To fwhm', () => {
-    const pseudoVoigt = new PseudoVoigt({ fwhm: 100, height: 1 });
+    const pseudoVoigt = new PseudoVoigt({ fwhm: 100 });
     const mu = 0.5;
     const width = 20;
     expect(pseudoVoigt.widthToFWHM(width)).toBe(
       width * (mu * ROOT_2LN2_MINUS_ONE + 1),
     );
-    expect(pseudoVoigt.widthToFWHM(width)).toBe(widthToFWHM(width));
+    expect(pseudoVoigt.widthToFWHM(width)).toBe(PseudoVoigt.widthToFWHM(width));
   });
   it('fwhm to width', () => {
-    const pseudoVoigt = new PseudoVoigt({ fwhm: 100, height: 1 });
+    const pseudoVoigt = new PseudoVoigt({ fwhm: 100 });
     const mu = 0.5;
     const fwhm = 20;
     expect(pseudoVoigt.fwhmToWidth(fwhm)).toBe(
       fwhm / (mu * ROOT_2LN2_MINUS_ONE + 1),
     );
     pseudoVoigt.fwhm = fwhm;
-    expect(pseudoVoigt.fwhmToWidth()).toBe(fwhmToWidth(fwhm));
+    expect(pseudoVoigt.fwhmToWidth()).toBe(PseudoVoigt.fwhmToWidth(fwhm));
   });
   it('change height should change area', () => {
-    const pseudoVoigt = new PseudoVoigt({ fwhm: 100, height: 1 });
+    const pseudoVoigt = new PseudoVoigt({ fwhm: 100 });
     const area = pseudoVoigt.getArea();
-    pseudoVoigt.height = 2;
-    expect(pseudoVoigt.getArea()).toBeCloseTo(2 * area, 4);
+    expect(pseudoVoigt.getArea(2)).toBeCloseTo(2 * area, 4);
   });
   it('change mu should change area', () => {
-    const pseudoVoigt = new PseudoVoigt({ fwhm: 100, height: 1, mu: 0 });
+    const pseudoVoigt = new PseudoVoigt({ fwhm: 100, mu: 0 });
     expect(pseudoVoigt.getArea()).toBeCloseTo(
-      lorentzian.getArea({ fwhm: 100 }),
+      Lorentzian.getArea({ fwhm: 100 }),
       4,
     );
     pseudoVoigt.mu = 1;
     expect(pseudoVoigt.getArea()).toBeCloseTo(
-      gaussian.getArea({ fwhm: 100 }),
+      Gaussian.getArea({ fwhm: 100 }),
       4,
     );
   });
@@ -77,12 +75,8 @@ describe('PseudoVoigt', () => {
     for (let i = 0; i < 11; i++) {
       const mu = i * 0.1;
       pseudoVoigt.mu = mu;
-      pseudoVoigt.height =
-        1 /
-        ((pseudoVoigt.mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) *
-          pseudoVoigt.fwhm +
-          ((1 - pseudoVoigt.mu) * pseudoVoigt.fwhm * Math.PI) / 2);
-      const data = pseudoVoigt.getData();
+      const height = pseudoVoigt.calculateHeight();
+      const data = pseudoVoigt.getData({ height });
       const area = data.reduce((a, b) => a + b, 0);
       expect(area).toBeCloseTo(0.9999, 3);
     }
