@@ -1,7 +1,6 @@
-import { GetData1DOptions } from "../../types/GetData1DOptions";
+import { GetData1DOptions } from '../../types/GetData1DOptions';
 
-export abstract class Shape1DClass
- {
+export abstract class Shape1DClass {
   public abstract height: number;
   public abstract fwhm: number;
 

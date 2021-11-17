@@ -1,5 +1,5 @@
 import { Gaussian2D } from '../shapes/2d/gaussian2D/Gaussian2D';
-import type { Shape2D } from '../types/Shape2D'
+import type { Shape2D } from '../types/Shape2D';
 
 /**
  * Generate a instance of a specific kind of shape.

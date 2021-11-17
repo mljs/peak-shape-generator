@@ -37,7 +37,7 @@ describe('Gaussian2D.shape', () => {
   it('sd fixed', () => {
     const sd = 50;
     const height = 3;
-    const data = Gaussian2D.getData({ sd }, {height});
+    const data = Gaussian2D.getData({ sd }, { height });
     const center = (data.length - 1) / 2;
     expect(data[center][center]).toBeCloseTo(3, 3);
     const fwhm = Gaussian2D.widthToFWHM(sd);
@@ -59,7 +59,7 @@ describe('Gaussian2D.shape', () => {
     expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
   });
   it('even fwhm', () => {
-    const data = Gaussian2D.getData({ fwhm: 100}, { length: 100, height: 1 });
+    const data = Gaussian2D.getData({ fwhm: 100 }, { length: 100, height: 1 });
     expect(data).toHaveLength(100);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);

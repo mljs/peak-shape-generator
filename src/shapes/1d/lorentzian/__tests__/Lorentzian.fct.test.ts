@@ -1,4 +1,4 @@
-import {Lorentzian} from '../Lorentzian';
+import { Lorentzian } from '../Lorentzian';
 
 describe('Lorentzian function', () => {
   it('Lorentzian.fct', () => {
