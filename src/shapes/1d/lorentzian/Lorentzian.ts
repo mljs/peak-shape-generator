@@ -1,5 +1,6 @@
 import { GetData1DOptions } from '../../../types/GetData1DOptions';
 import { ROOT_THREE } from '../../../util/constants';
+import { Shape1DClass } from '../Shape1DClass';
 
 export interface ILorentzianClassOptions {
   /**
@@ -22,7 +23,7 @@ export interface IGetAreaLorentzianOptions {
   fwhm?: number;
 }
 
-export class Lorentzian {
+export class Lorentzian extends Shape1DClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -30,6 +31,7 @@ export class Lorentzian {
   public fwhm: number;
 
   public constructor(options: ILorentzianClassOptions = {}) {
+    super();
     const { fwhm = 500 } = options;
 
     this.fwhm = fwhm;

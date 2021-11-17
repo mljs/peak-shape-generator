@@ -5,6 +5,7 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
+import { Shape1DClass } from '../Shape1DClass';
 // import { Shape1DClass } from '../Shape1DClass';
 
 interface ICalculateHeight {
@@ -44,7 +45,7 @@ export interface IGetAreaGaussianOptions {
   sd?: number;
 }
 
-export class Gaussian {
+export class Gaussian extends Shape1DClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -52,6 +53,7 @@ export class Gaussian {
   public fwhm: number;
 
   public constructor(options: IGaussianClassOptions = {}) {
+    super();
     const { fwhm = 500, sd } = options;
 
     this.fwhm = sd ? Gaussian.widthToFWHM(2 * sd) : fwhm;

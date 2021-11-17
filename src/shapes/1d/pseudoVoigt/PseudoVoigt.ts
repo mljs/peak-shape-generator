@@ -4,6 +4,7 @@ import {
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
+import { Shape1DClass } from '../Shape1DClass';
 import { Gaussian } from '../gaussian/Gaussian';
 import { Lorentzian } from '../lorentzian/Lorentzian';
 
@@ -44,7 +45,7 @@ interface ICalculateHeightOptions {
   area: number;
 }
 
-export class PseudoVoigt {
+export class PseudoVoigt extends Shape1DClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -57,6 +58,7 @@ export class PseudoVoigt {
   public mu: number;
 
   public constructor(options: IPseudoVoigtClassOptions = {}) {
+    super();
     const { fwhm = 500, mu = 0.5 } = options;
 
     this.mu = mu;

@@ -1,6 +1,7 @@
 import type { GetData2DOptions } from '../../../types/GetData2DOptions';
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import { Gaussian } from '../../1d/gaussian/Gaussian';
+import { Shape2DClass } from '../Shape2DClass';
 
 export interface XYNumber {
   x: number;
@@ -43,7 +44,7 @@ export interface IGetVolumeGaussian2DOptions {
   fwhm?: number | XYNumber;
 }
 
-export class Gaussian2D {
+export class Gaussian2D extends Shape2DClass {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -57,6 +58,7 @@ export class Gaussian2D {
   // public height: number;
 
   public constructor(options: IGaussian2DClassOptions = {}) {
+    super();
     let { fwhm = 50, sd } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);
