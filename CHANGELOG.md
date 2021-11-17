@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.0.1](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.0...v3.0.1) (2021-11-17)
+
+
+### Bug Fixes
+
+* add Abstract class to shapes ([06b5ab8](https://www.github.com/mljs/peak-shape-generator/commit/06b5ab89b8a3962e80b6c57251ea3b749c2eb16b))
+
 ## [3.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v2.0.2...v3.0.0) (2021-11-17)
 
 
