@@ -59,8 +59,8 @@
   },
   "devDependencies": {
     "compute-erfinv": "^3.0.1",
-    "eslint": "^7.32.0",
-    "eslint-config-cheminfo-typescript": "^8.0.9",
+    "eslint": "^8.2.0",
+    "eslint-config-cheminfo-typescript": "^10.2.2",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
