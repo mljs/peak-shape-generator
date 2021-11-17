@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v2.0.2...v3.0.0) (2021-11-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* change in Shape structure (#52)
+
+### Features
+
+* change in Shape structure ([#52](https://www.github.com/mljs/peak-shape-generator/issues/52)) ([321dfaf](https://www.github.com/mljs/peak-shape-generator/commit/321dfafb8a519413ab678482c9764fa306028cbc))
+
 ### [2.0.2](https://www.github.com/mljs/peak-shape-generator/compare/v2.0.1...v2.0.2) (2021-08-12)
 
 
