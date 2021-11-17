@@ -1,12 +1,12 @@
 import erfinv from 'compute-erfinv';
 
 import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../../../util/constants';
-import { Gaussian, widthToFWHM, fwhmToWidth } from '../Gaussian';
+import { Gaussian } from '../Gaussian';
 
 describe('Gaussian.shape', () => {
   it('height 1', () => {
-    const gaussian = new Gaussian({ fwhm: 10, height: 1 });
-    const data = gaussian.getData();
+    const gaussian = new Gaussian({ fwhm: 10 });
+    const data = gaussian.getData({ height: 1 });
     expect(data).toHaveLength(39);
     const center = (data.length - 1) / 2;
     expect(data[center]).toBe(1);
@@ -34,8 +34,8 @@ describe('Gaussian.shape', () => {
   it('sd fixed', () => {
     const sd = 50;
     const height = 3;
-    const gaussian = new Gaussian({ sd, height });
-    const data = gaussian.getData();
+    const gaussian = new Gaussian({ sd });
+    const data = gaussian.getData({ height });
     const center = Math.floor((data.length - 1) / 2);
     expect(data[center]).toBeCloseTo(height, 2);
     const area = data.reduce((a, b) => a + b, 0);
@@ -43,8 +43,8 @@ describe('Gaussian.shape', () => {
   });
 
   it('odd fwhm', () => {
-    const gaussian = new Gaussian({ fwhm: 101, height: 1 });
-    const data = gaussian.getData({ length: 101 });
+    const gaussian = new Gaussian({ fwhm: 101 });
+    const data = gaussian.getData({ length: 101, height: 1 });
     expect(data).toHaveLength(101);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
@@ -53,8 +53,8 @@ describe('Gaussian.shape', () => {
     expect(data[center]).toBeGreaterThan(data[center + 1]);
   });
   it('even fwhm', () => {
-    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
-    const data = gaussian.getData({ length: 100 });
+    const gaussian = new Gaussian({ fwhm: 100 });
+    const data = gaussian.getData({ length: 100, height: 1 });
     expect(data).toHaveLength(100);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
@@ -62,26 +62,25 @@ describe('Gaussian.shape', () => {
     expect(data[0]).toBeCloseTo(data[data.length - 1], 4);
   });
   it('width To fwhm', () => {
-    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    const gaussian = new Gaussian({ fwhm: 100 });
     const width = 20;
     expect(gaussian.widthToFWHM(width)).toBe(width * ROOT_2LN2);
-    expect(gaussian.widthToFWHM(width)).toBe(widthToFWHM(width));
+    expect(gaussian.widthToFWHM(width)).toBe(Gaussian.widthToFWHM(width));
   });
   it('fwhm to width', () => {
-    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    const gaussian = new Gaussian({ fwhm: 100 });
     const fwhm = 20;
     expect(gaussian.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
     gaussian.fwhm = fwhm;
-    expect(gaussian.fwhmToWidth()).toBe(fwhmToWidth(fwhm));
+    expect(gaussian.fwhmToWidth()).toBe(Gaussian.fwhmToWidth(fwhm));
   });
   it('change height should change area', () => {
-    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
-    const area = gaussian.getArea();
-    gaussian.height = 2;
-    expect(gaussian.getArea()).toBeCloseTo(2 * area, 4);
+    const gaussian = new Gaussian({ fwhm: 100 });
+    const area = gaussian.getArea(1);
+    expect(gaussian.getArea(2)).toBeCloseTo(2 * area, 4);
   });
   it('factor should be close', () => {
-    const gaussian = new Gaussian({ fwhm: 100, height: 1 });
+    const gaussian = new Gaussian({ fwhm: 100 });
     for (let i = 1; i < 11; i++) {
       const area = i * 0.1;
       expect(gaussian.getFactor(area)).toBeCloseTo(
