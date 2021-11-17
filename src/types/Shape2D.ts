@@ -1,9 +1,9 @@
-import type { Gaussian2DClassOptions } from '../shapes/2d/gaussian2D/Gaussian2D';
+import type { IGaussian2DClassOptions } from '../shapes/2d/gaussian2D/Gaussian2D';
 
 /**
  * kind of shape
  */
-interface GaussianShape2D extends Gaussian2DClassOptions {
+interface GaussianShape2D extends IGaussian2DClassOptions {
   kind: 'gaussian';
 }
 
