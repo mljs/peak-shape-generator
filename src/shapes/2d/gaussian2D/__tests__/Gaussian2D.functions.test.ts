@@ -1,10 +1,10 @@
 import { ROOT_2LN2, GAUSSIAN_EXP_FACTOR } from '../../../../util/constants';
 import erfinv from '../../../../util/erfinv';
-import * as gaussian2D from '../Gaussian2D';
+import { Gaussian2D } from '../Gaussian2D';
 
 describe('Gaussian2D.shape', () => {
   it('height 1', () => {
-    const data = gaussian2D.getData({ fwhm: 10, height: 1 });
+    const data = Gaussian2D.getData({ fwhm: 10 }, { height: 1 });
     expect(data).toHaveLength(39);
     const xCenter = (data.length - 1) / 2;
     const yCenter = (data[0].length - 1) / 2;
@@ -15,14 +15,14 @@ describe('Gaussian2D.shape', () => {
   });
 
   it('check gaussian2D continuous', () => {
-    const y = gaussian2D.getData({ fwhm: 590 }, { factor: 1 });
+    const y = Gaussian2D.getData({ fwhm: 590 }, { factor: 1 });
     const nbChanges = getNbChanges(y[(y.length - 1) / 2]);
     expect(nbChanges).toBe(2);
   });
 
   it('fwhm fixed and normalized', () => {
     const fwhm = 50;
-    const data = gaussian2D.getData({ fwhm });
+    const data = Gaussian2D.getData({ fwhm });
     expect(data).toHaveLength(195);
     const surface = data.reduce(
       (a, b) => a + b.reduce((c: number, d: number) => c + d, 0),
@@ -30,19 +30,19 @@ describe('Gaussian2D.shape', () => {
     );
     expect(surface).toBeCloseTo(0.9999, 2);
     const height = -GAUSSIAN_EXP_FACTOR / Math.PI / 50 / 50;
-    const computeSurface = gaussian2D.getSurface({ fwhm, height });
+    const computeSurface = Gaussian2D.getSurface({ fwhm, height });
     expect(computeSurface).toBeCloseTo(1, 2);
   });
 
   it('sd fixed', () => {
     const sd = 50;
     const height = 3;
-    const data = gaussian2D.getData({ sd, height });
+    const data = Gaussian2D.getData({ sd }, {height});
     const center = (data.length - 1) / 2;
     expect(data[center][center]).toBeCloseTo(3, 3);
-    const fwhm = gaussian2D.widthToFWHM(sd);
+    const fwhm = Gaussian2D.widthToFWHM(sd);
     expect(data[center][0]).toBeCloseTo(
-      gaussian2D.fct(0, -center, fwhm, fwhm) * height,
+      Gaussian2D.fct(0, -center, fwhm, fwhm) * height,
     );
     expect(data[center][center]).toBeCloseTo(height, 2);
     const surface = getSurface(data);
@@ -50,7 +50,7 @@ describe('Gaussian2D.shape', () => {
   });
 
   it('odd fwhm', () => {
-    const data = gaussian2D.getData({ fwhm: 101, height: 1 }, { length: 101 });
+    const data = Gaussian2D.getData({ fwhm: 101 }, { length: 101, height: 1 });
     expect(data).toHaveLength(101);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
@@ -59,7 +59,7 @@ describe('Gaussian2D.shape', () => {
     expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
   });
   it('even fwhm', () => {
-    const data = gaussian2D.getData({ fwhm: 100, height: 1 }, { length: 100 });
+    const data = Gaussian2D.getData({ fwhm: 100}, { length: 100, height: 1 });
     expect(data).toHaveLength(100);
     const lenG = data.length;
     const center = Math.floor((lenG - 1) / 2);
@@ -68,15 +68,15 @@ describe('Gaussian2D.shape', () => {
   });
   it('width To fwhm', () => {
     const width = 20;
-    expect(gaussian2D.widthToFWHM(width)).toBe(width * ROOT_2LN2);
+    expect(Gaussian2D.widthToFWHM(width)).toBe(width * ROOT_2LN2);
   });
   it('fwhm to width', () => {
     const fwhm = 20;
-    expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
+    expect(Gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
   });
   it('change height should change area', () => {
-    const surface = gaussian2D.getSurface({ fwhm: 100, height: 1 });
-    expect(gaussian2D.getSurface({ fwhm: 100, height: 2 })).toBeCloseTo(
+    const surface = Gaussian2D.getSurface({ fwhm: 100, height: 1 });
+    expect(Gaussian2D.getSurface({ fwhm: 100, height: 2 })).toBeCloseTo(
       2 * surface,
       4,
     );
@@ -84,7 +84,7 @@ describe('Gaussian2D.shape', () => {
   it('factor should be close', () => {
     for (let i = 1; i < 11; i++) {
       const surface = i * 0.1;
-      expect(gaussian2D.getFactor(surface)).toBeCloseTo(
+      expect(Gaussian2D.getFactor(surface)).toBeCloseTo(
         Math.sqrt(2) * erfinv(surface),
         1,
       );
