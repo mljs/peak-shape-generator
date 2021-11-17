@@ -58,6 +58,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
     "compute-erfinv": "^3.0.1",
     "eslint": "^8.2.0",
     "eslint-config-cheminfo-typescript": "^10.2.2",
