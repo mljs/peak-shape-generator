@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.0.2](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.1...v3.0.2) (2021-11-18)
+
+
+### Bug Fixes
+
+* change .d.ts to .ts extension ([4f0b5d1](https://www.github.com/mljs/peak-shape-generator/commit/4f0b5d1b07d9f7adbf9949421b96775a2e43b562))
+
 ### [3.0.1](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.0...v3.0.1) (2021-11-17)
 
 
