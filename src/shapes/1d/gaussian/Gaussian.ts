@@ -102,18 +102,18 @@ export class Gaussian extends Shape1DClass {
    * Return a parameterized function of a gaussian shape (see README for equation).
    * @returns - the y value of gaussian with the current parameters.
    */
-  public static fct(x: number, fwhm: number) {
+  public static fct = (x: number, fwhm: number) => {
     return Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow(x / fwhm, 2));
-  }
+  };
 
   /**
    * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
    * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
    * @returns fwhm
    */
-  public static widthToFWHM(width: number) {
+  public static widthToFWHM = (width: number) => {
     return width * ROOT_2LN2;
-  }
+  };
 
   /**
    * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
@@ -121,16 +121,16 @@ export class Gaussian extends Shape1DClass {
    * @param fwhm - Full Width at Half Maximum.
    * @returns width
    */
-  public static fwhmToWidth(fwhm: number) {
+  public static fwhmToWidth = (fwhm: number) => {
     return fwhm / ROOT_2LN2;
-  }
+  };
 
   /**
    * Calculate the area of a specific shape.
    * @returns returns the area of the specific shape and parameters.
    */
 
-  public static getArea(options: IGetAreaGaussianOptions) {
+  public static getArea = (options: IGetAreaGaussianOptions) => {
     let { fwhm, sd, height = 1 } = options;
 
     if (sd) fwhm = Gaussian.widthToFWHM(2 * sd);
@@ -140,26 +140,26 @@ export class Gaussian extends Shape1DClass {
     }
 
     return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
-  }
+  };
 
   /**
    * Calculate the number of times FWHM allows to reach a specific area coverage.
    * @param [area=0.9999] Expected area to be covered.
    * @returns
    */
-  public static getFactor(area = 0.9999) {
+  public static getFactor = (area = 0.9999) => {
     return Math.sqrt(2) * erfinv(area);
-  }
+  };
 
   /**
    * Calculate intensity array of a gaussian shape.
    * @returns {Float64Array} Intensity values.
    */
 
-  public static getData(
+  public static getData = (
     shape: IGaussianClassOptions = {},
     options: GetData1DOptions = {},
-  ) {
+  ) => {
     let { fwhm = 500, sd } = shape;
     if (sd) fwhm = Gaussian.widthToFWHM(2 * sd);
 
@@ -182,5 +182,5 @@ export class Gaussian extends Shape1DClass {
     }
 
     return data;
-  }
+  };
 }

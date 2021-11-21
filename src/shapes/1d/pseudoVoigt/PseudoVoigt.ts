@@ -63,12 +63,6 @@ export class PseudoVoigt extends Shape1DClass {
 
     this.mu = mu;
     this.fwhm = fwhm;
-    // this.height =
-    //   height === undefined
-    //     ? 1 /
-    //       ((mu / Math.sqrt(-GAUSSIAN_EXP_FACTOR / Math.PI)) * fwhm +
-    //         ((1 - mu) * fwhm * Math.PI) / 2)
-    //     : height;
   }
 
   public fwhmToWidth(fwhm = this.fwhm, mu = this.mu) {
@@ -111,10 +105,10 @@ export class PseudoVoigt extends Shape1DClass {
   /**
    * Calculate the height depending of fwhm, mu and area.
    */
-  public static calculateHeight(options: ICalculateHeightOptions) {
+  public static calculateHeight = (options: ICalculateHeightOptions) => {
     let { fwhm = 1, mu = 0.5, area = 1 } = options;
     return (2 * area) / (fwhm * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI));
-  }
+  };
 
   /**
    * Return a parameterized function of a pseudo voigt shape (see README for equation).
@@ -122,9 +116,9 @@ export class PseudoVoigt extends Shape1DClass {
    * @param fwhm - full width half maximum
    * @returns - the y value of pseudo voigt with the current parameters.
    */
-  public static fct(x: number, fwhm: number, mu: number) {
+  public static fct = (x: number, fwhm: number, mu: number) => {
     return (1 - mu) * Lorentzian.fct(x, fwhm) + mu * Gaussian.fct(x, fwhm);
-  }
+  };
 
   /**
    * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
@@ -132,9 +126,9 @@ export class PseudoVoigt extends Shape1DClass {
    * @param [mu=0.5] Ratio of gaussian contribution in the shape
    * @returns fwhm
    */
-  public static widthToFWHM(width: number, mu = 0.5) {
+  public static widthToFWHM = (width: number, mu = 0.5) => {
     return width * (mu * ROOT_2LN2_MINUS_ONE + 1);
-  }
+  };
 
   /**
    * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
@@ -142,42 +136,42 @@ export class PseudoVoigt extends Shape1DClass {
    * @param [mu=0.5] Ratio of gaussian contribution in the shape
    * @returns width
    */
-  public static fwhmToWidth(fwhm: number, mu = 0.5) {
+  public static fwhmToWidth = (fwhm: number, mu = 0.5) => {
     return fwhm / (mu * ROOT_2LN2_MINUS_ONE + 1);
-  }
+  };
 
   /**
    * Calculate the area of a specific shape.
    * @returns returns the area of the specific shape and parameters.
    */
 
-  public static getArea(options: IGetAreaPseudoVoigtOptions) {
+  public static getArea = (options: IGetAreaPseudoVoigtOptions) => {
     const { fwhm, height = 1, mu = 0.5 } = options;
     if (fwhm === undefined) {
       throw new Error('should pass fwhm or sd parameters');
     }
 
     return (fwhm * height * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI)) / 2;
-  }
+  };
 
   /**
    * Calculate the number of times FWHM allows to reach a specific area coverage.
    * @param [area=0.9999] Expected area to be covered.
    * @returns
    */
-  public static getFactor(area = 0.9999, mu = 0.5) {
+  public static getFactor = (area = 0.9999, mu = 0.5) => {
     return mu < 1 ? Lorentzian.getFactor(area) : Gaussian.getFactor(area);
-  }
+  };
 
   /**
    * Calculate intensity array of a pseudo voigt shape.
    * @returns {Float64Array} y values
    */
 
-  public static getData(
+  public static getData = (
     shape: IPseudoVoigtClassOptions = {},
     options: GetData1DOptions = {},
-  ) {
+  ) => {
     let { fwhm = 500, mu = 0.5 } = shape;
     let {
       length,
@@ -205,5 +199,5 @@ export class PseudoVoigt extends Shape1DClass {
     }
 
     return data;
-  }
+  };
 }

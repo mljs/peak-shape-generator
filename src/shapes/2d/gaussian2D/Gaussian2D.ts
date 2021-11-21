@@ -130,21 +130,21 @@ export class Gaussian2D extends Shape2DClass {
    * @param fwhmY - full width half maximum in the y axis.
    * @returns - the z value of bi-dimensional gaussian with the current parameters.
    */
-  public static fct(x: number, y: number, xFWHM: number, yFWHM: number) {
+  public static fct = (x: number, y: number, xFWHM: number, yFWHM: number) => {
     return Math.exp(
       GAUSSIAN_EXP_FACTOR * (Math.pow(x / xFWHM, 2) + Math.pow(y / yFWHM, 2)),
     );
-  }
+  };
 
   /**
    * Calculate the intensity matrix of a gaussian shape.
    * @returns z values.
    */
 
-  public static getData(
+  public static getData = (
     shape: IGaussian2DClassOptions,
     options: GetData2DOptions = {},
-  ) {
+  ) => {
     let { fwhm = 50, sd } = shape;
 
     fwhm = ensureFWHM2D(fwhm, sd);
@@ -182,21 +182,23 @@ export class Gaussian2D extends Shape2DClass {
       }
     }
     return data;
-  }
+  };
 
-  public static calculateHeight(options: ICalculateHeightGaussian2D = {}) {
+  public static calculateHeight = (
+    options: ICalculateHeightGaussian2D = {},
+  ) => {
     let { surface = 1, fwhm = 1 } = options;
     fwhm = ensureXYNumber(fwhm);
     return (surface * Math.LN2 * 4) / (Math.PI * fwhm.y * fwhm.x);
-  }
+  };
 
-  public static getSurface(options: IGetVolumeGaussian2DOptions = {}) {
+  public static getSurface = (options: IGetVolumeGaussian2DOptions = {}) => {
     let { fwhm = 50, height = 1 } = options;
 
     if (typeof fwhm !== 'object') fwhm = { x: fwhm, y: fwhm };
 
     return (height * Math.PI * fwhm.y * fwhm.x) / Math.LN2 / 4;
-  }
+  };
 }
 
 function ensureXYNumber(input: number | XYNumber): XYNumber {

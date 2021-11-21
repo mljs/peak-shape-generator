@@ -69,9 +69,9 @@ export class Lorentzian extends Shape1DClass {
    * Calculate the height depending of fwhm and area.
    */
 
-  public static calculateHeight({ fwhm = 1, area = 1 }) {
+  public static calculateHeight = ({ fwhm = 1, area = 1 }) => {
     return (2 * area) / Math.PI / fwhm;
-  }
+  };
 
   /**
    * Return a parameterized function of a lorentzian shape (see README for equation).
@@ -79,9 +79,9 @@ export class Lorentzian extends Shape1DClass {
    * @param fwhm - full width half maximum
    * @returns - the y value of lorentzian with the current parameters.
    */
-  public static fct(x: number, fwhm: number) {
+  public static fct = (x: number, fwhm: number) => {
     return Math.pow(fwhm, 2) / (4 * Math.pow(x, 2) + Math.pow(fwhm, 2));
-  }
+  };
 
   /**
    * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
@@ -89,9 +89,9 @@ export class Lorentzian extends Shape1DClass {
    * @param width - Width between the inflection points
    * @returns fwhm
    */
-  public static widthToFWHM(width: number) {
+  public static widthToFWHM = (width: number) => {
     return width * ROOT_THREE;
-  }
+  };
 
   /**
    * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
@@ -99,16 +99,16 @@ export class Lorentzian extends Shape1DClass {
    * @param fwhm - Full Width at Half Maximum.
    * @returns width
    */
-  public static fwhmToWidth(fwhm: number) {
+  public static fwhmToWidth = (fwhm: number) => {
     return fwhm / ROOT_THREE;
-  }
+  };
 
   /**
    * Calculate the area of a specific shape.
    * @returns returns the area of the specific shape and parameters.
    */
 
-  public static getArea(options: IGetAreaLorentzianOptions) {
+  public static getArea = (options: IGetAreaLorentzianOptions) => {
     const { fwhm, height = 1 } = options;
 
     if (fwhm === undefined) {
@@ -116,26 +116,26 @@ export class Lorentzian extends Shape1DClass {
     }
 
     return (height * Math.PI * fwhm) / 2;
-  }
+  };
 
   /**
    * Calculate the number of times FWHM allows to reach a specific area coverage.
    * @param [area=0.9999] Expected area to be covered.
    * @returns
    */
-  public static getFactor(area = 0.9999) {
+  public static getFactor = (area = 0.9999) => {
     return 2 * Math.tan(Math.PI * (area - 0.5));
-  }
+  };
 
   /**
    * Calculate intensity array of a lorentzian shape.
    * @returns {Float64Array} y values
    */
 
-  public static getData(
+  public static getData = (
     shape: ILorentzianClassOptions = {},
     options: GetData1DOptions = {},
-  ) {
+  ) => {
     let { fwhm = 500 } = shape;
     let {
       length,
@@ -156,5 +156,5 @@ export class Lorentzian extends Shape1DClass {
     }
 
     return data;
-  }
+  };
 }
