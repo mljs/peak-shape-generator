@@ -1,6 +1,7 @@
+import { DoubleArray } from 'cheminfo-types';
+
 import { GetData1DOptions } from '../../../types/GetData1DOptions';
 import { ROOT_THREE } from '../../../util/constants';
-import { Shape1DClass } from '../Shape1DClass';
 
 export interface ILorentzianClassOptions {
   /**
@@ -23,7 +24,20 @@ export interface IGetAreaLorentzianOptions {
   fwhm?: number;
 }
 
-export class Lorentzian extends Shape1DClass {
+export interface ILorentzianClass {
+  calculateHeight(area?: number): number;
+  fct(x: number): number;
+  widthToFWHM(width: number): number;
+  fwhmToWidth(fwhm?: number): number;
+  getArea(height?: number): number;
+  getFactor(area?: number): number;
+  getData(
+    options?: GetData1DOptions,
+  ): DoubleArray;
+}
+
+
+export class Lorentzian implements ILorentzianClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -31,7 +45,6 @@ export class Lorentzian extends Shape1DClass {
   public fwhm: number;
 
   public constructor(options: ILorentzianClassOptions = {}) {
-    super();
     const { fwhm = 500 } = options;
 
     this.fwhm = fwhm;

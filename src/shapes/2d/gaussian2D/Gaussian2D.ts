@@ -1,7 +1,8 @@
+import type { DoubleArray } from 'cheminfo-types';
+
 import type { GetData2DOptions } from '../../../types/GetData2DOptions';
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import { Gaussian } from '../../1d/gaussian/Gaussian';
-import { Shape2DClass } from '../Shape2DClass';
 
 export interface XYNumber {
   x: number;
@@ -9,8 +10,9 @@ export interface XYNumber {
 }
 
 interface ICalculateHeightGaussian2D {
+  sd?: number | XYNumber;
   fwhm?: number | XYNumber;
-  surface?: number;
+  volume?: number;
 }
 
 export interface IGaussian2DClassOptions {
@@ -28,8 +30,8 @@ export interface IGaussian2DClassOptions {
 }
 
 /**
- * Calculate the surface of gaussian shape.
- * @returns The surface of the specific shape and parameters.
+ * Calculate the Volume of gaussian shape.
+ * @returns The volume of the specific shape and parameters.
  */
 export interface IGetVolumeGaussian2DOptions {
   /**
@@ -42,9 +44,24 @@ export interface IGetVolumeGaussian2DOptions {
    * Could specify the value for each axis by a xy object or both by a number.
    */
   fwhm?: number | XYNumber;
+  /**
+   * The halft width between the inflection points or standard deviation.
+   * If it is defined the fwhm would be re-assigned.
+   */
+  sd?: number | XYNumber;
 }
 
-export class Gaussian2D extends Shape2DClass {
+export interface IGaussian2DClass {
+  calculateHeight(volume?: number): number;
+  fct(x: number, y: number): number;
+  widthToFWHM(width: number): number;
+  fwhmToWidth(fwhm?: number): number;
+  getVolume(height?: number): number;
+  getFactor(volume?: number): number;
+  getData(options?: GetData2DOptions): DoubleArray[];
+}
+
+export class Gaussian2D implements IGaussian2DClass {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -58,7 +75,6 @@ export class Gaussian2D extends Shape2DClass {
   // public height: number;
 
   public constructor(options: IGaussian2DClassOptions = {}) {
-    super();
     let { fwhm = 50, sd } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);
@@ -80,17 +96,17 @@ export class Gaussian2D extends Shape2DClass {
     );
   }
 
-  public getFactor(surface: number) {
-    return Gaussian.getFactor(surface);
+  public getFactor(volume = 1) {
+    return Gaussian.getFactor(volume);
   }
 
-  public getSurface(
+  public getVolume(
     height = Gaussian2D.calculateHeight({
       fwhm: { x: this.fwhmY, y: this.fwhmY },
-      surface: 1,
+      volume: 1,
     }),
   ) {
-    return Gaussian2D.getSurface({
+    return Gaussian2D.getVolume({
       fwhm: { x: this.fwhmY, y: this.fwhmY },
       height,
     });
@@ -102,6 +118,13 @@ export class Gaussian2D extends Shape2DClass {
 
   public fwhmToWidth(fwhm: number) {
     return Gaussian.fwhmToWidth(fwhm);
+  }
+
+  public calculateHeight(volume = 1) {
+    return Gaussian2D.calculateHeight({
+      volume,
+      fwhm: { x: this.fwhmY, y: this.fwhmY },
+    });
   }
 
   public static getFactor(surface: number) {
@@ -152,7 +175,7 @@ export class Gaussian2D extends Shape2DClass {
     let {
       factor = Gaussian.getFactor(),
       length = { x: 0, y: 0 },
-      height = Gaussian2D.calculateHeight({ fwhm, surface: 1 }),
+      height = Gaussian2D.calculateHeight({ fwhm, volume: 1 }),
     } = options;
 
     factor = ensureXYNumber(factor);
@@ -187,15 +210,15 @@ export class Gaussian2D extends Shape2DClass {
   public static calculateHeight = (
     options: ICalculateHeightGaussian2D = {},
   ) => {
-    let { surface = 1, fwhm = 1 } = options;
-    fwhm = ensureXYNumber(fwhm);
-    return (surface * Math.LN2 * 4) / (Math.PI * fwhm.y * fwhm.x);
+    let { volume = 1, fwhm = 1, sd } = options;
+    fwhm = ensureFWHM2D(fwhm, sd);
+    return (volume * Math.LN2 * 4) / (Math.PI * fwhm.y * fwhm.x);
   };
 
-  public static getSurface = (options: IGetVolumeGaussian2DOptions = {}) => {
-    let { fwhm = 50, height = 1 } = options;
+  public static getVolume = (options: IGetVolumeGaussian2DOptions = {}) => {
+    let { fwhm = 50, height = 1, sd } = options;
 
-    if (typeof fwhm !== 'object') fwhm = { x: fwhm, y: fwhm };
+    fwhm = ensureFWHM2D(fwhm, sd);
 
     return (height * Math.PI * fwhm.y * fwhm.x) / Math.LN2 / 4;
   };

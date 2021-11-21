@@ -5,15 +5,15 @@ import type { IPseudoVoigtClassOptions } from '../shapes/1d/pseudoVoigt/PseudoVo
 /**
  * kind of shape
  */
-interface GaussianShape1D extends IGaussianClassOptions {
+interface IGaussianShape1D extends IGaussianClassOptions {
   kind: 'gaussian';
 }
 
-interface LorentzianShape1D extends ILorentzianClassOptions {
+interface ILorentzianShape1D extends ILorentzianClassOptions {
   kind: 'lorentzian';
 }
 
-interface PseudoVoigtShape1D extends IPseudoVoigtClassOptions {
+interface IPseudoVoigtShape1D extends IPseudoVoigtClassOptions {
   kind: 'pseudoVoigt';
 }
-export type Shape1D = GaussianShape1D | LorentzianShape1D | PseudoVoigtShape1D;
+export type Shape1D = IGaussianShape1D | ILorentzianShape1D | IPseudoVoigtShape1D;

@@ -1,10 +1,11 @@
+import { DoubleArray } from 'cheminfo-types';
+
 import { GetData1DOptions } from '../../../types/GetData1DOptions';
 import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
-import { Shape1DClass } from '../Shape1DClass';
 import { Gaussian } from '../gaussian/Gaussian';
 import { Lorentzian } from '../lorentzian/Lorentzian';
 
@@ -45,7 +46,20 @@ interface ICalculateHeightOptions {
   area: number;
 }
 
-export class PseudoVoigt extends Shape1DClass {
+export interface IPseudoVoigtClass {
+  calculateHeight(area?: number): number;
+  fct(x: number): number;
+  widthToFWHM(width: number, mu?: number): number;
+  fwhmToWidth(fwhm?: number, mu?: number): number;
+  getArea(height?: number): number;
+  getFactor(area?: number): number;
+  getData(
+    options?: GetData1DOptions,
+  ): DoubleArray;
+}
+
+
+export class PseudoVoigt implements IPseudoVoigtClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -58,7 +72,6 @@ export class PseudoVoigt extends Shape1DClass {
   public mu: number;
 
   public constructor(options: IPseudoVoigtClassOptions = {}) {
-    super();
     const { fwhm = 500, mu = 0.5 } = options;
 
     this.mu = mu;

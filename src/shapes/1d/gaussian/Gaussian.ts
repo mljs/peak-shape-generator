@@ -1,3 +1,5 @@
+import type { DoubleArray } from 'cheminfo-types';
+
 import type { GetData1DOptions } from '../../../types/GetData1DOptions';
 import {
   ROOT_2LN2,
@@ -5,8 +7,6 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
-import { Shape1DClass } from '../Shape1DClass';
-// import { Shape1DClass } from '../Shape1DClass';
 
 interface ICalculateHeight {
   fwhm?: number;
@@ -45,7 +45,19 @@ export interface IGetAreaGaussianOptions {
   sd?: number;
 }
 
-export class Gaussian extends Shape1DClass {
+export interface IGaussianClass {
+  calculateHeight(area?: number): number;
+  fct(x: number): number;
+  widthToFWHM(width: number): number;
+  fwhmToWidth(fwhm?: number): number;
+  getArea(height?: number): number;
+  getFactor(area?: number): number;
+  getData(
+    options?: GetData1DOptions,
+  ): DoubleArray;
+}
+
+export class Gaussian implements IGaussianClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -53,7 +65,6 @@ export class Gaussian extends Shape1DClass {
   public fwhm: number;
 
   public constructor(options: IGaussianClassOptions = {}) {
-    super();
     const { fwhm = 500, sd } = options;
 
     this.fwhm = sd ? Gaussian.widthToFWHM(2 * sd) : fwhm;
@@ -129,7 +140,6 @@ export class Gaussian extends Shape1DClass {
    * Calculate the area of a specific shape.
    * @returns returns the area of the specific shape and parameters.
    */
-
   public static getArea = (options: IGetAreaGaussianOptions) => {
     let { fwhm, sd, height = 1 } = options;
 

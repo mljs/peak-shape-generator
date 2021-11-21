@@ -10,7 +10,7 @@ describe('Gaussian2D.shape', () => {
     const yCenter = (data[0].length - 1) / 2;
     expect(data[xCenter][yCenter]).toBe(1);
 
-    const surface = getSurface(data);
+    const surface = getVolume(data);
     expect(surface).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
   });
 
@@ -30,7 +30,7 @@ describe('Gaussian2D.shape', () => {
     );
     expect(surface).toBeCloseTo(0.9999, 2);
     const height = -GAUSSIAN_EXP_FACTOR / Math.PI / 50 / 50;
-    const computeSurface = Gaussian2D.getSurface({ fwhm, height });
+    const computeSurface = Gaussian2D.getVolume({ fwhm, height });
     expect(computeSurface).toBeCloseTo(1, 2);
   });
 
@@ -45,7 +45,7 @@ describe('Gaussian2D.shape', () => {
       Gaussian2D.fct(0, -center, fwhm, fwhm) * height,
     );
     expect(data[center][center]).toBeCloseTo(height, 2);
-    const surface = getSurface(data);
+    const surface = getVolume(data);
     expect(surface).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
   });
 
@@ -75,8 +75,8 @@ describe('Gaussian2D.shape', () => {
     expect(Gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
   });
   it('change height should change area', () => {
-    const surface = Gaussian2D.getSurface({ fwhm: 100, height: 1 });
-    expect(Gaussian2D.getSurface({ fwhm: 100, height: 2 })).toBeCloseTo(
+    const surface = Gaussian2D.getVolume({ fwhm: 100, height: 1 });
+    expect(Gaussian2D.getVolume({ fwhm: 100, height: 2 })).toBeCloseTo(
       2 * surface,
       4,
     );
@@ -92,7 +92,7 @@ describe('Gaussian2D.shape', () => {
   });
 });
 
-function getSurface(data: Array<Float64Array>) {
+function getVolume(data: Array<Float64Array>) {
   let surface = 0;
   for (const row of data) {
     for (let j = 0; j < data[0].length; j++) {

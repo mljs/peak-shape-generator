@@ -14,8 +14,8 @@ describe('Gaussian2D.shape', () => {
     const yCenter = (data[0].length - 1) / 2;
     expect(data[xCenter][yCenter]).toBe(1);
 
-    const surface = getSurface(data);
-    expect(surface).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
+    const volume = getVolume(data);
+    expect(volume).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
   });
 
   it('check gaussian2D continuous', () => {
@@ -29,9 +29,9 @@ describe('Gaussian2D.shape', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 50 });
     const data = gaussian2D.getData();
     expect(data).toHaveLength(195);
-    const surface = getSurface(data);
-    expect(surface).toBeCloseTo(0.9999, 2);
-    const computeSurface = gaussian2D.getSurface();
+    const volume = getVolume(data);
+    expect(volume).toBeCloseTo(0.9999, 2);
+    const computeSurface = gaussian2D.getVolume();
     expect(computeSurface).toBeCloseTo(1, 2);
   });
 
@@ -44,8 +44,8 @@ describe('Gaussian2D.shape', () => {
     expect(data[center][center]).toBeCloseTo(3, 3);
     expect(data[center][0]).toBeCloseTo(gaussian2D.fct(0, -center) * height);
     expect(data[center][center]).toBeCloseTo(height, 2);
-    const surface = getSurface(data);
-    expect(surface).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
+    const volume = getVolume(data);
+    expect(volume).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
   });
 
   it('odd fwhm', () => {
@@ -82,29 +82,29 @@ describe('Gaussian2D.shape', () => {
   });
   it('change height should change area', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100 });
-    const surface = gaussian2D.getSurface(1);
-    expect(gaussian2D.getSurface(2)).toBeCloseTo(2 * surface, 4);
+    const volume = gaussian2D.getVolume(1);
+    expect(gaussian2D.getVolume(2)).toBeCloseTo(2 * volume, 4);
   });
   it('factor should be close', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100 });
     for (let i = 1; i < 11; i++) {
-      const surface: number = i * 0.1;
-      expect(gaussian2D.getFactor(surface)).toBeCloseTo(
-        Math.sqrt(2) * erfinv(surface),
+      const volume: number = i * 0.1;
+      expect(gaussian2D.getFactor(volume)).toBeCloseTo(
+        Math.sqrt(2) * erfinv(volume),
         1,
       );
     }
   });
 });
 
-function getSurface(data: Array<Float64Array>) {
-  let surface = 0;
+function getVolume(data: Array<Float64Array>) {
+  let volume = 0;
   for (const row of data) {
     for (let j = 0; j < data[0].length; j++) {
-      surface += row[j];
+      volume += row[j];
     }
   }
-  return surface;
+  return volume;
 }
 
 function getNbChanges(y: Float64Array) {
