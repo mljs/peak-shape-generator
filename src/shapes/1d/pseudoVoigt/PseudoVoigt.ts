@@ -53,11 +53,8 @@ export interface IPseudoVoigtClass {
   fwhmToWidth(fwhm?: number, mu?: number): number;
   getArea(height?: number): number;
   getFactor(area?: number): number;
-  getData(
-    options?: GetData1DOptions,
-  ): DoubleArray;
+  getData(options?: GetData1DOptions): DoubleArray;
 }
-
 
 export class PseudoVoigt implements IPseudoVoigtClass {
   /**

@@ -16,4 +16,7 @@ interface ILorentzianShape1D extends ILorentzianClassOptions {
 interface IPseudoVoigtShape1D extends IPseudoVoigtClassOptions {
   kind: 'pseudoVoigt';
 }
-export type Shape1D = IGaussianShape1D | ILorentzianShape1D | IPseudoVoigtShape1D;
+export type Shape1D =
+  | IGaussianShape1D
+  | ILorentzianShape1D
+  | IPseudoVoigtShape1D;

@@ -52,9 +52,7 @@ export interface IGaussianClass {
   fwhmToWidth(fwhm?: number): number;
   getArea(height?: number): number;
   getFactor(area?: number): number;
-  getData(
-    options?: GetData1DOptions,
-  ): DoubleArray;
+  getData(options?: GetData1DOptions): DoubleArray;
 }
 
 export class Gaussian implements IGaussianClass {

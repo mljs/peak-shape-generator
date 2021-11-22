@@ -31,11 +31,8 @@ export interface ILorentzianClass {
   fwhmToWidth(fwhm?: number): number;
   getArea(height?: number): number;
   getFactor(area?: number): number;
-  getData(
-    options?: GetData1DOptions,
-  ): DoubleArray;
+  getData(options?: GetData1DOptions): DoubleArray;
 }
-
 
 export class Lorentzian implements ILorentzianClass {
   /**
