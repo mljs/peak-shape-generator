@@ -1,5 +1,3 @@
-import type { DoubleArray } from 'cheminfo-types';
-
 import {
   ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,
@@ -7,6 +5,7 @@ import {
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
 import type { GetData1DOptions } from '../GetData1DOptions';
+import type { IShape1DClass } from '../IShape1DClass';
 
 interface ICalculateHeight {
   fwhm?: number;
@@ -45,47 +44,8 @@ export interface IGetAreaGaussianOptions {
   sd?: number;
 }
 
-export interface IGaussianClass {
-  /**
-   * Calculate the height depending of fwhm and area.
-   */
-  calculateHeight(area?: number): number;
-  /**
-   * Return a parameterized function of a gaussian shape (see README for equation).
-   * @returns - the y value of gaussian with the current parameters.
-   */
-  fct(x: number): number;
-  /**
-   * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
-   * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
-   * @returns fwhm
-   */
-  widthToFWHM(width: number): number;
-  /**
-   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
-   * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
-   * @param fwhm - Full Width at Half Maximum.
-   * @returns width
-   */
-  fwhmToWidth(fwhm?: number): number;
-  /**
-   * Calculate the area of a specific shape.
-   * @returns returns the area of the specific shape and parameters.
-   */
-  getArea(height?: number): number;
-  /**
-   * Calculate the number of times FWHM allows to reach a specific area coverage.
-   * @param [area=0.9999] Expected area to be covered.
-   */
-  getFactor(area?: number): number;
-  /**
-   * Calculate intensity array of a gaussian shape.
-   * @returns Intensity values.
-   */
-  getData(options?: GetData1DOptions): DoubleArray;
-}
 
-export class Gaussian implements IGaussianClass {
+export class Gaussian implements IShape1DClass {
   /**
    * Full width at half maximum.
    * @default 500

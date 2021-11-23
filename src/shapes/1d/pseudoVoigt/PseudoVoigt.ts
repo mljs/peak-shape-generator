@@ -1,11 +1,10 @@
-import { DoubleArray } from 'cheminfo-types';
-
 import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import { GetData1DOptions } from '../GetData1DOptions';
+import { IShape1DClass } from '../IShape1DClass';
 import { gaussianFct, getGaussianFactor } from '../gaussian/Gaussian';
 import { lorentzianFct, getLorentzianFactor } from '../lorentzian/Lorentzian';
 
@@ -46,60 +45,16 @@ interface ICalculateHeightOptions {
   area: number;
 }
 
-export interface IPseudoVoigtClass {
-  /**
-   * Calculate the height depending of fwhm, mu and area.
-   */
-  calculateHeight(area?: number): number;
-  /**
-   * Return a parameterized function of a pseudo voigt shape (see README for equation).
-   * @param x - x value to calculate.
-   * @param fwhm - full width half maximum
-   * @returns - the y value of pseudo voigt with the current parameters.
-   */
-  fct(x: number): number;
-  /**
-   * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
-   * @param width - Width between the inflection points
-   * @param [mu=0.5] Ratio of gaussian contribution in the shape
-   * @returns fwhm
-   */
-  widthToFWHM(width: number, mu?: number): number;
-  /**
-   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
-   * @param fwhm - Full Width at Half Maximum.
-   * @param [mu=0.5] Ratio of gaussian contribution in the shape
-   * @returns width
-   */
-  fwhmToWidth(fwhm?: number, mu?: number): number;
-  /**
-   * Calculate the area of a specific shape.
-   * @returns returns the area of the specific shape and parameters.
-   */
-  getArea(height?: number): number;
-  /**
-   * Calculate the number of times FWHM allows to reach a specific area coverage.
-   * @param [area=0.9999] Expected area to be covered.
-   * @returns
-   */
-  getFactor(area?: number): number;
-  /**
-   * Calculate intensity array of a pseudo voigt shape.
-   * @returns y values
-   */
-  getData(options?: GetData1DOptions): DoubleArray;
-}
-
-export class PseudoVoigt implements IPseudoVoigtClass {
-  /**
-   * Full width at half maximum.
-   * @default 500
-   */
-  public fwhm: number;
+export interface IPseudoVoigtClass extends IShape1DClass {
   /**
    * Ratio of gaussian contribution in the shape
    * @default 0.5
    */
+  mu: number;
+}
+
+export class PseudoVoigt implements IPseudoVoigtClass {
+  public fwhm: number;
   public mu: number;
 
   public constructor(options: IPseudoVoigtClassOptions = {}) {
