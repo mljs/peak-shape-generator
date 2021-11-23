@@ -1,6 +1,6 @@
-import type { IGaussianClassOptions } from '../shapes/1d/gaussian/Gaussian';
-import type { ILorentzianClassOptions } from '../shapes/1d/lorentzian/Lorentzian';
-import type { IPseudoVoigtClassOptions } from '../shapes/1d/pseudoVoigt/PseudoVoigt';
+import type { IGaussianClassOptions } from './gaussian/Gaussian';
+import type { ILorentzianClassOptions } from './lorentzian/Lorentzian';
+import type { IPseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
 
 /**
  * kind of shape

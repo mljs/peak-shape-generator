@@ -1,11 +1,11 @@
 import erfinv from 'compute-erfinv';
 
 import { ROOT_2LN2 } from '../../../../util/constants';
-import { Gaussian2D } from '../Gaussian2D';
 import {
   gaussianWidthToFWHM,
   gaussianFwhmToWidth,
 } from '../../../1d/gaussian/Gaussian';
+import { Gaussian2D } from '../Gaussian2D';
 
 describe('Gaussian2D.shape', () => {
   it('height 1', () => {

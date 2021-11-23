@@ -1,6 +1,6 @@
 import type { DoubleArray } from 'cheminfo-types';
 
-import type { GetData2DOptions } from '../../../types/GetData2DOptions';
+import type { GetData2DOptions } from '../GetData2DOptions';
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import {
   getGaussianFactor,
@@ -118,12 +118,12 @@ export class Gaussian2D implements IGaussian2DClass {
 
   public getVolume(
     height = calculateGaussian2DHeight({
-      fwhm: { x: this.fwhmY, y: this.fwhmY },
+      fwhm: { x: this.fwhmX, y: this.fwhmY },
       volume: 1,
     }),
   ) {
     return getGaussian2DVolume({
-      fwhm: { x: this.fwhmY, y: this.fwhmY },
+      fwhm: { x: this.fwhmX, y: this.fwhmY },
       height,
     });
   }
@@ -139,7 +139,7 @@ export class Gaussian2D implements IGaussian2DClass {
   public calculateHeight(volume = 1) {
     return calculateGaussian2DHeight({
       volume,
-      fwhm: { x: this.fwhmY, y: this.fwhmY },
+      fwhm: { x: this.fwhmX, y: this.fwhmY },
     });
   }
 

@@ -1,6 +1,6 @@
 import type { DoubleArray } from 'cheminfo-types';
 
-import type { GetData1DOptions } from '../../../types/GetData1DOptions';
+import type { GetData1DOptions } from '../GetData1DOptions';
 import {
   ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,

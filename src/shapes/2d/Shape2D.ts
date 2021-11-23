@@ -1,4 +1,4 @@
-import type { IGaussian2DClassOptions } from '../shapes/2d/gaussian2D/Gaussian2D';
+import type { IGaussian2DClassOptions } from './gaussian2D/Gaussian2D';
 
 /**
  * kind of shape
