@@ -1,13 +1,13 @@
-import type { GetData1DOptions } from '../types/GetData1DOptions';
-import type { Shape1D } from '../types/Shape1D';
+import type { GetData2DOptions } from '../types/GetData2DOptions';
+import type { Shape2D } from '../types/Shape2D';
 
-import { getShape1D } from './getShape1D';
+import { getShape2D } from './getShape2D';
 
 /**
  * Returns an array with the intensity values of a specific kind of shape.
  */
 
-export function getShapeData1D(shape: Shape1D, options: GetData1DOptions = {}) {
-  const shapeInstance = getShape1D(shape);
+export function getShapeData2D(shape: Shape2D, options: GetData2DOptions = {}) {
+  const shapeInstance = getShape2D(shape);
   return shapeInstance.getData(options);
 }

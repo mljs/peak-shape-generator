@@ -1,5 +1,9 @@
 import { ROOT_THREE } from '../../../../util/constants';
-import { Lorentzian } from '../Lorentzian';
+import {
+  Lorentzian,
+  lorentzianFwhmToWidth,
+  lorentzianWidthToFWHM,
+} from '../Lorentzian';
 
 describe('lorentzian', () => {
   it('default factor area', () => {
@@ -49,14 +53,14 @@ describe('lorentzian', () => {
     const lorentzian = new Lorentzian({ fwhm: 100 });
     const width = 20;
     expect(lorentzian.widthToFWHM(width)).toBe(width * ROOT_THREE);
-    expect(lorentzian.widthToFWHM(width)).toBe(Lorentzian.widthToFWHM(width));
+    expect(lorentzian.widthToFWHM(width)).toBe(lorentzianWidthToFWHM(width));
   });
   it('fwhm to width', () => {
     const lorentzian = new Lorentzian({ fwhm: 100 });
     const fwhm = 20;
     expect(lorentzian.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_THREE);
     lorentzian.fwhm = fwhm;
-    expect(lorentzian.fwhmToWidth()).toBe(Lorentzian.fwhmToWidth(fwhm));
+    expect(lorentzian.fwhmToWidth()).toBe(lorentzianFwhmToWidth(fwhm));
   });
   it('change height should change area', () => {
     const lorentzian = new Lorentzian({ fwhm: 100 });

@@ -2,6 +2,10 @@ import erfinv from 'compute-erfinv';
 
 import { ROOT_2LN2 } from '../../../../util/constants';
 import { Gaussian2D } from '../Gaussian2D';
+import {
+  gaussianWidthToFWHM,
+  gaussianFwhmToWidth,
+} from '../../../1d/gaussian/Gaussian';
 
 describe('Gaussian2D.shape', () => {
   it('height 1', () => {
@@ -71,14 +75,14 @@ describe('Gaussian2D.shape', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100 });
     const width = 20;
     expect(gaussian2D.widthToFWHM(width)).toBe(width * ROOT_2LN2);
-    expect(gaussian2D.widthToFWHM(width)).toBe(Gaussian2D.widthToFWHM(width));
+    expect(gaussian2D.widthToFWHM(width)).toBe(gaussianWidthToFWHM(width));
   });
   it('fwhm to width', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100 });
     const fwhm = 20;
     expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
     gaussian2D.fwhm = fwhm;
-    expect(gaussian2D.fwhmToWidth(fwhm)).toBe(Gaussian2D.fwhmToWidth(fwhm));
+    expect(gaussian2D.fwhmToWidth(fwhm)).toBe(gaussianFwhmToWidth(fwhm));
   });
   it('change height should change area', () => {
     const gaussian2D = new Gaussian2D({ fwhm: 100 });
