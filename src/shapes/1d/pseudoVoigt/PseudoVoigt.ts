@@ -1,11 +1,11 @@
 import { DoubleArray } from 'cheminfo-types';
 
-import { GetData1DOptions } from '../GetData1DOptions';
 import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
+import { GetData1DOptions } from '../GetData1DOptions';
 import { gaussianFct, getGaussianFactor } from '../gaussian/Gaussian';
 import { lorentzianFct, getLorentzianFactor } from '../lorentzian/Lorentzian';
 
@@ -147,7 +147,9 @@ export class PseudoVoigt implements IPseudoVoigtClass {
   }
 }
 
-export const calculatePseudoVoigtHeight = (options: ICalculateHeightOptions) => {
+export const calculatePseudoVoigtHeight = (
+  options: ICalculateHeightOptions,
+) => {
   let { fwhm = 1, mu = 0.5, area = 1 } = options;
   return (2 * area) / (fwhm * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI));
 };

@@ -1,7 +1,7 @@
+import type { Shape1D } from '../shapes/1d/Shape1D';
 import { Gaussian } from '../shapes/1d/gaussian/Gaussian';
 import { Lorentzian } from '../shapes/1d/lorentzian/Lorentzian';
 import { PseudoVoigt } from '../shapes/1d/pseudoVoigt/PseudoVoigt';
-import type { Shape1D } from '../shapes/1d/Shape1D';
 
 /**
  * Generate a instance of a specific kind of shape.

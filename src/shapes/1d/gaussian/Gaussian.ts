@@ -1,12 +1,12 @@
 import type { DoubleArray } from 'cheminfo-types';
 
-import type { GetData1DOptions } from '../GetData1DOptions';
 import {
   ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
+import type { GetData1DOptions } from '../GetData1DOptions';
 
 interface ICalculateHeight {
   fwhm?: number;

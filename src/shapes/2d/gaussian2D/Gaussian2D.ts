@@ -1,12 +1,12 @@
 import type { DoubleArray } from 'cheminfo-types';
 
-import type { GetData2DOptions } from '../GetData2DOptions';
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import {
   getGaussianFactor,
   gaussianFwhmToWidth,
   gaussianWidthToFWHM,
 } from '../../1d/gaussian/Gaussian';
+import type { GetData2DOptions } from '../GetData2DOptions';
 
 export interface XYNumber {
   x: number;

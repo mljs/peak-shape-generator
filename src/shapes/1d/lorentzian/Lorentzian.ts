@@ -1,7 +1,7 @@
 import { DoubleArray } from 'cheminfo-types';
 
-import { GetData1DOptions } from '../GetData1DOptions';
 import { ROOT_THREE } from '../../../util/constants';
+import { GetData1DOptions } from '../GetData1DOptions';
 
 export interface ILorentzianClassOptions {
   /**
