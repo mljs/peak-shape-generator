@@ -1,12 +1,12 @@
-import type { GetData1DOptions } from '../../../types/GetData1DOptions';
+import type { DoubleArray } from 'cheminfo-types';
+
 import {
   ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
-import { Shape1DClass } from '../Shape1DClass';
-// import { Shape1DClass } from '../Shape1DClass';
+import type { GetData1DOptions } from '../GetData1DOptions';
 
 interface ICalculateHeight {
   fwhm?: number;
@@ -45,7 +45,47 @@ export interface IGetAreaGaussianOptions {
   sd?: number;
 }
 
-export class Gaussian extends Shape1DClass {
+export interface IGaussianClass {
+  /**
+   * Calculate the height depending of fwhm and area.
+   */
+  calculateHeight(area?: number): number;
+  /**
+   * Return a parameterized function of a gaussian shape (see README for equation).
+   * @returns - the y value of gaussian with the current parameters.
+   */
+  fct(x: number): number;
+  /**
+   * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
+   * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
+   * @returns fwhm
+   */
+  widthToFWHM(width: number): number;
+  /**
+   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
+   * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
+   * @param fwhm - Full Width at Half Maximum.
+   * @returns width
+   */
+  fwhmToWidth(fwhm?: number): number;
+  /**
+   * Calculate the area of a specific shape.
+   * @returns returns the area of the specific shape and parameters.
+   */
+  getArea(height?: number): number;
+  /**
+   * Calculate the number of times FWHM allows to reach a specific area coverage.
+   * @param [area=0.9999] Expected area to be covered.
+   */
+  getFactor(area?: number): number;
+  /**
+   * Calculate intensity array of a gaussian shape.
+   * @returns Intensity values.
+   */
+  getData(options?: GetData1DOptions): DoubleArray;
+}
+
+export class Gaussian implements IGaussianClass {
   /**
    * Full width at half maximum.
    * @default 500
@@ -53,134 +93,100 @@ export class Gaussian extends Shape1DClass {
   public fwhm: number;
 
   public constructor(options: IGaussianClassOptions = {}) {
-    super();
     const { fwhm = 500, sd } = options;
 
-    this.fwhm = sd ? Gaussian.widthToFWHM(2 * sd) : fwhm;
+    this.fwhm = sd ? gaussianWidthToFWHM(2 * sd) : fwhm;
   }
 
   public fwhmToWidth(fwhm = this.fwhm) {
-    return Gaussian.fwhmToWidth(fwhm);
+    return gaussianFwhmToWidth(fwhm);
   }
 
   public widthToFWHM(width: number) {
-    return Gaussian.widthToFWHM(width);
+    return gaussianWidthToFWHM(width);
   }
 
   public fct(x: number) {
-    return Gaussian.fct(x, this.fwhm);
+    return gaussianFct(x, this.fwhm);
   }
 
-  public getArea(height = Gaussian.calculateHeight({ fwhm: this.fwhm })) {
-    return Gaussian.getArea({ fwhm: this.fwhm, height });
+  public getArea(height = calculateGaussianHeight({ fwhm: this.fwhm })) {
+    return getGaussianArea({ fwhm: this.fwhm, height });
   }
 
   public getFactor(area?: number) {
-    return Gaussian.getFactor(area);
+    return getGaussianFactor(area);
   }
 
   public getData(options: GetData1DOptions = {}) {
-    return Gaussian.getData(this, options);
+    return getGaussianData(this, options);
   }
 
   public calculateHeight(area = 1) {
-    return Gaussian.calculateHeight({ fwhm: this.fwhm, area });
+    return calculateGaussianHeight({ fwhm: this.fwhm, area });
+  }
+}
+
+export function calculateGaussianHeight(options: ICalculateHeight) {
+  let { fwhm = 1, area = 1, sd } = options;
+
+  if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
+
+  return (2 * area) / ROOT_PI_OVER_LN2 / fwhm;
+}
+
+export function gaussianFct(x: number, fwhm: number) {
+  return Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow(x / fwhm, 2));
+}
+
+export function gaussianWidthToFWHM(width: number) {
+  return width * ROOT_2LN2;
+}
+
+export function gaussianFwhmToWidth(fwhm: number) {
+  return fwhm / ROOT_2LN2;
+}
+
+export function getGaussianArea(options: IGetAreaGaussianOptions) {
+  let { fwhm, sd, height = 1 } = options;
+
+  if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
+
+  if (fwhm === undefined) {
+    throw new Error('should pass fwhm or sd parameters');
   }
 
-  /**
-   * Calculate the height depending of fwhm and area.
-   */
+  return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
+}
 
-  public static calculateHeight(options: ICalculateHeight) {
-    let { fwhm = 1, area = 1, sd } = options;
+export function getGaussianFactor(area = 0.9999) {
+  return Math.sqrt(2) * erfinv(area);
+}
 
-    if (sd) fwhm = Gaussian.widthToFWHM(2 * sd);
+export function getGaussianData(
+  shape: IGaussianClassOptions = {},
+  options: GetData1DOptions = {},
+) {
+  let { fwhm = 500, sd } = shape;
+  if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
-    return (2 * area) / ROOT_PI_OVER_LN2 / fwhm;
-  }
-  /**
-   * Return a parameterized function of a gaussian shape (see README for equation).
-   * @returns - the y value of gaussian with the current parameters.
-   */
-  public static fct(x: number, fwhm: number) {
-    return Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow(x / fwhm, 2));
-  }
+  let {
+    length,
+    factor = getGaussianFactor(),
+    height = calculateGaussianHeight({ fwhm }),
+  } = options;
 
-  /**
-   * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
-   * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
-   * @returns fwhm
-   */
-  public static widthToFWHM(width: number) {
-    return width * ROOT_2LN2;
+  if (!length) {
+    length = Math.min(Math.ceil(fwhm * factor), Math.pow(2, 25) - 1);
+    if (length % 2 === 0) length++;
   }
 
-  /**
-   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
-   * for more information check the [mathworld page](https://mathworld.wolfram.com/GaussianFunction.html)
-   * @param fwhm - Full Width at Half Maximum.
-   * @returns width
-   */
-  public static fwhmToWidth(fwhm: number) {
-    return fwhm / ROOT_2LN2;
+  const center = (length - 1) / 2;
+  const data = new Float64Array(length);
+  for (let i = 0; i <= center; i++) {
+    data[i] = gaussianFct(i - center, fwhm) * height;
+    data[length - 1 - i] = data[i];
   }
 
-  /**
-   * Calculate the area of a specific shape.
-   * @returns returns the area of the specific shape and parameters.
-   */
-
-  public static getArea(options: IGetAreaGaussianOptions) {
-    let { fwhm, sd, height = 1 } = options;
-
-    if (sd) fwhm = Gaussian.widthToFWHM(2 * sd);
-
-    if (fwhm === undefined) {
-      throw new Error('should pass fwhm or sd parameters');
-    }
-
-    return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
-  }
-
-  /**
-   * Calculate the number of times FWHM allows to reach a specific area coverage.
-   * @param [area=0.9999] Expected area to be covered.
-   * @returns
-   */
-  public static getFactor(area = 0.9999) {
-    return Math.sqrt(2) * erfinv(area);
-  }
-
-  /**
-   * Calculate intensity array of a gaussian shape.
-   * @returns {Float64Array} Intensity values.
-   */
-
-  public static getData(
-    shape: IGaussianClassOptions = {},
-    options: GetData1DOptions = {},
-  ) {
-    let { fwhm = 500, sd } = shape;
-    if (sd) fwhm = Gaussian.widthToFWHM(2 * sd);
-
-    let {
-      length,
-      factor = Gaussian.getFactor(),
-      height = Gaussian.calculateHeight({ fwhm }),
-    } = options;
-
-    if (!length) {
-      length = Math.min(Math.ceil(fwhm * factor), Math.pow(2, 25) - 1);
-      if (length % 2 === 0) length++;
-    }
-
-    const center = (length - 1) / 2;
-    const data = new Float64Array(length);
-    for (let i = 0; i <= center; i++) {
-      data[i] = Gaussian.fct(i - center, fwhm) * height;
-      data[length - 1 - i] = data[i];
-    }
-
-    return data;
-  }
+  return data;
 }

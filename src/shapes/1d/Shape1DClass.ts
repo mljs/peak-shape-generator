@@ -1,12 +1,5 @@
-import { GetData1DOptions } from '../../types/GetData1DOptions';
+import type { Gaussian } from './gaussian/Gaussian';
+import type { Lorentzian } from './lorentzian/Lorentzian';
+import type { PseudoVoigt } from './pseudoVoigt/PseudoVoigt';
 
-export abstract class Shape1DClass {
-  public abstract fwhm: number;
-
-  public abstract fwhmToWidth(fwhm: number): number;
-  public abstract widthToFWHM(width: number): number;
-  public abstract fct(x: number): number;
-  public abstract getArea(height?: number): number;
-  public abstract getFactor(area?: number): number;
-  public abstract getData(options: GetData1DOptions): Float64Array;
-}
+export type Shape1DClass = Gaussian | PseudoVoigt | Lorentzian;
