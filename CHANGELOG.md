@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.0.3](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.2...v3.0.3) (2021-11-23)
+
+
+### Bug Fixes
+
+* Implement interfaces ([#56](https://www.github.com/mljs/peak-shape-generator/issues/56)) ([1635357](https://www.github.com/mljs/peak-shape-generator/commit/1635357cf7c2f3c32915e9a59322b051da4457c0))
+
 ### [3.0.2](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.1...v3.0.2) (2021-11-18)
 
 
