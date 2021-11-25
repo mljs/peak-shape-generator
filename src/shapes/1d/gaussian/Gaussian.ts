@@ -44,7 +44,6 @@ export interface IGetAreaGaussianOptions {
   sd?: number;
 }
 
-
 export class Gaussian implements IShape1DClass {
   /**
    * Full width at half maximum.

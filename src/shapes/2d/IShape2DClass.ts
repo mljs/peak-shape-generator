@@ -14,8 +14,8 @@ export interface IShape2DClass {
   /**
    * setter to parameters fwhmX and fwhmY
    */
-   fwhm: number | XYNumber;
-   /**
+  fwhm: number | XYNumber;
+  /**
    * Calculate the height depending of fwhm and volumen.
    */
   calculateHeight(volume?: number): number;

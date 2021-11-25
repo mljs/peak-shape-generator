@@ -1,6 +1,6 @@
-import { DoubleArray } from "cheminfo-types";
+import { DoubleArray } from 'cheminfo-types';
 
-import { GetData1DOptions } from "./GetData1DOptions";
+import { GetData1DOptions } from './GetData1DOptions';
 
 export interface IShape1DClass {
   fwhm: number;
