@@ -23,7 +23,6 @@
     "lib-esm"
   ],
   "scripts": {
-    "build": "npm run tsc && cheminfo-build",
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
     "eslint": "eslint src --cache",
