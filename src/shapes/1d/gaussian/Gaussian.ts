@@ -119,10 +119,6 @@ export function getGaussianArea(options: GetGaussianAreaOptions) {
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
-  if (fwhm === undefined) {
-    throw new Error('should pass fwhm or sd parameters');
-  }
-
   return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
 }
 
