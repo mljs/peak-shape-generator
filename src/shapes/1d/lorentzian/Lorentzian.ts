@@ -1,9 +1,8 @@
-import { DoubleArray } from 'cheminfo-types';
-
 import { ROOT_THREE } from '../../../util/constants';
-import { GetData1DOptions } from '../GetData1DOptions';
+import type { GetData1DOptions } from '../GetData1DOptions';
+import type { Shape1DClass } from '../Shape1DClass';
 
-export interface ILorentzianClassOptions {
+export interface LorentzianClassOptions {
   /**
    * Full width at half maximum.
    * @default 500
@@ -11,7 +10,7 @@ export interface ILorentzianClassOptions {
   fwhm?: number;
 }
 
-export interface IGetAreaLorentzianOptions {
+interface GetLorentzianAreaOptions {
   /**
    * The maximum intensity value of the shape
    * @default 1
@@ -24,58 +23,14 @@ export interface IGetAreaLorentzianOptions {
   fwhm?: number;
 }
 
-export interface ILorentzianClass {
-  /**
-   * Calculate the height depending of fwhm and area.
-   */
-  calculateHeight(area?: number): number;
-  /**
-   * Return a parameterized function of a lorentzian shape (see README for equation).
-   * @param x - x value to calculate.
-   * @param fwhm - full width half maximum
-   * @returns - the y value of lorentzian with the current parameters.
-   */
-  fct(x: number): number;
-  /**
-   * Compute the value of Full Width at Half Maximum (FWHM) from the width between the inflection points.
-   * for more information check the [mathworld page](https://mathworld.wolfram.com/LorentzianFunction.html)
-   * @param width - Width between the inflection points
-   * @returns fwhm
-   */
-  widthToFWHM(width: number): number;
-  /**
-   * Compute the value of width between the inflection points from Full Width at Half Maximum (FWHM).
-   * for more information check the [mathworld page](https://mathworld.wolfram.com/LorentzianFunction.html)
-   * @param fwhm - Full Width at Half Maximum.
-   * @returns width
-   */
-  fwhmToWidth(fwhm?: number): number;
-  /**
-   * Calculate the area of a specific shape.
-   * @returns returns the area of the specific shape and parameters.
-   */
-  getArea(height?: number): number;
-  /**
-   * Calculate the number of times FWHM allows to reach a specific area coverage.
-   * @param [area=0.9999] Expected area to be covered.
-   * @returns
-   */
-  getFactor(area?: number): number;
-  /**
-   * Calculate intensity array of a lorentzian shape.
-   * @returns y values
-   */
-  getData(options?: GetData1DOptions): DoubleArray;
-}
-
-export class Lorentzian implements ILorentzianClass {
+export class Lorentzian implements Shape1DClass {
   /**
    * Full width at half maximum.
    * @default 500
    */
   public fwhm: number;
 
-  public constructor(options: ILorentzianClassOptions = {}) {
+  public constructor(options: LorentzianClassOptions = {}) {
     const { fwhm = 500 } = options;
 
     this.fwhm = fwhm;
@@ -126,13 +81,8 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
   return fwhm / ROOT_THREE;
 };
 
-export const getLorentzianArea = (options: IGetAreaLorentzianOptions) => {
-  const { fwhm, height = 1 } = options;
-
-  if (fwhm === undefined) {
-    throw new Error('should pass fwhm or sd parameters');
-  }
-
+export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
+  const { fwhm = 500, height = 1 } = options;
   return (height * Math.PI * fwhm) / 2;
 };
 
@@ -141,7 +91,7 @@ export const getLorentzianFactor = (area = 0.9999) => {
 };
 
 export const getLorentzianData = (
-  shape: ILorentzianClassOptions = {},
+  shape: LorentzianClassOptions = {},
   options: GetData1DOptions = {},
 ) => {
   let { fwhm = 500 } = shape;

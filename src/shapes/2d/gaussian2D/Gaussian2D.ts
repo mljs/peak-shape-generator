@@ -1,5 +1,3 @@
-import type { DoubleArray } from 'cheminfo-types';
-
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
 import {
   getGaussianFactor,
@@ -7,19 +5,26 @@ import {
   gaussianWidthToFWHM,
 } from '../../1d/gaussian/Gaussian';
 import type { GetData2DOptions } from '../GetData2DOptions';
+import { Shape2DClass } from '../Shape2DClass';
 
 export interface XYNumber {
   x: number;
   y: number;
 }
 
-interface ICalculateHeightGaussian2D {
+interface CalculateGaussian2DHeightOptions {
   sd?: number | XYNumber;
+  /**
+   * @default 50
+   */
   fwhm?: number | XYNumber;
+  /**
+   * @default 1
+   */
   volume?: number;
 }
 
-export interface IGaussian2DClassOptions {
+export interface Gaussian2DClassOptions {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -37,7 +42,7 @@ export interface IGaussian2DClassOptions {
  * Calculate the Volume of gaussian shape.
  * @returns The volume of the specific shape and parameters.
  */
-export interface IGetVolumeGaussian2DOptions {
+export interface GetGaussian2DVolumeOptions {
   /**
    * The maximum intensity value of the shape
    * @default 1
@@ -46,6 +51,7 @@ export interface IGetVolumeGaussian2DOptions {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
+   * @default 50
    */
   fwhm?: number | XYNumber;
   /**
@@ -55,42 +61,11 @@ export interface IGetVolumeGaussian2DOptions {
   sd?: number | XYNumber;
 }
 
-export interface IGaussian2DClass {
-  calculateHeight(volume?: number): number;
-  /**
-   * Return a parameterized function of a Gaussian2D shape (see README for equation).
-   * @param x - x value to calculate.
-   * @param y - y value to calculate.
-   * @param fwhmX - full width half maximum in the x axis.
-   * @param fwhmY - full width half maximum in the y axis.
-   * @returns - the z value of bi-dimensional gaussian with the current parameters.
-   */
-  fct(x: number, y: number): number;
-  widthToFWHM(width: number): number;
-  fwhmToWidth(fwhm?: number): number;
-  getVolume(height?: number): number;
-  getFactor(volume?: number): number;
-  /**
-   * Calculate the intensity matrix of a gaussian shape.
-   * @returns z values.
-   */
-  getData(options?: GetData2DOptions): DoubleArray[];
-}
-
-export class Gaussian2D implements IGaussian2DClass {
-  /**
-   * Full width at half maximum.
-   * Could specify the value for each axis by a xy object or both by a number.
-   * @default 50
-   */
+export class Gaussian2D implements Shape2DClass {
   public fwhmX: number;
   public fwhmY: number;
-  // /**
-  //  * The maximum z value of the shape, default keep surface equal 1.
-  //  */
-  // public height: number;
 
-  public constructor(options: IGaussian2DClassOptions = {}) {
+  public constructor(options: Gaussian2DClassOptions = {}) {
     let { fwhm = 50, sd } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);
@@ -162,7 +137,7 @@ export const gaussian2DFct = (
 };
 
 export const getGaussian2DData = (
-  shape: IGaussian2DClassOptions,
+  shape: Gaussian2DClassOptions,
   options: GetData2DOptions = {},
 ) => {
   let { fwhm = 50, sd } = shape;
@@ -205,15 +180,15 @@ export const getGaussian2DData = (
 };
 
 export const calculateGaussian2DHeight = (
-  options: ICalculateHeightGaussian2D = {},
+  options: CalculateGaussian2DHeightOptions = {},
 ) => {
-  let { volume = 1, fwhm = 1, sd } = options;
+  let { volume = 1, fwhm = 50, sd } = options;
   fwhm = ensureFWHM2D(fwhm, sd);
   return (volume * Math.LN2 * 4) / (Math.PI * fwhm.y * fwhm.x);
 };
 
 export const getGaussian2DVolume = (
-  options: IGetVolumeGaussian2DOptions = {},
+  options: GetGaussian2DVolumeOptions = {},
 ) => {
   let { fwhm = 50, height = 1, sd } = options;
 
