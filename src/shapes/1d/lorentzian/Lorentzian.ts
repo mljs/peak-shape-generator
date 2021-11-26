@@ -82,7 +82,7 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
 };
 
 export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
-  const { fwhm, height = 1 } = options;
+  const { fwhm = 500, height = 1 } = options;
 
   if (fwhm === undefined) {
     throw new Error('should pass fwhm or sd parameters');

@@ -14,7 +14,13 @@ export interface XYNumber {
 
 interface CalculateGaussian2DHeightOptions {
   sd?: number | XYNumber;
+  /**
+   * @default 50
+   */
   fwhm?: number | XYNumber;
+  /**
+   * @default 1
+   */
   volume?: number;
 }
 
@@ -45,6 +51,7 @@ export interface GetGaussian2DVolumeOptions {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
+   * @default 50
    */
   fwhm?: number | XYNumber;
   /**
@@ -175,7 +182,7 @@ export const getGaussian2DData = (
 export const calculateGaussian2DHeight = (
   options: CalculateGaussian2DHeightOptions = {},
 ) => {
-  let { volume = 1, fwhm = 1, sd } = options;
+  let { volume = 1, fwhm = 50, sd } = options;
   fwhm = ensureFWHM2D(fwhm, sd);
   return (volume * Math.LN2 * 4) / (Math.PI * fwhm.y * fwhm.x);
 };

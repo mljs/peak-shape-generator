@@ -127,7 +127,7 @@ export const pseudoVoigtFwhmToWidth = (fwhm: number, mu = 0.5) => {
 };
 
 export const getPseudoVoigtArea = (options: GetPseudoVoigtAreaOptions) => {
-  const { fwhm, height = 1, mu = 0.5 } = options;
+  const { fwhm = 500, height = 1, mu = 0.5 } = options;
   if (fwhm === undefined) {
     throw new Error('should pass fwhm or sd parameters');
   }

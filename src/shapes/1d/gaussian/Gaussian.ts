@@ -8,7 +8,13 @@ import type { GetData1DOptions } from '../GetData1DOptions';
 import type { Shape1DClass } from '../Shape1DClass';
 
 interface CalculateGaussianHeightOptions {
+  /**
+   * @default 500
+   */
   fwhm?: number;
+  /**
+   * @default 1
+   */
   area?: number;
   sd?: number;
 }
@@ -89,7 +95,7 @@ export class Gaussian implements Shape1DClass {
 export function calculateGaussianHeight(
   options: CalculateGaussianHeightOptions,
 ) {
-  let { fwhm = 1, area = 1, sd } = options;
+  let { fwhm = 500, area = 1, sd } = options;
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
@@ -109,7 +115,7 @@ export function gaussianFwhmToWidth(fwhm: number) {
 }
 
 export function getGaussianArea(options: GetGaussianAreaOptions) {
-  let { fwhm, sd, height = 1 } = options;
+  let { fwhm = 500, sd, height = 1 } = options;
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
