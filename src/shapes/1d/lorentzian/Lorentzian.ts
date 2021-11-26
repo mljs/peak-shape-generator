@@ -1,8 +1,8 @@
 import { ROOT_THREE } from '../../../util/constants';
 import type { GetData1DOptions } from '../GetData1DOptions';
-import type { IShape1DClass } from '../IShape1DClass';
+import type { Shape1DClass } from '../Shape1DClass';
 
-export interface ILorentzianClassOptions {
+export interface LorentzianClassOptions {
   /**
    * Full width at half maximum.
    * @default 500
@@ -10,7 +10,7 @@ export interface ILorentzianClassOptions {
   fwhm?: number;
 }
 
-export interface IGetAreaLorentzianOptions {
+interface GetLorentzianAreaOptions {
   /**
    * The maximum intensity value of the shape
    * @default 1
@@ -23,14 +23,14 @@ export interface IGetAreaLorentzianOptions {
   fwhm?: number;
 }
 
-export class Lorentzian implements IShape1DClass {
+export class Lorentzian implements Shape1DClass {
   /**
    * Full width at half maximum.
    * @default 500
    */
   public fwhm: number;
 
-  public constructor(options: ILorentzianClassOptions = {}) {
+  public constructor(options: LorentzianClassOptions = {}) {
     const { fwhm = 500 } = options;
 
     this.fwhm = fwhm;
@@ -81,7 +81,7 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
   return fwhm / ROOT_THREE;
 };
 
-export const getLorentzianArea = (options: IGetAreaLorentzianOptions) => {
+export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
   const { fwhm, height = 1 } = options;
 
   if (fwhm === undefined) {
@@ -96,7 +96,7 @@ export const getLorentzianFactor = (area = 0.9999) => {
 };
 
 export const getLorentzianData = (
-  shape: ILorentzianClassOptions = {},
+  shape: LorentzianClassOptions = {},
   options: GetData1DOptions = {},
 ) => {
   let { fwhm = 500 } = shape;

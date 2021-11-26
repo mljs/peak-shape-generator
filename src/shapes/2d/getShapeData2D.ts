@@ -1,5 +1,5 @@
-import type { GetData2DOptions } from '../shapes/2d/GetData2DOptions';
-import type { Shape2D } from '../shapes/2d/Shape2D';
+import type { GetData2DOptions } from './GetData2DOptions';
+import type { Shape2D } from './Shape2D';
 
 import { getShape2D } from './getShape2D';
 

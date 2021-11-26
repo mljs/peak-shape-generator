@@ -5,15 +5,15 @@ import {
 } from '../../../util/constants';
 import erfinv from '../../../util/erfinv';
 import type { GetData1DOptions } from '../GetData1DOptions';
-import type { IShape1DClass } from '../IShape1DClass';
+import type { Shape1DClass } from '../Shape1DClass';
 
-interface ICalculateHeight {
+interface CalculateGaussianHeightOptions {
   fwhm?: number;
   area?: number;
   sd?: number;
 }
 
-export interface IGaussianClassOptions {
+export interface GaussianClassOptions {
   /**
    * Full width at half maximum.
    * @default 500
@@ -26,7 +26,7 @@ export interface IGaussianClassOptions {
   sd?: number;
 }
 
-export interface IGetAreaGaussianOptions {
+interface GetGaussianAreaOptions {
   /**
    * The maximum intensity value of the shape.
    * @default 1
@@ -44,14 +44,14 @@ export interface IGetAreaGaussianOptions {
   sd?: number;
 }
 
-export class Gaussian implements IShape1DClass {
+export class Gaussian implements Shape1DClass {
   /**
    * Full width at half maximum.
    * @default 500
    */
   public fwhm: number;
 
-  public constructor(options: IGaussianClassOptions = {}) {
+  public constructor(options: GaussianClassOptions = {}) {
     const { fwhm = 500, sd } = options;
 
     this.fwhm = sd ? gaussianWidthToFWHM(2 * sd) : fwhm;
@@ -86,7 +86,9 @@ export class Gaussian implements IShape1DClass {
   }
 }
 
-export function calculateGaussianHeight(options: ICalculateHeight) {
+export function calculateGaussianHeight(
+  options: CalculateGaussianHeightOptions,
+) {
   let { fwhm = 1, area = 1, sd } = options;
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
@@ -106,7 +108,7 @@ export function gaussianFwhmToWidth(fwhm: number) {
   return fwhm / ROOT_2LN2;
 }
 
-export function getGaussianArea(options: IGetAreaGaussianOptions) {
+export function getGaussianArea(options: GetGaussianAreaOptions) {
   let { fwhm, sd, height = 1 } = options;
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
@@ -123,7 +125,7 @@ export function getGaussianFactor(area = 0.9999) {
 }
 
 export function getGaussianData(
-  shape: IGaussianClassOptions = {},
+  shape: GaussianClassOptions = {},
   options: GetData1DOptions = {},
 ) {
   let { fwhm = 500, sd } = shape;

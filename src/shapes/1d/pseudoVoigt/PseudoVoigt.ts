@@ -4,11 +4,11 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import { GetData1DOptions } from '../GetData1DOptions';
-import { IShape1DClass } from '../IShape1DClass';
+import { Shape1DClass } from '../Shape1DClass';
 import { gaussianFct, getGaussianFactor } from '../gaussian/Gaussian';
 import { lorentzianFct, getLorentzianFactor } from '../lorentzian/Lorentzian';
 
-export interface IPseudoVoigtClassOptions {
+export interface PseudoVoigtClassOptions {
   /**
    * Full width at half maximum.
    * @default 500
@@ -21,7 +21,7 @@ export interface IPseudoVoigtClassOptions {
   mu?: number;
 }
 
-export interface IGetAreaPseudoVoigtOptions {
+interface GetPseudoVoigtAreaOptions {
   /**
    * The maximum intensity value of the shape
    * @default 1
@@ -39,25 +39,21 @@ export interface IGetAreaPseudoVoigtOptions {
   mu?: number;
 }
 
-interface ICalculateHeightOptions {
+interface CalculatePseudoVoightHeightOptions {
   fwhm: number;
   mu: number;
   area: number;
 }
 
-export interface IPseudoVoigtClass extends IShape1DClass {
+export class PseudoVoigt implements Shape1DClass {
+  public fwhm: number;
   /**
    * Ratio of gaussian contribution in the shape
    * @default 0.5
    */
-  mu: number;
-}
-
-export class PseudoVoigt implements IPseudoVoigtClass {
-  public fwhm: number;
   public mu: number;
 
-  public constructor(options: IPseudoVoigtClassOptions = {}) {
+  public constructor(options: PseudoVoigtClassOptions = {}) {
     const { fwhm = 500, mu = 0.5 } = options;
 
     this.mu = mu;
@@ -103,7 +99,7 @@ export class PseudoVoigt implements IPseudoVoigtClass {
 }
 
 export const calculatePseudoVoigtHeight = (
-  options: ICalculateHeightOptions,
+  options: CalculatePseudoVoightHeightOptions,
 ) => {
   let { fwhm = 1, mu = 0.5, area = 1 } = options;
   return (2 * area) / (fwhm * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI));
@@ -121,7 +117,7 @@ export const pseudoVoigtFwhmToWidth = (fwhm: number, mu = 0.5) => {
   return fwhm / (mu * ROOT_2LN2_MINUS_ONE + 1);
 };
 
-export const getPseudoVoigtArea = (options: IGetAreaPseudoVoigtOptions) => {
+export const getPseudoVoigtArea = (options: GetPseudoVoigtAreaOptions) => {
   const { fwhm, height = 1, mu = 0.5 } = options;
   if (fwhm === undefined) {
     throw new Error('should pass fwhm or sd parameters');
@@ -135,7 +131,7 @@ export const getPseudoVoigtFactor = (area = 0.9999, mu = 0.5) => {
 };
 
 export const getPseudoVoigtData = (
-  shape: IPseudoVoigtClassOptions = {},
+  shape: PseudoVoigtClassOptions = {},
   options: GetData1DOptions = {},
 ) => {
   let { fwhm = 500, mu = 0.5 } = shape;

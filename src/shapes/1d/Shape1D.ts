@@ -1,22 +1,19 @@
-import type { IGaussianClassOptions } from './gaussian/Gaussian';
-import type { ILorentzianClassOptions } from './lorentzian/Lorentzian';
-import type { IPseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
+import type { GaussianClassOptions } from './gaussian/Gaussian';
+import type { LorentzianClassOptions } from './lorentzian/Lorentzian';
+import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
 
 /**
  * kind of shape
  */
-interface IGaussianShape1D extends IGaussianClassOptions {
+interface GaussianShape1D extends GaussianClassOptions {
   kind: 'gaussian';
 }
 
-interface ILorentzianShape1D extends ILorentzianClassOptions {
+interface LorentzianShape1D extends LorentzianClassOptions {
   kind: 'lorentzian';
 }
 
-interface IPseudoVoigtShape1D extends IPseudoVoigtClassOptions {
+interface PseudoVoigtShape1D extends PseudoVoigtClassOptions {
   kind: 'pseudoVoigt';
 }
-export type Shape1D =
-  | IGaussianShape1D
-  | ILorentzianShape1D
-  | IPseudoVoigtShape1D;
+export type Shape1D = GaussianShape1D | LorentzianShape1D | PseudoVoigtShape1D;

@@ -2,7 +2,7 @@ import { DoubleArray } from 'cheminfo-types';
 
 import { GetData1DOptions } from './GetData1DOptions';
 
-export interface IShape1DClass {
+export interface Shape1DClass {
   fwhm: number;
   /**
    * Calculate the height depending of fwhm and area.
