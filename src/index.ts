@@ -10,5 +10,5 @@ export * from './shapes/2d/getShapeData2D';
 
 export type { Shape1D } from './shapes/1d/Shape1D';
 export type { Shape2D } from './shapes/2d/Shape2D';
-export type { IShape1DInstance } from './shapes/1d/IShape1DInstance';
-export type { IShape2DInstance } from './shapes/2d/IShape2DInstance';
+export type { Shape1DInstance } from './shapes/1d/Shape1DInstance';
+export type { Shape2DInstance } from './shapes/2d/Shape2DInstance';

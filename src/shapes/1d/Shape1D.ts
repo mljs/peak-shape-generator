@@ -16,4 +16,5 @@ interface LorentzianShape1D extends LorentzianClassOptions {
 interface PseudoVoigtShape1D extends PseudoVoigtClassOptions {
   kind: 'pseudoVoigt';
 }
+
 export type Shape1D = GaussianShape1D | LorentzianShape1D | PseudoVoigtShape1D;

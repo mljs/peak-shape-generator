@@ -3,7 +3,7 @@ import { DoubleArray } from 'cheminfo-types';
 import { GetData2DOptions } from './GetData2DOptions';
 import { XYNumber } from './XYNumber';
 
-export interface IShape2DClass {
+export interface Shape2DClass {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.

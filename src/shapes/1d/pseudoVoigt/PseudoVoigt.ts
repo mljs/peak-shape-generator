@@ -40,9 +40,18 @@ interface GetPseudoVoigtAreaOptions {
 }
 
 interface CalculatePseudoVoightHeightOptions {
-  fwhm: number;
-  mu: number;
-  area: number;
+  /**
+   * @default 1
+   */
+  fwhm?: number;
+  /**
+   * @default 0.5
+   */
+  mu?: number;
+  /**
+   * @default 1
+   */
+  area?: number;
 }
 
 export class PseudoVoigt implements Shape1DClass {
@@ -99,7 +108,7 @@ export class PseudoVoigt implements Shape1DClass {
 }
 
 export const calculatePseudoVoigtHeight = (
-  options: CalculatePseudoVoightHeightOptions,
+  options: CalculatePseudoVoightHeightOptions = {},
 ) => {
   let { fwhm = 1, mu = 0.5, area = 1 } = options;
   return (2 * area) / (fwhm * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI));

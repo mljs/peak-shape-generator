@@ -1,6 +1,5 @@
 import type { GetData1DOptions } from './GetData1DOptions';
 import type { Shape1D } from './Shape1D';
-
 import { getShape1D } from './getShape1D';
 
 /**

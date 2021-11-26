@@ -5,20 +5,20 @@ import {
   gaussianWidthToFWHM,
 } from '../../1d/gaussian/Gaussian';
 import type { GetData2DOptions } from '../GetData2DOptions';
-import { IShape2DClass } from '../IShape2DClass';
+import { Shape2DClass } from '../Shape2DClass';
 
 export interface XYNumber {
   x: number;
   y: number;
 }
 
-interface ICalculateHeightGaussian2D {
+interface CalculateGaussian2DHeightOptions {
   sd?: number | XYNumber;
   fwhm?: number | XYNumber;
   volume?: number;
 }
 
-export interface IGaussian2DClassOptions {
+export interface Gaussian2DClassOptions {
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -36,7 +36,7 @@ export interface IGaussian2DClassOptions {
  * Calculate the Volume of gaussian shape.
  * @returns The volume of the specific shape and parameters.
  */
-export interface IGetVolumeGaussian2DOptions {
+export interface GetGaussian2DVolumeOptions {
   /**
    * The maximum intensity value of the shape
    * @default 1
@@ -54,11 +54,11 @@ export interface IGetVolumeGaussian2DOptions {
   sd?: number | XYNumber;
 }
 
-export class Gaussian2D implements IShape2DClass {
+export class Gaussian2D implements Shape2DClass {
   public fwhmX: number;
   public fwhmY: number;
 
-  public constructor(options: IGaussian2DClassOptions = {}) {
+  public constructor(options: Gaussian2DClassOptions = {}) {
     let { fwhm = 50, sd } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);
@@ -130,7 +130,7 @@ export const gaussian2DFct = (
 };
 
 export const getGaussian2DData = (
-  shape: IGaussian2DClassOptions,
+  shape: Gaussian2DClassOptions,
   options: GetData2DOptions = {},
 ) => {
   let { fwhm = 50, sd } = shape;
@@ -173,7 +173,7 @@ export const getGaussian2DData = (
 };
 
 export const calculateGaussian2DHeight = (
-  options: ICalculateHeightGaussian2D = {},
+  options: CalculateGaussian2DHeightOptions = {},
 ) => {
   let { volume = 1, fwhm = 1, sd } = options;
   fwhm = ensureFWHM2D(fwhm, sd);
@@ -181,7 +181,7 @@ export const calculateGaussian2DHeight = (
 };
 
 export const getGaussian2DVolume = (
-  options: IGetVolumeGaussian2DOptions = {},
+  options: GetGaussian2DVolumeOptions = {},
 ) => {
   let { fwhm = 50, height = 1, sd } = options;
 
