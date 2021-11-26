@@ -1,5 +1,21 @@
 # Changelog
 
+## [4.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.3...v4.0.0) (2021-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* simplify exposed methods and interface
+
+### Features
+
+* simplify exposed methods and interface ([eabd472](https://www.github.com/mljs/peak-shape-generator/commit/eabd47296336b088a014276f956ed902e8620c13))
+
+
+### Bug Fixes
+
+* avoid duplication of interfaces ([#58](https://www.github.com/mljs/peak-shape-generator/issues/58)) ([6b68b58](https://www.github.com/mljs/peak-shape-generator/commit/6b68b5892b88ae6ec7921cee819cecb6b17dfe1d))
+
 ### [3.0.3](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.2...v3.0.3) (2021-11-23)
 
 
