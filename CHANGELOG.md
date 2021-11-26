@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.0.1](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.0...v4.0.1) (2021-11-26)
+
+
+### Bug Fixes
+
+* expose static methods of Gaussian2D ([c4b9427](https://www.github.com/mljs/peak-shape-generator/commit/c4b94279f617fdb48275c4a0fd00e80797e81271))
+
 ## [4.0.0](https://www.github.com/mljs/peak-shape-generator/compare/v3.0.3...v4.0.0) (2021-11-26)
 
 
