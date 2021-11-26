@@ -1,6 +1,6 @@
-export { Gaussian } from './shapes/1d/gaussian/Gaussian';
-export { Lorentzian } from './shapes/1d/lorentzian/Lorentzian';
-export { PseudoVoigt } from './shapes/1d/pseudoVoigt/PseudoVoigt';
+export * from './shapes/1d/gaussian/Gaussian';
+export * from './shapes/1d/lorentzian/Lorentzian';
+export * from './shapes/1d/pseudoVoigt/PseudoVoigt';
 export { Gaussian2D } from './shapes/2d/gaussian2D/Gaussian2D';
 
 export * from './shapes/1d/getShape1D';
