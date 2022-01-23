@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.0.2](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.1...v4.0.2) (2022-01-23)
+
+
+### Bug Fixes
+
+* update dependencies ([edd036f](https://www.github.com/mljs/peak-shape-generator/commit/edd036f1d7291cde8408f6ea8073e807883880e3))
+
 ### [4.0.1](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.0...v4.0.1) (2021-11-26)
 
 
