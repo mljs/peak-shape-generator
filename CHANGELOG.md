@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.0.3](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.2...v4.0.3) (2022-02-03)
+
+
+### Bug Fixes
+
+* export ShapeXDClass types ([4e7892f](https://www.github.com/mljs/peak-shape-generator/commit/4e7892fe25be0831b3cf8c863193cb4824a9829f))
+
 ### [4.0.2](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.1...v4.0.2) (2022-01-23)
 
 
