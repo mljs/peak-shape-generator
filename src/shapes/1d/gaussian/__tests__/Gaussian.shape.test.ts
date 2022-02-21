@@ -16,6 +16,7 @@ describe('Gaussian.shape', () => {
     expect(data[center]).toBe(1);
     const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo((ROOT_PI_OVER_LN2 * 10) / 2, 3);
+    expect(gaussian.getParameters()).toStrictEqual(['fwhm']);
   });
 
   it('check gaussian continuous', () => {

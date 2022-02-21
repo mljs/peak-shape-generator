@@ -21,6 +21,7 @@ describe('PseudoVoigt', () => {
     const height = shape.calculateHeight();
     const computedArea = shape.getArea(height);
     expect(computedArea).toBeCloseTo(1, 2);
+    expect(shape.getParameters()).toStrictEqual(['fwhm', 'mu']);
   });
   it('odd fwhm', () => {
     const data = new PseudoVoigt({ fwhm: 11 }).getData({

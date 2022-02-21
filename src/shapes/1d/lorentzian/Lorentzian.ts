@@ -63,6 +63,10 @@ export class Lorentzian implements Shape1DClass {
   public calculateHeight(area = 1) {
     return calculateLorentzianHeight({ fwhm: this.fwhm, area });
   }
+
+  public getParameters() {
+    return ['fwhm'];
+  }
 }
 
 export const calculateLorentzianHeight = ({ fwhm = 1, area = 1 }) => {

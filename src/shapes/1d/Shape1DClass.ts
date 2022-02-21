@@ -41,4 +41,8 @@ export interface Shape1DClass {
    * @returns Intensity values.
    */
   getData(options?: GetData1DOptions): DoubleArray;
+  /**
+   * Returns an array of the different parameters characterizing the shape
+   */
+  getParameters(): string[];
 }

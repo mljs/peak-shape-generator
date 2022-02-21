@@ -90,6 +90,10 @@ export class Gaussian implements Shape1DClass {
   public calculateHeight(area = 1) {
     return calculateGaussianHeight({ fwhm: this.fwhm, area });
   }
+
+  public getParameters() {
+    return ['fwhm'];
+  }
 }
 
 export function calculateGaussianHeight(

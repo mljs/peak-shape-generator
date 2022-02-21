@@ -15,6 +15,7 @@ describe('lorentzian', () => {
     const height = lorentzian.calculateHeight(1);
     const computedArea = lorentzian.getArea(height);
     expect(computedArea).toBeCloseTo(1, 2);
+    expect(lorentzian.getParameters()).toStrictEqual(['fwhm']);
   });
   it('default factor', () => {
     const lorentzian = new Lorentzian({ fwhm: 10 });

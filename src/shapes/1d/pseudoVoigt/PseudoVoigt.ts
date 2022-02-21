@@ -105,6 +105,10 @@ export class PseudoVoigt implements Shape1DClass {
   public calculateHeight(area = 1) {
     return calculatePseudoVoigtHeight({ fwhm: this.fwhm, mu: this.mu, area });
   }
+
+  public getParameters() {
+    return ['fwhm', 'mu'];
+  }
 }
 
 export const calculatePseudoVoigtHeight = (
