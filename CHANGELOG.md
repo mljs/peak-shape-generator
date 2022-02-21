@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.3...v4.1.0) (2022-02-21)
+
+
+### Features
+
+* add getParameters to Shape1D ([7a967b1](https://www.github.com/mljs/peak-shape-generator/commit/7a967b1aac199dc340a7e9d96ef5b43971265314))
+
 ### [4.0.3](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.2...v4.0.3) (2022-02-03)
 
 
