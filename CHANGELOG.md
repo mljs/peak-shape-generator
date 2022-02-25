@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.1.1](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.0...v4.1.1) (2022-02-25)
+
+
+### Bug Fixes
+
+* update cheminfo-types ([8311faf](https://www.github.com/mljs/peak-shape-generator/commit/8311faf39716a836c70efaf30e32ac06516342aa))
+
 ## [4.1.0](https://www.github.com/mljs/peak-shape-generator/compare/v4.0.3...v4.1.0) (2022-02-21)
 
 
