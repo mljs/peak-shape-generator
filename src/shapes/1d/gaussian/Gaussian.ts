@@ -106,6 +106,13 @@ export function calculateGaussianHeight(
   return (2 * area) / ROOT_PI_OVER_LN2 / fwhm;
 }
 
+/**
+ * Calculate the height of the gaussian function of a specific width (fwhm) at a speicifc
+ * x position (the gaussian is centered on x=0)
+ * @param x
+ * @param fwhm
+ * @returns y
+ */
 export function gaussianFct(x: number, fwhm: number) {
   return Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow(x / fwhm, 2));
 }
