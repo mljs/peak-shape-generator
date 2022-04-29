@@ -53,7 +53,7 @@ export class Lorentzian implements Shape1DClass {
   }
 
   public getFactor(area?: number) {
-    return getLorentzianFactor(area);
+    return getLorentzianFactor(this.fwhm, area);
   }
 
   public getData(options: GetData1DOptions = {}) {
@@ -73,6 +73,11 @@ export const calculateLorentzianHeight = ({ fwhm = 1, area = 1 }) => {
   return (2 * area) / Math.PI / fwhm;
 };
 
+export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
+  const { fwhm = 500, height = 1 } = options;
+  return (height * Math.PI * fwhm) / 2;
+};
+
 export const lorentzianFct = (x: number, fwhm: number) => {
   return fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
 };
@@ -85,13 +90,19 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
   return fwhm / ROOT_THREE;
 };
 
-export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
-  const { fwhm = 500, height = 1 } = options;
-  return (height * Math.PI * fwhm) / 2;
-};
-
-export const getLorentzianFactor = (area = 0.9999) => {
-  return 2 * Math.tan(Math.PI * (area - 0.5));
+export const getLorentzianFactor = (fwhm = 1, area = 0.9999) => {
+  if (area >= 1) {
+    throw new Error('area should be (0 - 1)');
+  }
+  const hwhm = fwhm * 0.5;
+  const halfResidual = (1 - area) * 0.5;
+  const quantileFunction = (r: number, p: number) =>
+    r * Math.tan(Math.PI * (p - 0.5));
+  return (
+    (quantileFunction(hwhm, 1 - halfResidual) -
+      quantileFunction(hwhm, halfResidual)) /
+    fwhm
+  );
 };
 
 export const getLorentzianData = (
@@ -101,7 +112,7 @@ export const getLorentzianData = (
   let { fwhm = 500 } = shape;
   let {
     length,
-    factor = getLorentzianFactor(),
+    factor = getLorentzianFactor(fwhm),
     height = calculateLorentzianHeight({ fwhm, area: 1 }),
   } = options;
 
