@@ -1,6 +1,6 @@
 import { gaussianFct } from '../../gaussian/Gaussian';
 import { lorentzianFct } from '../../lorentzian/Lorentzian';
-import { PseudoVoigt } from '../PseudoVoigt';
+import { PseudoVoigt, getPseudoVoigtFactor } from '../PseudoVoigt';
 
 describe('pseudoVoigt function', () => {
   it('mu equal 0, pure lorentzian', () => {
@@ -27,5 +27,9 @@ describe('pseudoVoigt function', () => {
       gaussianFct(0.15, 0.2) * 0.5 + lorentzianFct(0.15, 0.2) * 0.5,
       2,
     );
+  });
+
+  it('Pseudlvoigt functions', () => {
+    expect(getPseudoVoigtFactor(0.9)).toBeLessThan(5);
   });
 });
