@@ -24,6 +24,10 @@ where
 
 `$ npm i ml-peak-shape-generator`
 
+This package allows to calculate various shapes. By default they will have a height of 1.
+
+![demo.png](demo.png)
+
 ## Usage
 
 ```js
