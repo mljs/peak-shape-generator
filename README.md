@@ -28,6 +28,8 @@ This package allows to calculate various shapes. By default they will have a hei
 
 ![demo.png](demo.png)
 
+You see the resulting functions using this [playground](https://codesandbox.io/s/lorentzian-u1upg0?file=/Example.tsx)
+
 ## Usage
 
 ```js
