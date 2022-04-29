@@ -74,7 +74,7 @@ export const calculateLorentzianHeight = ({ fwhm = 1, area = 1 }) => {
 };
 
 export const lorentzianFct = (x: number, fwhm: number) => {
-  return Math.pow(fwhm, 2) / (4 * Math.pow(x, 2) + Math.pow(fwhm, 2));
+  return fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
 };
 
 export const lorentzianWidthToFWHM = (width: number) => {

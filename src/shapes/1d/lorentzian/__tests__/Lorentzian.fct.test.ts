@@ -9,5 +9,6 @@ describe('Lorentzian function', () => {
 
   it('Lorentzian functions', () => {
     expect(getLorentzianFactor(0.9)).toBeLessThan(5);
+    expect(getLorentzianFactor(0.99)).toBeLessThan(77);
   });
 });
