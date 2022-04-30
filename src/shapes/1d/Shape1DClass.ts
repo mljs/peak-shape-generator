@@ -2,6 +2,8 @@ import { DoubleArray } from 'cheminfo-types';
 
 import { GetData1DOptions } from './GetData1DOptions';
 
+export type Parameter = 'fwhm' | 'mu';
+
 export interface Shape1DClass {
   fwhm: number;
   /**
@@ -44,5 +46,5 @@ export interface Shape1DClass {
   /**
    * Returns an array of the different parameters characterizing the shape
    */
-  getParameters(): string[];
+  getParameters(): Parameter[];
 }

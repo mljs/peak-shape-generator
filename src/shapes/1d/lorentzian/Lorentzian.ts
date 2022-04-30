@@ -1,6 +1,6 @@
 import { ROOT_THREE } from '../../../util/constants';
 import type { GetData1DOptions } from '../GetData1DOptions';
-import type { Shape1DClass } from '../Shape1DClass';
+import type { Parameter, Shape1DClass } from '../Shape1DClass';
 
 export interface LorentzianClassOptions {
   /**
@@ -64,7 +64,7 @@ export class Lorentzian implements Shape1DClass {
     return calculateLorentzianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters() {
+  public getParameters(): Parameter[] {
     return ['fwhm'];
   }
 }

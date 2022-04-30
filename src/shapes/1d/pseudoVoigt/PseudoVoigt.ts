@@ -4,7 +4,7 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants';
 import { GetData1DOptions } from '../GetData1DOptions';
-import { Shape1DClass } from '../Shape1DClass';
+import { Parameter, Shape1DClass } from '../Shape1DClass';
 import { gaussianFct, getGaussianFactor } from '../gaussian/Gaussian';
 import { lorentzianFct, getLorentzianFactor } from '../lorentzian/Lorentzian';
 
@@ -106,7 +106,7 @@ export class PseudoVoigt implements Shape1DClass {
     return calculatePseudoVoigtHeight({ fwhm: this.fwhm, mu: this.mu, area });
   }
 
-  public getParameters() {
+  public getParameters(): Parameter[] {
     return ['fwhm', 'mu'];
   }
 }

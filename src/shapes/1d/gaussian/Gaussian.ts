@@ -6,6 +6,7 @@ import {
 import erfinv from '../../../util/erfinv';
 import type { GetData1DOptions } from '../GetData1DOptions';
 import type { Shape1DClass } from '../Shape1DClass';
+import { Parameter } from '../Shape1DClass';
 
 interface CalculateGaussianHeightOptions {
   /**
@@ -91,7 +92,7 @@ export class Gaussian implements Shape1DClass {
     return calculateGaussianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters() {
+  public getParameters(): Parameter[] {
     return ['fwhm'];
   }
 }
