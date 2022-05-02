@@ -12,10 +12,20 @@ describe('lorentzian', () => {
     expect(data).toHaveLength(3183099);
     const area = data.reduce((a, b) => a + b, 0);
     expect(area).toBeCloseTo(0.9999, 5);
-    const height = lorentzian.calculateHeight(1);
+    const expectedArea = 1;
+    const height = lorentzian.calculateHeight(expectedArea);
     const computedArea = lorentzian.getArea(height);
-    expect(computedArea).toBeCloseTo(1, 2);
+    expect(computedArea).toBeCloseTo(expectedArea, 2);
     expect(lorentzian.getParameters()).toStrictEqual(['fwhm']);
+  });
+  it('differents factor', () => {
+    const lorentzian = new Lorentzian({ fwhm: 1000 });
+    const areas = [0.98, 0.96, 0.7, 0.4, 0.2];
+    for (let area of areas) {
+      const data = lorentzian.getData({ factor: lorentzian.getFactor(area) });
+      const sum = data.reduce((a, b) => a + b, 0);
+      expect(sum).toBeCloseTo(area, 3);
+    }
   });
   it('default factor', () => {
     const lorentzian = new Lorentzian({ fwhm: 10 });

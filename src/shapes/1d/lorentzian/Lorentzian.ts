@@ -73,6 +73,11 @@ export const calculateLorentzianHeight = ({ fwhm = 1, area = 1 }) => {
   return (2 * area) / Math.PI / fwhm;
 };
 
+export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
+  const { fwhm = 500, height = 1 } = options;
+  return (height * Math.PI * fwhm) / 2;
+};
+
 export const lorentzianFct = (x: number, fwhm: number) => {
   return fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
 };
@@ -85,13 +90,15 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
   return fwhm / ROOT_THREE;
 };
 
-export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
-  const { fwhm = 500, height = 1 } = options;
-  return (height * Math.PI * fwhm) / 2;
-};
-
 export const getLorentzianFactor = (area = 0.9999) => {
-  return 2 * Math.tan(Math.PI * (area - 0.5));
+  if (area >= 1) {
+    throw new Error('area should be (0 - 1)');
+  }
+  const halfResidual = (1 - area) * 0.5;
+  const quantileFunction = (p: number) => Math.tan(Math.PI * (p - 0.5));
+  return (
+    (quantileFunction(1 - halfResidual) - quantileFunction(halfResidual)) / 2
+  );
 };
 
 export const getLorentzianData = (

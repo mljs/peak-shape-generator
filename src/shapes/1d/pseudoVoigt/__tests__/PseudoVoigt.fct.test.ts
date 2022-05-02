@@ -30,6 +30,6 @@ describe('pseudoVoigt function', () => {
   });
 
   it('Pseudlvoigt functions', () => {
-    expect(getPseudoVoigtFactor(0.9)).toBeLessThan(5);
+    expect(getPseudoVoigtFactor(0.9)).toBeLessThan(7);
   });
 });

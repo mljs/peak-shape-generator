@@ -11,7 +11,7 @@ export interface GetData1DOptions {
   length?: number;
   /**
    * Number of times of fwhm to calculate length..
-   * @default 'covers 99.99 % of volume'
+   * @default 'covers 99.99 % of area'
    */
   factor?: number;
 }
