@@ -12,4 +12,8 @@ describe('Lorentzian function', () => {
     expect(getLorentzianFactor(0.7)).toBeLessThan(2);
     expect(getLorentzianFactor(0.99)).toBeLessThan(77);
   });
+
+  it('Throw if area is bigger that 1', () => {
+    expect(() => getLorentzianFactor(1.2)).toThrow('area should be (0 - 1)');
+  });
 });

@@ -2,6 +2,7 @@ import erfinv from 'compute-erfinv';
 
 import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../../../util/constants';
 import {
+  calculateGaussianHeight,
   Gaussian,
   gaussianFwhmToWidth,
   gaussianWidthToFWHM,
@@ -83,6 +84,14 @@ describe('Gaussian.shape', () => {
     const gaussian = new Gaussian({ fwhm: 100 });
     const area = gaussian.getArea(1);
     expect(gaussian.getArea(2)).toBeCloseTo(2 * area, 4);
+  });
+  it('height calculations', () => {
+    const gaussian = new Gaussian({ fwhm: 100 });
+    const heightFromShape = gaussian.calculateHeight();
+    const height = calculateGaussianHeight({ fwhm: 100, area: 1 });
+    const expectedHeight = 1 / ROOT_PI_OVER_LN2 / 50;
+    expect(heightFromShape).toBeCloseTo(height, 4);
+    expect(height).toBeCloseTo(expectedHeight, 4);
   });
   it('factor should be close', () => {
     const gaussian = new Gaussian({ fwhm: 100 });
