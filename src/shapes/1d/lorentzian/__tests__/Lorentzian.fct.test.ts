@@ -8,7 +8,8 @@ describe('Lorentzian function', () => {
   });
 
   it('Lorentzian functions', () => {
-    expect(getLorentzianFactor(0.9)).toBeLessThan(5);
+    expect(getLorentzianFactor(0.5)).toBeCloseTo(1);
+    expect(getLorentzianFactor(0.7)).toBeLessThan(2);
     expect(getLorentzianFactor(0.99)).toBeLessThan(77);
   });
 });

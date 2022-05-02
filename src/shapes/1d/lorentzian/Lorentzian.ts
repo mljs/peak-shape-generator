@@ -53,7 +53,7 @@ export class Lorentzian implements Shape1DClass {
   }
 
   public getFactor(area?: number) {
-    return getLorentzianFactor(this.fwhm, area);
+    return getLorentzianFactor(area);
   }
 
   public getData(options: GetData1DOptions = {}) {
@@ -90,18 +90,14 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
   return fwhm / ROOT_THREE;
 };
 
-export const getLorentzianFactor = (fwhm = 1, area = 0.9999) => {
+export const getLorentzianFactor = (area = 0.9999) => {
   if (area >= 1) {
     throw new Error('area should be (0 - 1)');
   }
-  const hwhm = fwhm * 0.5;
   const halfResidual = (1 - area) * 0.5;
-  const quantileFunction = (r: number, p: number) =>
-    r * Math.tan(Math.PI * (p - 0.5));
+  const quantileFunction = (p: number) => Math.tan(Math.PI * (p - 0.5));
   return (
-    (quantileFunction(hwhm, 1 - halfResidual) -
-      quantileFunction(hwhm, halfResidual)) /
-    fwhm
+    (quantileFunction(1 - halfResidual) - quantileFunction(halfResidual)) / 2
   );
 };
 
@@ -112,7 +108,7 @@ export const getLorentzianData = (
   let { fwhm = 500 } = shape;
   let {
     length,
-    factor = getLorentzianFactor(fwhm),
+    factor = getLorentzianFactor(),
     height = calculateLorentzianHeight({ fwhm, area: 1 }),
   } = options;
 
