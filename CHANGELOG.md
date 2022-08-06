@@ -1,5 +1,13 @@
 # Changelog
 
+### [4.1.2](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.1...v4.1.2) (2022-08-06)
+
+
+### Bug Fixes
+
+* export shape types ([222296f](https://www.github.com/mljs/peak-shape-generator/commit/222296f7ee8a5cbd22c62d727143aeb5136a5bf2))
+* getLorenztianFactor function. close [#70](https://www.github.com/mljs/peak-shape-generator/issues/70) ([#71](https://www.github.com/mljs/peak-shape-generator/issues/71)) ([49dcc32](https://www.github.com/mljs/peak-shape-generator/commit/49dcc32d16ea41f6a8f461b4369f56a4ff0f058f))
+
 ### [4.1.1](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.0...v4.1.1) (2022-02-25)
 
 
