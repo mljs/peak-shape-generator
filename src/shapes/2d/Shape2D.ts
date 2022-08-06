@@ -3,7 +3,7 @@ import type { Gaussian2DClassOptions } from './gaussian2D/Gaussian2D';
 /**
  * kind of shape
  */
-interface GaussianShape2D extends Gaussian2DClassOptions {
+export interface GaussianShape2D extends Gaussian2DClassOptions {
   kind: 'gaussian';
 }
 

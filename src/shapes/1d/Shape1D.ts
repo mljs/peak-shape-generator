@@ -5,15 +5,15 @@ import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
 /**
  * kind of shape
  */
-interface GaussianShape1D extends GaussianClassOptions {
+export interface GaussianShape1D extends GaussianClassOptions {
   kind: 'gaussian';
 }
 
-interface LorentzianShape1D extends LorentzianClassOptions {
+export interface LorentzianShape1D extends LorentzianClassOptions {
   kind: 'lorentzian';
 }
 
-interface PseudoVoigtShape1D extends PseudoVoigtClassOptions {
+export interface PseudoVoigtShape1D extends PseudoVoigtClassOptions {
   kind: 'pseudoVoigt';
 }
 

@@ -66,7 +66,7 @@ export class Gaussian2D implements Shape2DClass {
   public fwhmY: number;
 
   public constructor(options: Gaussian2DClassOptions = {}) {
-    let { fwhm = 50, sd } = options;
+    let { fwhm = 20, sd } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);
 

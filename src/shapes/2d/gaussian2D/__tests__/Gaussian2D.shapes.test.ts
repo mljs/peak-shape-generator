@@ -23,7 +23,7 @@ describe('Gaussian2D.shape', () => {
   });
 
   it('check gaussian2D continuous', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 5900 });
+    const gaussian2D = new Gaussian2D({ fwhm: 59 });
     const y = gaussian2D.getData({ factor: 1 });
     const nbChanges = getNbChanges(y[(y.length - 1) / 2]);
     expect(nbChanges).toBe(2);
