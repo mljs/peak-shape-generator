@@ -1,6 +1,7 @@
 export * from './shapes/1d/gaussian/Gaussian';
 export * from './shapes/1d/lorentzian/Lorentzian';
 export * from './shapes/1d/pseudoVoigt/PseudoVoigt';
+export * from './shapes/1d/generalizedLorentzian/GeneralizedLorentzian';
 export * from './shapes/2d/gaussian2D/Gaussian2D';
 
 export * from './shapes/1d/getShape1D';
@@ -11,6 +12,7 @@ export type {
   PseudoVoigtShape1D,
   GaussianShape1D,
   LorentzianShape1D,
+  GeneralizedLorentzianShape1D,
 } from './shapes/1d/Shape1D';
 export type { Shape2D, GaussianShape2D } from './shapes/2d/Shape2D';
 export type { Shape1DClass } from './shapes/1d/Shape1DClass';

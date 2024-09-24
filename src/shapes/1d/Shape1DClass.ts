@@ -2,7 +2,7 @@ import { DoubleArray } from 'cheminfo-types';
 
 import { GetData1DOptions } from './GetData1DOptions';
 
-export type Parameter = 'fwhm' | 'mu';
+export type Parameter = 'fwhm' | 'mu' | 'gamma';
 
 export interface Shape1DClass {
   fwhm: number;
