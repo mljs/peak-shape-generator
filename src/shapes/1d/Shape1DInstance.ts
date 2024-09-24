@@ -3,4 +3,8 @@ import { GeneralizedLorentzian } from './generalizedLorentzian/GeneralizedLorent
 import { Lorentzian } from './lorentzian/Lorentzian';
 import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt';
 
-export type Shape1DInstance = Gaussian | Lorentzian | PseudoVoigt | GeneralizedLorentzian;
+export type Shape1DInstance =
+  | Gaussian
+  | Lorentzian
+  | PseudoVoigt
+  | GeneralizedLorentzian;
