@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.1.3](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.2...v4.1.3) (2024-09-24)
+
+
+### Bug Fixes
+
+* add generalizedLorentzian shape ([#75](https://www.github.com/mljs/peak-shape-generator/issues/75)) ([9916cd2](https://www.github.com/mljs/peak-shape-generator/commit/9916cd2abc066ddc1013e6aa5aec9000d2daf788))
+
 ### [4.1.2](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.1...v4.1.2) (2022-08-06)
 
 
