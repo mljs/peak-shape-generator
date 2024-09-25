@@ -92,7 +92,7 @@ export const calculateGeneralizedLorentzianHeight = ({
   gamma = 1,
   area = 1,
 }) => {
-  return area / fwhm / (3.14159 - 0.420894 * gamma) / 2;
+  return (area / fwhm / (3.14159 - 0.420894 * gamma)) * 2;
 };
 
 /**
@@ -102,7 +102,7 @@ export const getGeneralizedLorentzianArea = (
   options: GetGeneralizedLorentzianAreaOptions,
 ) => {
   const { fwhm = 500, height = 1, gamma = 1 } = options;
-  return 2 * height * fwhm * (3.14159 - 0.420894 * gamma);
+  return (height * fwhm * (3.14159 - 0.420894 * gamma)) / 2;
 };
 
 export const generalizedLorentzianFct = (
@@ -110,7 +110,7 @@ export const generalizedLorentzianFct = (
   fwhm: number,
   gamma: number,
 ) => {
-  const u = (x / 2 / fwhm) ** 2;
+  const u = ((2 * x) / fwhm) ** 2;
   return (1 - gamma) / (1 + u) + (gamma * (1 + u / 2)) / (1 + u + u ** 2);
 };
 
@@ -145,7 +145,7 @@ export const getGeneralizedLorentzianData = (
   let {
     length,
     factor = getGeneralizedLorentzianFactor(),
-    height = 1,
+    height = calculateGeneralizedLorentzianHeight({ fwhm, area: 1, gamma }),
   } = options;
 
   if (!length) {
