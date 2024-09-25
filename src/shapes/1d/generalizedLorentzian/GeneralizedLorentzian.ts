@@ -154,7 +154,6 @@ export const getGeneralizedLorentzianData = (
   }
 
   const center = (length - 1) / 2;
-  console.log(center, height);
   const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
     data[i] = generalizedLorentzianFct(i - center, fwhm, gamma) * height;
