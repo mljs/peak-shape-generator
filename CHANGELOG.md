@@ -1,5 +1,12 @@
 # Changelog
 
+### [4.1.4](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.3...v4.1.4) (2024-09-26)
+
+
+### Bug Fixes
+
+* correct fwhm for generalized lorentzian ([#78](https://www.github.com/mljs/peak-shape-generator/issues/78)) ([515b882](https://www.github.com/mljs/peak-shape-generator/commit/515b8828c06f0d4babd42275881a4c47c74de021))
+
 ### [4.1.3](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.2...v4.1.3) (2024-09-24)
 
 
