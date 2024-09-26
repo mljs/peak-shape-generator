@@ -30,6 +30,12 @@ interface GetGeneralizedLorentzianAreaOptions {
   x?: number;
 }
 
+/**
+ * This shape is a linear combination of rational function (n|n+2), for n = 0 (lorentzian function) and n = 2
+ * the parameter that combines those two functions is `gamma` and it is called the kurtosis parameter, it is an
+ * implementation of generalized lorentzian shape published by Stanislav Sykora in the SMASH 2010. DOI:10.3247/SL3nmr10.006
+ * @link http://www.ebyte.it/stan/Talk_ML_UserMeeting_SMASH_2010_GeneralizedLorentzian.html
+ */
 export class GeneralizedLorentzian implements Shape1DClass {
   /**
    * Full width at half maximum.

@@ -45,7 +45,7 @@ interface GetGaussianAreaOptions {
    */
   fwhm?: number;
   /**
-   * The halft width between the inflection points or standard deviation.
+   * The half width between the inflection points or standard deviation.
    * If it is defined the fwhm would be re-assigned.
    */
   sd?: number;
