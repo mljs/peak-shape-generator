@@ -10,7 +10,7 @@ export interface LorentzianClassOptions {
   fwhm?: number;
 }
 
-interface GetLorentzianAreaOptions {
+export interface GetLorentzianAreaOptions {
   /**
    * The maximum intensity value of the shape
    * @default 1
