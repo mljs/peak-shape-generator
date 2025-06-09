@@ -33,7 +33,7 @@ export class LorentzianDispersive implements Shape1DClass {
     return lorentzianDispersiveFct(x, this.fwhm);
   }
 
-  public getArea() {
+  public getArea(_height: number) {
     return 0;
   }
 
