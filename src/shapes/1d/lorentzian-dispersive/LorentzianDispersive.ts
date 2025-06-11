@@ -1,4 +1,5 @@
 import type { GetData1DOptions } from '../GetData1DOptions';
+import type { Parameter, Shape1DClass } from '../Shape1DClass';
 import {
   calculateLorentzianHeight,
   getLorentzianFactor,
@@ -6,7 +7,6 @@ import {
   lorentzianFwhmToWidth,
   lorentzianWidthToFWHM,
 } from '../lorentzian/Lorentzian';
-import type { Parameter, Shape1DClass } from '../Shape1DClass';
 
 export class LorentzianDispersive implements Shape1DClass {
   /**
@@ -33,6 +33,7 @@ export class LorentzianDispersive implements Shape1DClass {
     return lorentzianDispersiveFct(x, this.fwhm);
   }
 
+  //eslint-disable-next-line
   public getArea(_height: number) {
     return 0;
   }
