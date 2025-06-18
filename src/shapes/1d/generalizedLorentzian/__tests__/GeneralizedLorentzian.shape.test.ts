@@ -66,9 +66,11 @@ describe('GeneralizedLorentzian class and utilities', () => {
   });
 
   it('getGeneralizedLorentzianFactor throws for area >= 1', () => {
-    expect(() => getGeneralizedLorentzianFactor(1)).toThrow('area must be < 1');
+    expect(() => getGeneralizedLorentzianFactor(1)).toThrow(
+      'area should be (0 - 1)',
+    );
     expect(() => getGeneralizedLorentzianFactor(1.1)).toThrow(
-      'area must be < 1',
+      'area should be (0 - 1)',
     );
   });
 
