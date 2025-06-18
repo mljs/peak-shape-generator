@@ -1,3 +1,4 @@
+import { ROOT_THREE } from '../../../../util/constants';
 import { LorentzianDispersive } from '../LorentzianDispersive';
 
 describe('lorentzian', () => {
@@ -12,6 +13,10 @@ describe('lorentzian', () => {
     const computedArea = lorentzian.getArea(height);
     expect(computedArea).toBeCloseTo(expectedArea, 2);
     expect(lorentzian.getParameters()).toStrictEqual(['fwhm']);
+
+    const width = 20;
+    expect(lorentzian.widthToFWHM(width)).toBe(width * ROOT_THREE);
+    expect(lorentzian.fwhmToWidth(lorentzian.widthToFWHM(width))).toBe(width);
   });
   it('differents factor', () => {
     const lorentzian = new LorentzianDispersive({ fwhm: 1000 });
