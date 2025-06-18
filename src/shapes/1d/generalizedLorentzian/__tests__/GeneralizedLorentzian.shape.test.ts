@@ -66,8 +66,10 @@ describe('GeneralizedLorentzian class and utilities', () => {
   });
 
   it('getGeneralizedLorentzianFactor throws for area >= 1', () => {
-    expect(() => getGeneralizedLorentzianFactor(1)).toThrow();
-    expect(() => getGeneralizedLorentzianFactor(1.1)).toThrow();
+    expect(() => getGeneralizedLorentzianFactor(1)).toThrow('area must be < 1');
+    expect(() => getGeneralizedLorentzianFactor(1.1)).toThrow(
+      'area must be < 1',
+    );
   });
 
   it('getGeneralizedLorentzianFactor returns number for area < 1', () => {
@@ -81,7 +83,7 @@ describe('GeneralizedLorentzian class and utilities', () => {
       { fwhm: 5, gamma: 1 },
       { length: 11 },
     );
-    expect(data.length).toBe(11);
+    expect(data).toHaveLength(11);
     for (let i = 0; i < data.length / 2; i++) {
       expect(data[i]).toBeCloseTo(data[data.length - 1 - i]);
     }
@@ -95,7 +97,7 @@ describe('GeneralizedLorentzian class and utilities', () => {
 
   it('getParameters returns correct parameter names', () => {
     const gLorentzian = new GeneralizedLorentzian();
-    expect(gLorentzian.getParameters()).toEqual(['fwhm', 'gamma']);
+    expect(gLorentzian.getParameters()).toStrictEqual(['fwhm', 'gamma']);
   });
 
   it('utility functions: fwhm/width conversion', () => {

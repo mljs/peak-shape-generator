@@ -1,6 +1,7 @@
 import type { GaussianClassOptions } from './gaussian/Gaussian';
 import { GeneralizedLorentzianClassOptions } from './generalizedLorentzian/GeneralizedLorentzian';
 import type { LorentzianClassOptions } from './lorentzian/Lorentzian';
+import { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive';
 import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
 
 /**
@@ -18,6 +19,10 @@ export interface PseudoVoigtShape1D extends PseudoVoigtClassOptions {
   kind: 'pseudoVoigt';
 }
 
+export interface LorentzianDispersiveShape1D extends LorentzianDispersive {
+  kind: 'lorentzianDispersive';
+}
+
 export interface GeneralizedLorentzianShape1D
   extends GeneralizedLorentzianClassOptions {
   kind: 'generalizedLorentzian';
@@ -27,4 +32,5 @@ export type Shape1D =
   | GaussianShape1D
   | LorentzianShape1D
   | PseudoVoigtShape1D
+  | LorentzianDispersiveShape1D
   | GeneralizedLorentzianShape1D;
