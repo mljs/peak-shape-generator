@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.0](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.4...v4.2.0) (2025-06-18)
+
+
+### Features
+
+* dispersive lorentzian implementation ([#81](https://www.github.com/mljs/peak-shape-generator/issues/81)) ([1daf4b6](https://www.github.com/mljs/peak-shape-generator/commit/1daf4b6d33510f4a7836d77bca17ad43f7c17838))
+
 ### [4.1.4](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.3...v4.1.4) (2024-09-26)
 
 
