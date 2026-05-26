@@ -1,13 +1,14 @@
+import { getGaussianFactor } from '../gaussian/Gaussian';
+import { getLorentzianFactor } from '../lorentzian/Lorentzian';
+
 /**
  * Find the k factor for a pseudo-Voigt distribution such that the
  * cumulative probability pPseudoVoigt(k, mu) equals `pTarget`.
  *
  * Uses a simple bisection search (with exponential bracketing) to
  * invert the pseudo-Voigt cumulative function. Special cases:
- * - pTarget <= 0 -> returns 0
- * - pTarget >= 1 -> returns Infinity
- * - mu === 1 -> reduces to the gaussian case and returns tan((pi/2)*pTarget)
- *
+ * - mu === 1 -> reduces to the gaussian case
+ * - mu === 0 -> reduces to the lorentzian case
  * @param pTarget - Target cumulative probability in (0,1)
  * @param mu - Gaussian fraction in [0,1]
  * @param tol - Convergence tolerance
@@ -20,9 +21,16 @@ export function pseudoVoigtFindFactor(
   tol = 1e-9,
   maxIter = 200,
 ) {
-  if (pTarget <= 0) return 0;
-  if (pTarget >= 1) return Infinity;
-  if (mu === 1) return Math.tan((Math.PI / 2) * pTarget);
+  if (pTarget <= 0 || pTarget >= 1) {
+    throw new RangeError('pTarget must be in (0,1)');
+  }
+
+  if (mu === 1) {
+    return getGaussianFactor(pTarget);
+  } else if (mu === 0) {
+    return getLorentzianFactor(pTarget);
+  }
+
   // bisection
   let lo = 0;
   let hi = 10;
