@@ -5,8 +5,10 @@ import {
 } from '../../../util/constants';
 import { GetData1DOptions } from '../GetData1DOptions';
 import { Parameter, Shape1DClass } from '../Shape1DClass';
-import { gaussianFct, getGaussianFactor } from '../gaussian/Gaussian';
-import { lorentzianFct, getLorentzianFactor } from '../lorentzian/Lorentzian';
+import { gaussianFct } from '../gaussian/Gaussian';
+import { lorentzianFct } from '../lorentzian/Lorentzian';
+
+import { pseudoVoigtFindFactor } from './computeFactor';
 
 export interface PseudoVoigtClassOptions {
   /**
@@ -86,7 +88,7 @@ export class PseudoVoigt implements Shape1DClass {
   }
 
   public getFactor(area?: number) {
-    return getPseudoVoigtFactor(area);
+    return getPseudoVoigtFactor(area, this.mu);
   }
 
   public getData(options: GetData1DOptions = {}) {
@@ -136,7 +138,7 @@ export const getPseudoVoigtArea = (options: GetPseudoVoigtAreaOptions) => {
 };
 
 export const getPseudoVoigtFactor = (area = 0.9999, mu = 0.5) => {
-  return mu < 1 ? getLorentzianFactor(area) : getGaussianFactor(area);
+  return pseudoVoigtFindFactor(area, mu);
 };
 
 export const getPseudoVoigtData = (
