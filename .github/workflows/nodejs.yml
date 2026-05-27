@@ -7,14 +7,14 @@ on:
   pull_request:
 
 env:
-  NODE_VERSION: 16.x
+  NODE_VERSION: 26.x
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install dependencies
@@ -27,12 +27,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [22.x, 24.x, 26.x]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
@@ -40,4 +40,4 @@ jobs:
       - name: Run tests
         run: npm run test-coverage
       - name: Send coverage report to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v6
