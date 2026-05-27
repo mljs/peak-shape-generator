@@ -40,8 +40,11 @@ export function pseudoVoigtFindFactor(
     const mid = 0.5 * (lo + hi);
     const val = pPseudoVoigt(mid, mu);
     if (Math.abs(val - pTarget) < tol) return mid;
-    if (val < pTarget) lo = mid;
-    else hi = mid;
+    if (val < pTarget) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
   }
   return 0.5 * (lo + hi);
 }
