@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.0](https://www.github.com/mljs/peak-shape-generator/compare/v4.2.0...v4.3.0) (2026-05-27)
+
+
+### Features
+
+* **pseudovoigt:** compute the factor based on mu parameter ([#83](https://www.github.com/mljs/peak-shape-generator/issues/83)) ([bb4b572](https://www.github.com/mljs/peak-shape-generator/commit/bb4b5722b2a710c78f3177a82d04eb28e67e3481))
+
 ## [4.2.0](https://www.github.com/mljs/peak-shape-generator/compare/v4.1.4...v4.2.0) (2025-06-18)
 
 
