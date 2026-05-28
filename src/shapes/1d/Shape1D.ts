@@ -2,6 +2,7 @@ import type { GaussianClassOptions } from './gaussian/Gaussian';
 import { GeneralizedLorentzianClassOptions } from './generalizedLorentzian/GeneralizedLorentzian';
 import type { LorentzianClassOptions } from './lorentzian/Lorentzian';
 import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
+import type { PseudoVoigtTCHClassOptions } from './pseudoVoigtTCH/PseudoVoigtTCH';
 
 /**
  * kind of shape
@@ -27,9 +28,14 @@ export interface GeneralizedLorentzianShape1D
   kind: 'generalizedLorentzian';
 }
 
+export interface PseudoVoigtTCHShape1D extends PseudoVoigtTCHClassOptions {
+  kind: 'pseudoVoigtTCH';
+}
+
 export type Shape1D =
   | GaussianShape1D
   | LorentzianShape1D
   | PseudoVoigtShape1D
   | LorentzianDispersiveShape1D
-  | GeneralizedLorentzianShape1D;
+  | GeneralizedLorentzianShape1D
+  | PseudoVoigtTCHShape1D;

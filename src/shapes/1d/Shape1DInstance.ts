@@ -3,10 +3,12 @@ import { GeneralizedLorentzian } from './generalizedLorentzian/GeneralizedLorent
 import { Lorentzian } from './lorentzian/Lorentzian';
 import { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive';
 import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt';
+import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH';
 
 export type Shape1DInstance =
   | Gaussian
   | Lorentzian
   | PseudoVoigt
+  | PseudoVoigtTCH
   | LorentzianDispersive
   | GeneralizedLorentzian;

@@ -5,6 +5,7 @@ import { GeneralizedLorentzian } from './generalizedLorentzian/GeneralizedLorent
 import { Lorentzian } from './lorentzian/Lorentzian';
 import { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive';
 import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt';
+import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH';
 
 /**
  * Generate a instance of a specific kind of shape.
@@ -19,6 +20,8 @@ export function getShape1D(shape: Shape1D): Shape1DInstance {
       return new Lorentzian(shape);
     case 'pseudoVoigt':
       return new PseudoVoigt(shape);
+    case 'pseudoVoigtTCH':
+      return new PseudoVoigtTCH(shape);
     case 'lorentzianDispersive':
       return new LorentzianDispersive(shape);
     case 'generalizedLorentzian':
