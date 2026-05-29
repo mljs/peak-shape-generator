@@ -68,21 +68,22 @@ interface CalculatePseudoVoightHeightOptions {
 export class PseudoVoigtTCH implements Shape1DClass {
   private _fwhmG: number;
   private _fwhmL: number;
-  public fwhm: number;
+  public _fwhm: number;
   /**
    * Ratio of gaussian contribution in the shape
    * @default 0.5
    */
-  public mu: number;
+  public _mu: number;
+  private lorentzianWidthFraction: number;
 
   public constructor(options: PseudoVoigtTCHClassOptions = {}) {
-    const { fwhm = 500, mu = 0.5, fwhmG = 500, fwhmL = 500 } = options;
+    const { fwhmG = 500, fwhmL = 500 } = options;
 
-    this.mu = mu;
-    this.fwhm = fwhm;
+    this._mu = 0;
+    this.lorentzianWidthFraction = 1;
+    this._fwhm = 500;
     this._fwhmG = fwhmG;
     this._fwhmL = fwhmL;
-    this.fwhmG = fwhmG;
     this.fwhmL = fwhmL;
   }
 
@@ -90,8 +91,8 @@ export class PseudoVoigtTCH implements Shape1DClass {
     const H = computeEffectiveWidth(value, this._fwhmL);
     const r = this._fwhmL / H;
     const mu = 1 - (1.36603 * r - 0.47719 * r * r + 0.11116 * r * r * r);
-    this.fwhm = H;
-    this.mu = mu;
+    this._fwhm = H;
+    this._mu = mu;
     this._fwhmG = value;
   }
 
@@ -103,8 +104,8 @@ export class PseudoVoigtTCH implements Shape1DClass {
     const H = computeEffectiveWidth(this._fwhmG, value);
     const r = value / H;
     const mu = 1 - (1.36603 * r - 0.47719 * r * r + 0.11116 * r * r * r);
-    this.fwhm = H;
-    this.mu = mu;
+    this._fwhm = H;
+    this._mu = mu;
     this._fwhmL = value;
   }
 
@@ -112,24 +113,48 @@ export class PseudoVoigtTCH implements Shape1DClass {
     return this._fwhmL;
   }
 
-  public fwhmToWidth(fwhm = this.fwhm, mu = this.mu) {
+  public set mu(value: number) {
+    const r = lorentzianWidthFraction(1 - value);
+    this.lorentzianWidthFraction = r;
+    this._fwhmL = this._fwhm * r;
+    this._fwhmG = this._fwhm * (1 - r);
+    this._mu = value;
+  }
+
+  public get mu() {
+    return this._mu;
+  }
+
+  public set fwhm(value: number) {
+    const r =
+      this.lorentzianWidthFraction || lorentzianWidthFraction(1 - this._mu);
+    this._fwhmL = value * r;
+    this._fwhmG = value * (1 - r);
+    this._fwhm = value;
+  }
+
+  public get fwhm() {
+    return this._fwhm;
+  }
+
+  public fwhmToWidth(fwhm = this._fwhm, mu = this._mu) {
     return pseudoVoigtFwhmToWidth(fwhm, mu);
   }
 
-  public widthToFWHM(width: number, mu: number = this.mu) {
+  public widthToFWHM(width: number, mu: number = this._mu) {
     return pseudoVoigtWidthToFWHM(width, mu);
   }
 
   public fct(x: number) {
-    return pseudoVoigtFct(x, this.fwhm, this.mu);
+    return pseudoVoigtFct(x, this._fwhm, this._mu);
   }
 
   public getArea(height = 1) {
-    return getPseudoVoigtArea({ fwhm: this.fwhm, height, mu: this.mu });
+    return getPseudoVoigtArea({ fwhm: this._fwhm, height, mu: this._mu });
   }
 
   public getFactor(area?: number) {
-    return getPseudoVoigtFactor(area, this.mu);
+    return getPseudoVoigtFactor(area, this._mu);
   }
 
   public getData(options: GetData1DOptions = {}) {
@@ -137,8 +162,8 @@ export class PseudoVoigtTCH implements Shape1DClass {
       length,
       factor,
       height = calculatePseudoVoigtHeight({
-        fwhm: this.fwhm,
-        mu: this.mu,
+        fwhm: this._fwhm,
+        mu: this._mu,
         area: 1,
       }),
     } = options;
@@ -235,4 +260,22 @@ function computeEffectiveWidth(Hg: number, Hl: number): number {
       Hl5,
     1 / 5,
   );
+}
+
+function lorentzianWidthFraction(eta: number): number {
+  // solve:
+  // mu = 1.36603*x - 0.47719*x² + 0.11116*x³
+  // where x = Hl / H
+
+  let x = eta; // initial guess
+
+  for (let i = 0; i < 6; i++) {
+    const f = 1.36603 * x - 0.47719 * x * x + 0.11116 * x * x * x - eta;
+
+    const df = 1.36603 - 2 * 0.47719 * x + 3 * 0.11116 * x * x;
+
+    x -= f / df;
+  }
+
+  return x;
 }
