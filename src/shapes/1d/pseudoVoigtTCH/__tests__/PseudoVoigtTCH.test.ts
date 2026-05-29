@@ -98,3 +98,11 @@ test('widthToFWHM and fwhmToWidth are inverses', () => {
 
   expect(shape.widthToFWHM(width)).toBeCloseTo(shape.fwhm, 4);
 });
+
+test('getFactor returns a finite positive number', () => {
+  const shape = new PseudoVoigtTCH({ fwhmG: 100, fwhmL: 100 });
+
+  expect(shape.getFactor(0.9)).toBeGreaterThan(0);
+  expect(Number.isFinite(shape.getFactor(0.9))).toBe(true);
+  expect(shape.getFactor(0.5)).toBeLessThan(shape.getFactor(0.99));
+});
