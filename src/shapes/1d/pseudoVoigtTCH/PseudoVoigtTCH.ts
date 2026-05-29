@@ -75,6 +75,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
           lorentzianFraction *
           lorentzianFraction);
     this._fwhmG = value;
+    this._lorentzianWidthFraction = lorentzianFraction;
   }
 
   public get fwhmG(): number {
@@ -94,6 +95,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
           lorentzianFraction *
           lorentzianFraction);
     this._fwhmL = value;
+    this._lorentzianWidthFraction = lorentzianFraction;
   }
 
   public get fwhmL(): number {
@@ -178,21 +180,13 @@ export class PseudoVoigtTCH implements Shape1DClass {
  * @returns effective combined FWHM.
  */
 function computeEffectiveWidth(fwhmG: number, fwhmL: number): number {
-  const g2 = fwhmG * fwhmG;
-  const g3 = g2 * fwhmG;
-  const g4 = g3 * fwhmG;
-  const g5 = g4 * fwhmG;
-  const l2 = fwhmL * fwhmL;
-  const l3 = l2 * fwhmL;
-  const l4 = l3 * fwhmL;
-  const l5 = l4 * fwhmL;
   return (
-    g5 +
-    2.69269 * g4 * fwhmL +
-    2.42843 * g3 * l2 +
-    4.47163 * g2 * l3 +
-    0.07842 * fwhmG * l4 +
-    l5
+    fwhmG ** 5 +
+    2.69269 * fwhmG ** 4 * fwhmL +
+    2.42843 * fwhmG ** 3 * fwhmL ** 2 +
+    4.47163 * fwhmG ** 2 * fwhmL ** 3 +
+    0.07842 * fwhmG * fwhmL ** 4 +
+    fwhmL ** 5
   ) ** 0.2;
 }
 
@@ -203,12 +197,16 @@ function computeEffectiveWidth(fwhmG: number, fwhmL: number): number {
  * @returns the lorentzian width fraction fwhmL/fwhm.
  */
 function lorentzianWidthFraction(lorentzianFraction: number): number {
-  let x = lorentzianFraction;
+  let fraction = lorentzianFraction;
   for (let i = 0; i < 6; i++) {
     const f =
-      1.36603 * x - 0.47719 * x * x + 0.11116 * x * x * x - lorentzianFraction;
-    const df = 1.36603 - 2 * 0.47719 * x + 3 * 0.11116 * x * x;
-    x -= f / df;
+      1.36603 * fraction -
+      0.47719 * fraction * fraction +
+      0.11116 * fraction * fraction * fraction -
+      lorentzianFraction;
+    const df =
+      1.36603 - 2 * 0.47719 * fraction + 3 * 0.11116 * fraction * fraction;
+    fraction -= f / df;
   }
-  return x;
+  return fraction;
 }
