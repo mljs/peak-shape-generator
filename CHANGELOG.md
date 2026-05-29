@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.0.0](https://github.com/mljs/peak-shape-generator/compare/v4.3.0...v5.0.0) (2026-05-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* package is now ESM-only; consumers using require() must migrate to import, or run Node.js >= 20.19, >= 22.12, or any 24.x or later.
+
+### Features
+
+* add PseudoVoigtTCH shape (TCH-style pseudo-Voigt with independent fwhmG/fwhmL) ([de0561d](https://github.com/mljs/peak-shape-generator/commit/de0561d78438d84fc5a0c639bd41b3b8cbd1d614))
+* migrate to ESM and update tooling to current standards ([2e0895f](https://github.com/mljs/peak-shape-generator/commit/2e0895f3260e4048753f6552bfeaa9292966f529))
+
 ## [4.3.0](https://www.github.com/mljs/peak-shape-generator/compare/v4.2.0...v4.3.0) (2026-05-27)
 
 
