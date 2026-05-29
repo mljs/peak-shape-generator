@@ -63,10 +63,17 @@ export class PseudoVoigtTCH implements Shape1DClass {
   }
 
   public set fwhmG(value: number) {
-    const H = computeEffectiveWidth(value, this._fwhmL);
-    const r = this._fwhmL / H;
-    this._fwhm = H;
-    this._mu = 1 - (1.36603 * r - 0.47719 * r * r + 0.11116 * r * r * r);
+    const effectiveFwhm = computeEffectiveWidth(value, this._fwhmL);
+    const lorentzianFraction = this._fwhmL / effectiveFwhm;
+    this._fwhm = effectiveFwhm;
+    this._mu =
+      1 -
+      (1.36603 * lorentzianFraction -
+        0.47719 * lorentzianFraction * lorentzianFraction +
+        0.11116 *
+          lorentzianFraction *
+          lorentzianFraction *
+          lorentzianFraction);
     this._fwhmG = value;
   }
 
@@ -75,10 +82,17 @@ export class PseudoVoigtTCH implements Shape1DClass {
   }
 
   public set fwhmL(value: number) {
-    const H = computeEffectiveWidth(this._fwhmG, value);
-    const r = value / H;
-    this._fwhm = H;
-    this._mu = 1 - (1.36603 * r - 0.47719 * r * r + 0.11116 * r * r * r);
+    const effectiveFwhm = computeEffectiveWidth(this._fwhmG, value);
+    const lorentzianFraction = value / effectiveFwhm;
+    this._fwhm = effectiveFwhm;
+    this._mu =
+      1 -
+      (1.36603 * lorentzianFraction -
+        0.47719 * lorentzianFraction * lorentzianFraction +
+        0.11116 *
+          lorentzianFraction *
+          lorentzianFraction *
+          lorentzianFraction);
     this._fwhmL = value;
   }
 
@@ -87,10 +101,10 @@ export class PseudoVoigtTCH implements Shape1DClass {
   }
 
   public set mu(value: number) {
-    const r = lorentzianWidthFraction(1 - value);
-    this._lorentzianWidthFraction = r;
-    this._fwhmL = this._fwhm * r;
-    this._fwhmG = this._fwhm * (1 - r);
+    const lorentzianFraction = lorentzianWidthFraction(1 - value);
+    this._lorentzianWidthFraction = lorentzianFraction;
+    this._fwhmL = this._fwhm * lorentzianFraction;
+    this._fwhmG = this._fwhm * (1 - lorentzianFraction);
     this._mu = value;
   }
 
@@ -99,10 +113,10 @@ export class PseudoVoigtTCH implements Shape1DClass {
   }
 
   public set fwhm(value: number) {
-    const r =
+    const lorentzianFraction =
       this._lorentzianWidthFraction || lorentzianWidthFraction(1 - this._mu);
-    this._fwhmL = value * r;
-    this._fwhmG = value * (1 - r);
+    this._fwhmL = value * lorentzianFraction;
+    this._fwhmG = value * (1 - lorentzianFraction);
     this._fwhm = value;
   }
 
@@ -157,42 +171,42 @@ export class PseudoVoigtTCH implements Shape1DClass {
 }
 
 /**
- * Compute the effective FWHM H from gaussian (Hg) and lorentzian (Hl) widths
+ * Compute the effective FWHM from gaussian and lorentzian component widths
  * using the Thompson–Cox–Hastings approximation.
- * @param Hg - gaussian FWHM.
- * @param Hl - lorentzian FWHM.
+ * @param fwhmG - gaussian component FWHM.
+ * @param fwhmL - lorentzian component FWHM.
  * @returns effective combined FWHM.
  */
-function computeEffectiveWidth(Hg: number, Hl: number): number {
-  const Hg2 = Hg * Hg;
-  const Hg3 = Hg2 * Hg;
-  const Hg4 = Hg3 * Hg;
-  const Hg5 = Hg4 * Hg;
-  const Hl2 = Hl * Hl;
-  const Hl3 = Hl2 * Hl;
-  const Hl4 = Hl3 * Hl;
-  const Hl5 = Hl4 * Hl;
+function computeEffectiveWidth(fwhmG: number, fwhmL: number): number {
+  const g2 = fwhmG * fwhmG;
+  const g3 = g2 * fwhmG;
+  const g4 = g3 * fwhmG;
+  const g5 = g4 * fwhmG;
+  const l2 = fwhmL * fwhmL;
+  const l3 = l2 * fwhmL;
+  const l4 = l3 * fwhmL;
+  const l5 = l4 * fwhmL;
   return (
-    (Hg5 +
-      2.69269 * Hg4 * Hl +
-      2.42843 * Hg3 * Hl2 +
-      4.47163 * Hg2 * Hl3 +
-      0.07842 * Hg * Hl4 +
-      Hl5) **
-    0.2
-  );
+    g5 +
+    2.69269 * g4 * fwhmL +
+    2.42843 * g3 * l2 +
+    4.47163 * g2 * l3 +
+    0.07842 * fwhmG * l4 +
+    l5
+  ) ** 0.2;
 }
 
 /**
- * Solve for the lorentzian width fraction x = Hl/H given eta = 1 - mu,
- * using Newton–Raphson on: 1.36603·x - 0.47719·x² + 0.11116·x³ = eta.
- * @param eta - target value (= 1 - mu).
- * @returns the lorentzian width fraction Hl/H.
+ * Solve for the lorentzian width fraction fwhmL/fwhm given lorentzianFraction = 1 - mu,
+ * using Newton's method on: 1.36603·x - 0.47719·x² + 0.11116·x³ = lorentzianFraction.
+ * @param lorentzianFraction - TCH lorentzian mixing parameter (= 1 - mu).
+ * @returns the lorentzian width fraction fwhmL/fwhm.
  */
-function lorentzianWidthFraction(eta: number): number {
-  let x = eta;
+function lorentzianWidthFraction(lorentzianFraction: number): number {
+  let x = lorentzianFraction;
   for (let i = 0; i < 6; i++) {
-    const f = 1.36603 * x - 0.47719 * x * x + 0.11116 * x * x * x - eta;
+    const f =
+      1.36603 * x - 0.47719 * x * x + 0.11116 * x * x * x - lorentzianFraction;
     const df = 1.36603 - 2 * 0.47719 * x + 3 * 0.11116 * x * x;
     x -= f / df;
   }
