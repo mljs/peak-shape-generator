@@ -77,14 +77,20 @@ export class PseudoVoigtTCH implements Shape1DClass {
   private lorentzianWidthFraction: number;
 
   public constructor(options: PseudoVoigtTCHClassOptions = {}) {
-    const { fwhmG = 500, fwhmL = 500 } = options;
+    const { fwhmG, fwhmL, fwhm, mu = 0.5 } = options;
 
-    this._mu = 0;
-    this.lorentzianWidthFraction = 1;
-    this._fwhm = 500;
-    this._fwhmG = fwhmG;
-    this._fwhmL = fwhmL;
-    this.fwhmL = fwhmL;
+    this._mu = mu;
+    this._fwhm = 0;
+    this._fwhmG = 0;
+    this._fwhmL = 0;
+    this.lorentzianWidthFraction = lorentzianWidthFraction(1 - mu);
+
+    if (fwhmG && fwhmL) {
+      this._fwhmG = fwhmG;
+      this.fwhmL = fwhmL;
+    } else if (fwhm) {
+      this.fwhm = fwhm;
+    }
   }
 
   public set fwhmG(value: number) {
