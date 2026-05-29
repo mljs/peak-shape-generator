@@ -1,4 +1,4 @@
-import type { XYNumber } from './XYNumber';
+import type { XYNumber } from './XYNumber.ts';
 
 export interface GetData2DOptions {
   /**

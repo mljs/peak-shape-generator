@@ -1,7 +1,7 @@
-import { DoubleArray } from 'cheminfo-types';
+import type { DoubleArray } from 'cheminfo-types';
 
-import { GetData2DOptions } from './GetData2DOptions';
-import { XYNumber } from './XYNumber';
+import type { GetData2DOptions } from './GetData2DOptions.ts';
+import type { XYNumber } from './XYNumber.ts';
 
 export interface Shape2DClass {
   /**
@@ -23,8 +23,6 @@ export interface Shape2DClass {
    * Return a parameterized function of a Gaussian2D shape (see README for equation).
    * @param x - x value to calculate.
    * @param y - y value to calculate.
-   * @param fwhmX - full width half maximum in the x axis.
-   * @param fwhmY - full width half maximum in the y axis.
    * @returns - the z value of bi-dimensional gaussian with the current parameters.
    */
   fct(x: number, y: number): number;

@@ -1,107 +1,136 @@
 import erfinv from 'compute-erfinv';
+import { expect, test } from 'vitest';
 
-import { ROOT_2LN2 } from '../../../../util/constants';
+import { ROOT_2LN2 } from '../../../../util/constants.ts';
 import {
-  gaussianWidthToFWHM,
   gaussianFwhmToWidth,
-} from '../../../1d/gaussian/Gaussian';
-import { Gaussian2D } from '../Gaussian2D';
+  gaussianWidthToFWHM,
+} from '../../../1d/gaussian/Gaussian.ts';
+import { Gaussian2D } from '../Gaussian2D.ts';
 
-describe('Gaussian2D.shape', () => {
-  it('height 1', () => {
-    const gaussian2D = new Gaussian2D({
-      fwhm: 10,
-    });
-    const data = gaussian2D.getData({ height: 1 });
-    expect(data).toHaveLength(39);
-    const xCenter = (data.length - 1) / 2;
-    const yCenter = (data[0].length - 1) / 2;
-    expect(data[xCenter][yCenter]).toBe(1);
+test('height 1', () => {
+  const gaussian2D = new Gaussian2D({
+    fwhm: 10,
+  });
+  const data = gaussian2D.getData({ height: 1 });
 
-    const volume = getVolume(data);
-    expect(volume).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
-  });
+  expect(data).toHaveLength(39);
 
-  it('check gaussian2D continuous', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 59 });
-    const y = gaussian2D.getData({ factor: 1 });
-    const nbChanges = getNbChanges(y[(y.length - 1) / 2]);
-    expect(nbChanges).toBe(2);
-  });
+  const xCenter = (data.length - 1) / 2;
+  const yCenter = (data[0].length - 1) / 2;
 
-  it('fwhm fixed and normalized', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 50 });
-    const data = gaussian2D.getData();
-    expect(data).toHaveLength(195);
-    const volume = getVolume(data);
-    expect(volume).toBeCloseTo(0.9999, 2);
-    const computeSurface = gaussian2D.getVolume();
-    expect(computeSurface).toBeCloseTo(1, 2);
-  });
+  expect(data[xCenter][yCenter]).toBe(1);
 
-  it('sd fixed', () => {
-    const sd = 50;
-    const height = 3;
-    const gaussian2D = new Gaussian2D({ sd });
-    const data = gaussian2D.getData({ height });
-    const center = (data.length - 1) / 2;
-    expect(data[center][center]).toBeCloseTo(3, 3);
-    expect(data[center][0]).toBeCloseTo(gaussian2D.fct(0, -center) * height);
-    expect(data[center][center]).toBeCloseTo(height, 2);
-    const volume = getVolume(data);
-    expect(volume).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
-  });
+  const volume = getVolume(data);
 
-  it('odd fwhm', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 101 });
-    const data = gaussian2D.getData({ length: 101, height: 1 });
-    expect(data).toHaveLength(101);
-    const lenG = data.length;
-    const center = Math.floor((lenG - 1) / 2);
-    expect(data[center][center]).toBeCloseTo(1, 4);
-    expect(data[center - 1][center]).toBeCloseTo(data[center + 1][center], 4);
-    expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
-  });
-  it('even fwhm', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 100 });
-    const data = gaussian2D.getData({ length: 100, height: 1 });
-    expect(data).toHaveLength(100);
-    const lenG = data.length;
-    const center = Math.floor((lenG - 1) / 2);
-    expect(data[center][center]).toBeCloseTo(data[center + 1][center], 4);
-    expect(data[0][center]).toBeCloseTo(data[data.length - 1][center], 4);
-  });
-  it('width To fwhm', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 100 });
-    const width = 20;
-    expect(gaussian2D.widthToFWHM(width)).toBe(width * ROOT_2LN2);
-    expect(gaussian2D.widthToFWHM(width)).toBe(gaussianWidthToFWHM(width));
-  });
-  it('fwhm to width', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 100 });
-    const fwhm = 20;
-    expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
-    gaussian2D.fwhm = fwhm;
-    expect(gaussian2D.fwhmToWidth(fwhm)).toBe(gaussianFwhmToWidth(fwhm));
-  });
-  it('change height should change area', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 100 });
-    const volume = gaussian2D.getVolume(1);
-    expect(gaussian2D.getVolume(2)).toBeCloseTo(2 * volume, 4);
-  });
-  it('factor should be close', () => {
-    const gaussian2D = new Gaussian2D({ fwhm: 100 });
-    for (let i = 1; i < 11; i++) {
-      const volume: number = i * 0.1;
-      expect(gaussian2D.getFactor(volume)).toBeCloseTo(
-        Math.sqrt(2) * erfinv(volume),
-        1,
-      );
-    }
-  });
+  expect(volume).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
 });
 
-function getVolume(data: Array<Float64Array>) {
+test('check gaussian2D continuous', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 59 });
+  const y = gaussian2D.getData({ factor: 1 });
+  const nbChanges = getNbChanges(y[(y.length - 1) / 2]);
+
+  expect(nbChanges).toBe(2);
+});
+
+test('fwhm fixed and normalized', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 50 });
+  const data = gaussian2D.getData();
+
+  expect(data).toHaveLength(195);
+
+  const volume = getVolume(data);
+
+  expect(volume).toBeCloseTo(0.9999, 2);
+
+  const computeSurface = gaussian2D.getVolume();
+
+  expect(computeSurface).toBeCloseTo(1, 2);
+});
+
+test('sd fixed', () => {
+  const sd = 50;
+  const height = 3;
+  const gaussian2D = new Gaussian2D({ sd });
+  const data = gaussian2D.getData({ height });
+  const center = (data.length - 1) / 2;
+
+  expect(data[center][center]).toBeCloseTo(3, 3);
+  expect(data[center][0]).toBeCloseTo(gaussian2D.fct(0, -center) * height);
+  expect(data[center][center]).toBeCloseTo(height, 2);
+
+  const volume = getVolume(data);
+
+  expect(volume).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
+});
+
+test('odd fwhm', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 101 });
+  const data = gaussian2D.getData({ length: 101, height: 1 });
+
+  expect(data).toHaveLength(101);
+
+  const lenG = data.length;
+  const center = Math.floor((lenG - 1) / 2);
+
+  expect(data[center][center]).toBeCloseTo(1, 4);
+  expect(data[center - 1][center]).toBeCloseTo(data[center + 1][center], 4);
+  expect(data[center][center]).toBeGreaterThan(data[center + 1][center]);
+});
+
+test('even fwhm', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+  const data = gaussian2D.getData({ length: 100, height: 1 });
+
+  expect(data).toHaveLength(100);
+
+  const lenG = data.length;
+  const center = Math.floor((lenG - 1) / 2);
+
+  expect(data[center][center]).toBeCloseTo(data[center + 1][center], 4);
+  expect(data[0][center]).toBeCloseTo(data.at(-1)[center], 4);
+});
+
+test('width To fwhm', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+  const width = 20;
+
+  expect(gaussian2D.widthToFWHM(width)).toBe(width * ROOT_2LN2);
+  expect(gaussian2D.widthToFWHM(width)).toBe(gaussianWidthToFWHM(width));
+});
+
+test('fwhm to width', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+  const fwhm = 20;
+
+  expect(gaussian2D.fwhmToWidth(fwhm)).toBe(fwhm / ROOT_2LN2);
+
+  gaussian2D.fwhm = fwhm;
+
+  expect(gaussian2D.fwhmToWidth(fwhm)).toBe(gaussianFwhmToWidth(fwhm));
+});
+
+test('change height should change area', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+  const volume = gaussian2D.getVolume(1);
+
+  expect(gaussian2D.getVolume(2)).toBeCloseTo(2 * volume, 4);
+});
+
+test('factor should be close', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+  for (let i = 1; i < 11; i++) {
+    const volume: number = i * 0.1;
+
+    expect(gaussian2D.getFactor(volume)).toBeCloseTo(
+      Math.sqrt(2) * erfinv(volume),
+      1,
+    );
+  }
+});
+
+function getVolume(data: Float64Array[]) {
   let volume = 0;
   for (const row of data) {
     for (let j = 0; j < data[0].length; j++) {
@@ -112,7 +141,7 @@ function getVolume(data: Array<Float64Array>) {
 }
 
 function getNbChanges(y: Float64Array) {
-  let yPrime = [0];
+  const yPrime = [0];
 
   for (let i = 1; i < y.length; i++) {
     // first derivative
@@ -122,9 +151,9 @@ function getNbChanges(y: Float64Array) {
   let positive = true;
   let nbChanges = 0;
   for (let i = 1; i < yPrime.length; i++) {
-    let diff = yPrime[i] - yPrime[i - 1];
+    const diff = yPrime[i] - yPrime[i - 1];
 
-    if (diff > 0 && positive === false) {
+    if (diff > 0 && !positive) {
       positive = true;
       nbChanges++;
     }

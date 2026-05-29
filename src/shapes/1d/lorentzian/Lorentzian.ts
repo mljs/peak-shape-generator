@@ -1,6 +1,6 @@
-import { ROOT_THREE } from '../../../util/constants';
-import type { GetData1DOptions } from '../GetData1DOptions';
-import type { Parameter, Shape1DClass } from '../Shape1DClass';
+import { ROOT_THREE } from '../../../util/constants.ts';
+import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
 
 export interface LorentzianClassOptions {
   /**
@@ -90,14 +90,16 @@ export const lorentzianFwhmToWidth = (fwhm: number) => {
   return fwhm / ROOT_THREE;
 };
 
+const lorentzianQuantile = (p: number) => Math.tan(Math.PI * (p - 0.5));
+
 export const getLorentzianFactor = (area = 0.9999) => {
   if (area >= 1) {
     throw new Error('area should be (0 - 1)');
   }
   const halfResidual = (1 - area) * 0.5;
-  const quantileFunction = (p: number) => Math.tan(Math.PI * (p - 0.5));
   return (
-    (quantileFunction(1 - halfResidual) - quantileFunction(halfResidual)) / 2
+    (lorentzianQuantile(1 - halfResidual) - lorentzianQuantile(halfResidual)) /
+    2
   );
 };
 
@@ -105,23 +107,24 @@ export const getLorentzianData = (
   shape: LorentzianClassOptions = {},
   options: GetData1DOptions = {},
 ) => {
-  let { fwhm = 500 } = shape;
-  let {
-    length,
+  const { fwhm = 500 } = shape;
+  const {
     factor = getLorentzianFactor(),
     height = calculateLorentzianHeight({ fwhm, area: 1 }),
   } = options;
+  let { length } = options;
 
   if (!length) {
-    length = Math.min(Math.ceil(fwhm * factor), Math.pow(2, 25) - 1);
+    length = Math.min(Math.ceil(fwhm * factor), 2 ** 25 - 1);
     if (length % 2 === 0) length++;
   }
 
   const center = (length - 1) / 2;
   const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    data[i] = lorentzianFct(i - center, fwhm) * height;
-    data[length - 1 - i] = data[i];
+    const value = lorentzianFct(i - center, fwhm) * height;
+    data[i] = value;
+    data[length - 1 - i] = value;
   }
 
   return data;

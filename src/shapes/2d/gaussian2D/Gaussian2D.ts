@@ -1,11 +1,11 @@
-import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants';
+import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants.ts';
 import {
-  getGaussianFactor,
   gaussianFwhmToWidth,
   gaussianWidthToFWHM,
-} from '../../1d/gaussian/Gaussian';
-import type { GetData2DOptions } from '../GetData2DOptions';
-import { Shape2DClass } from '../Shape2DClass';
+  getGaussianFactor,
+} from '../../1d/gaussian/Gaussian.ts';
+import type { GetData2DOptions } from '../GetData2DOptions.ts';
+import type { Shape2DClass } from '../Shape2DClass.ts';
 
 export interface XYNumber {
   x: number;
@@ -66,7 +66,8 @@ export class Gaussian2D implements Shape2DClass {
   public fwhmY: number;
 
   public constructor(options: Gaussian2DClassOptions = {}) {
-    let { fwhm = 20, sd } = options;
+    const { sd } = options;
+    let { fwhm = 20 } = options;
 
     fwhm = ensureFWHM2D(fwhm, sd);
 
@@ -131,24 +132,20 @@ export const gaussian2DFct = (
   xFWHM: number,
   yFWHM: number,
 ) => {
-  return Math.exp(
-    GAUSSIAN_EXP_FACTOR * (Math.pow(x / xFWHM, 2) + Math.pow(y / yFWHM, 2)),
-  );
+  return Math.exp(GAUSSIAN_EXP_FACTOR * ((x / xFWHM) ** 2 + (y / yFWHM) ** 2));
 };
 
 export const getGaussian2DData = (
   shape: Gaussian2DClassOptions,
   options: GetData2DOptions = {},
 ) => {
-  let { fwhm = 50, sd } = shape;
+  const { sd } = shape;
+  let { fwhm = 50 } = shape;
 
   fwhm = ensureFWHM2D(fwhm, sd);
 
-  let {
-    factor = getGaussianFactor(),
-    length = { x: 0, y: 0 },
-    height = calculateGaussian2DHeight({ fwhm, volume: 1 }),
-  } = options;
+  const { height = calculateGaussian2DHeight({ fwhm, volume: 1 }) } = options;
+  let { factor = getGaussianFactor(), length = { x: 0, y: 0 } } = options;
 
   factor = ensureXYNumber(factor);
 
@@ -158,7 +155,7 @@ export const getGaussian2DData = (
     if (!length[axis]) {
       length[axis] = Math.min(
         Math.ceil(fwhm[axis] * factor[axis]),
-        Math.pow(2, 25) - 1,
+        2 ** 25 - 1,
       );
       if (length[axis] % 2 === 0) length[axis]++;
     }
@@ -182,7 +179,8 @@ export const getGaussian2DData = (
 export const calculateGaussian2DHeight = (
   options: CalculateGaussian2DHeightOptions = {},
 ) => {
-  let { volume = 1, fwhm = 50, sd } = options;
+  const { sd, volume = 1 } = options;
+  let { fwhm = 50 } = options;
   fwhm = ensureFWHM2D(fwhm, sd);
   return (volume * Math.LN2 * 4) / (Math.PI * fwhm.y * fwhm.x);
 };
@@ -190,7 +188,8 @@ export const calculateGaussian2DHeight = (
 export const getGaussian2DVolume = (
   options: GetGaussian2DVolumeOptions = {},
 ) => {
-  let { fwhm = 50, height = 1, sd } = options;
+  const { sd, height = 1 } = options;
+  let { fwhm = 50 } = options;
 
   fwhm = ensureFWHM2D(fwhm, sd);
 
@@ -203,7 +202,7 @@ function ensureXYNumber(input: number | XYNumber): XYNumber {
 
 function ensureFWHM2D(fwhm?: number | XYNumber, sd?: number | XYNumber) {
   if (sd !== undefined) {
-    let sdObject = ensureXYNumber(sd);
+    const sdObject = ensureXYNumber(sd);
     return {
       x: gaussianWidthToFWHM(2 * sdObject.x),
       y: gaussianWidthToFWHM(2 * sdObject.y),

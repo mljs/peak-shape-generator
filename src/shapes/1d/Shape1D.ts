@@ -1,7 +1,7 @@
-import type { GaussianClassOptions } from './gaussian/Gaussian';
-import { GeneralizedLorentzianClassOptions } from './generalizedLorentzian/GeneralizedLorentzian';
-import type { LorentzianClassOptions } from './lorentzian/Lorentzian';
-import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt';
+import type { GaussianClassOptions } from './gaussian/Gaussian.ts';
+import type { GeneralizedLorentzianClassOptions } from './generalizedLorentzian/GeneralizedLorentzian.ts';
+import type { LorentzianClassOptions } from './lorentzian/Lorentzian.ts';
+import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt.ts';
 
 /**
  * kind of shape
@@ -22,8 +22,7 @@ export interface LorentzianDispersiveShape1D extends LorentzianClassOptions {
   kind: 'lorentzianDispersive';
 }
 
-export interface GeneralizedLorentzianShape1D
-  extends GeneralizedLorentzianClassOptions {
+export interface GeneralizedLorentzianShape1D extends GeneralizedLorentzianClassOptions {
   kind: 'generalizedLorentzian';
 }
 

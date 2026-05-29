@@ -2,13 +2,13 @@ import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
-} from '../../../util/constants';
-import { GetData1DOptions } from '../GetData1DOptions';
-import { Parameter, Shape1DClass } from '../Shape1DClass';
-import { gaussianFct } from '../gaussian/Gaussian';
-import { lorentzianFct } from '../lorentzian/Lorentzian';
+} from '../../../util/constants.ts';
+import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import { gaussianFct } from '../gaussian/Gaussian.ts';
+import { lorentzianFct } from '../lorentzian/Lorentzian.ts';
 
-import { pseudoVoigtFindFactor } from './computeFactor';
+import { pseudoVoigtFindFactor } from './computeFactor.ts';
 
 export interface PseudoVoigtClassOptions {
   /**
@@ -116,7 +116,7 @@ export class PseudoVoigt implements Shape1DClass {
 export const calculatePseudoVoigtHeight = (
   options: CalculatePseudoVoightHeightOptions = {},
 ) => {
-  let { fwhm = 1, mu = 0.5, area = 1 } = options;
+  const { fwhm = 1, mu = 0.5, area = 1 } = options;
   return (2 * area) / (fwhm * (mu * ROOT_PI_OVER_LN2 + (1 - mu) * Math.PI));
 };
 
@@ -145,12 +145,10 @@ export const getPseudoVoigtData = (
   shape: PseudoVoigtClassOptions = {},
   options: GetData1DOptions = {},
 ) => {
-  let { fwhm = 500, mu = 0.5 } = shape;
-  let {
-    length,
-    factor = getPseudoVoigtFactor(0.999, mu),
-    height = calculatePseudoVoigtHeight({ fwhm, mu, area: 1 }),
-  } = options;
+  const { fwhm = 500, mu = 0.5 } = shape;
+  const { factor = getPseudoVoigtFactor(0.999, mu) } = options;
+  let { length, height = calculatePseudoVoigtHeight({ fwhm, mu, area: 1 }) } =
+    options;
 
   if (!height) {
     height =
@@ -160,15 +158,16 @@ export const getPseudoVoigtData = (
   }
 
   if (!length) {
-    length = Math.min(Math.ceil(fwhm * factor), Math.pow(2, 25) - 1);
+    length = Math.min(Math.ceil(fwhm * factor), 2 ** 25 - 1);
     if (length % 2 === 0) length++;
   }
 
   const center = (length - 1) / 2;
   const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    data[i] = pseudoVoigtFct(i - center, fwhm, mu) * height;
-    data[length - 1 - i] = data[i];
+    const value = pseudoVoigtFct(i - center, fwhm, mu) * height;
+    data[i] = value;
+    data[length - 1 - i] = value;
   }
 
   return data;

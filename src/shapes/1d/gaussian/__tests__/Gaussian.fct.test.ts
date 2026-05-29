@@ -1,19 +1,21 @@
-import { Gaussian, getGaussianFactor } from '../Gaussian';
+import { expect, test } from 'vitest';
 
-describe('Gaussian function', () => {
-  it('Gaussian.fct', () => {
-    const gaussian = new Gaussian({ fwhm: 0.2 });
-    expect(gaussian.fct(0)).toBeCloseTo(1);
-    expect(gaussian.fct(0.1)).toBeCloseTo(0.5);
-  });
+import { Gaussian, getGaussianFactor } from '../Gaussian.ts';
 
-  it('new Gaussian() gaussian.fct', () => {
-    const gaussian = new Gaussian({ fwhm: 0.2 });
-    expect(gaussian.fct(0)).toBeCloseTo(1);
-    expect(gaussian.fct(0.1)).toBeCloseTo(0.5);
-  });
+test('Gaussian.fct', () => {
+  const gaussian = new Gaussian({ fwhm: 0.2 });
 
-  it('Guassian functions', () => {
-    expect(getGaussianFactor()).toBeCloseTo(3.8833175701198104);
-  });
+  expect(gaussian.fct(0)).toBeCloseTo(1);
+  expect(gaussian.fct(0.1)).toBeCloseTo(0.5);
+});
+
+test('new Gaussian() gaussian.fct', () => {
+  const gaussian = new Gaussian({ fwhm: 0.2 });
+
+  expect(gaussian.fct(0)).toBeCloseTo(1);
+  expect(gaussian.fct(0.1)).toBeCloseTo(0.5);
+});
+
+test('Guassian functions', () => {
+  expect(getGaussianFactor()).toBeCloseTo(3.8833175701198104);
 });

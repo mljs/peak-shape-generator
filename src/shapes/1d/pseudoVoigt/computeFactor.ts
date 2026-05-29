@@ -1,5 +1,5 @@
-import { getGaussianFactor } from '../gaussian/Gaussian';
-import { getLorentzianFactor } from '../lorentzian/Lorentzian';
+import { getGaussianFactor } from '../gaussian/Gaussian.ts';
+import { getLorentzianFactor } from '../lorentzian/Lorentzian.ts';
 
 /**
  * Find the k factor for a pseudo-Voigt distribution such that the

@@ -1,12 +1,11 @@
 import {
-  ROOT_2LN2,
   GAUSSIAN_EXP_FACTOR,
+  ROOT_2LN2,
   ROOT_PI_OVER_LN2,
-} from '../../../util/constants';
-import erfinv from '../../../util/erfinv';
-import type { GetData1DOptions } from '../GetData1DOptions';
-import type { Shape1DClass } from '../Shape1DClass';
-import { Parameter } from '../Shape1DClass';
+} from '../../../util/constants.ts';
+import erfinv from '../../../util/erfinv.ts';
+import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
 
 interface CalculateGaussianHeightOptions {
   /**
@@ -97,10 +96,16 @@ export class Gaussian implements Shape1DClass {
   }
 }
 
+/**
+ * Calculate the peak height for a given area and fwhm.
+ * @param options - fwhm, area, and optional sd.
+ * @returns the peak height.
+ */
 export function calculateGaussianHeight(
   options: CalculateGaussianHeightOptions,
 ) {
-  let { fwhm = 500, area = 1, sd } = options;
+  const { area = 1, sd } = options;
+  let { fwhm = 500 } = options;
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
@@ -108,59 +113,87 @@ export function calculateGaussianHeight(
 }
 
 /**
- * Calculate the height of the gaussian function of a specific width (fwhm) at a speicifc
- * x position (the gaussian is centered on x=0)
- * @param x
- * @param fwhm
- * @returns y
+ * Evaluate the gaussian function centered at x=0.
+ * @param x - position at which to evaluate.
+ * @param fwhm - full width at half maximum.
+ * @returns the intensity at x.
  */
 export function gaussianFct(x: number, fwhm: number) {
-  return Math.exp(GAUSSIAN_EXP_FACTOR * Math.pow(x / fwhm, 2));
+  return Math.exp(GAUSSIAN_EXP_FACTOR * (x / fwhm) ** 2);
 }
 
+/**
+ * Convert inflection-point width to full width at half maximum.
+ * @param width - width between inflection points.
+ * @returns full width at half maximum.
+ */
 export function gaussianWidthToFWHM(width: number) {
   return width * ROOT_2LN2;
 }
 
+/**
+ * Convert full width at half maximum to inflection-point width.
+ * @param fwhm - full width at half maximum.
+ * @returns width between inflection points.
+ */
 export function gaussianFwhmToWidth(fwhm: number) {
   return fwhm / ROOT_2LN2;
 }
 
+/**
+ * Calculate the area under a gaussian peak.
+ * @param options - fwhm, height, and optional sd.
+ * @returns the area.
+ */
 export function getGaussianArea(options: GetGaussianAreaOptions) {
-  let { fwhm = 500, sd, height = 1 } = options;
+  const { sd, height = 1 } = options;
+  let { fwhm = 500 } = options;
 
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
   return (height * ROOT_PI_OVER_LN2 * fwhm) / 2;
 }
 
+/**
+ * Calculate the half-width factor corresponding to a given area coverage fraction.
+ * @param area - target area fraction (0–1). Defaults to `0.9999`.
+ * @returns the factor by which to multiply fwhm to cover the given area.
+ */
 export function getGaussianFactor(area = 0.9999) {
   return Math.sqrt(2) * erfinv(area);
 }
 
+/**
+ * Generate an intensity array for a gaussian shape.
+ * @param shape - gaussian shape parameters (fwhm, sd).
+ * @param options - sampling options (length, factor, height).
+ * @returns Float64Array of intensity values.
+ */
 export function getGaussianData(
   shape: GaussianClassOptions = {},
   options: GetData1DOptions = {},
 ) {
-  let { fwhm = 500, sd } = shape;
+  const { sd } = shape;
+  let { fwhm = 500 } = shape;
   if (sd) fwhm = gaussianWidthToFWHM(2 * sd);
 
-  let {
-    length,
+  const {
     factor = getGaussianFactor(),
     height = calculateGaussianHeight({ fwhm }),
   } = options;
+  let { length } = options;
 
   if (!length) {
-    length = Math.min(Math.ceil(fwhm * factor), Math.pow(2, 25) - 1);
+    length = Math.min(Math.ceil(fwhm * factor), 2 ** 25 - 1);
     if (length % 2 === 0) length++;
   }
 
   const center = (length - 1) / 2;
   const data = new Float64Array(length);
   for (let i = 0; i <= center; i++) {
-    data[i] = gaussianFct(i - center, fwhm) * height;
-    data[length - 1 - i] = data[i];
+    const value = gaussianFct(i - center, fwhm) * height;
+    data[i] = value;
+    data[length - 1 - i] = value;
   }
 
   return data;

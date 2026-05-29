@@ -1,8 +1,8 @@
-import { Gaussian } from './gaussian/Gaussian';
-import { GeneralizedLorentzian } from './generalizedLorentzian/GeneralizedLorentzian';
-import { Lorentzian } from './lorentzian/Lorentzian';
-import { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive';
-import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt';
+import type { Gaussian } from './gaussian/Gaussian.ts';
+import type { GeneralizedLorentzian } from './generalizedLorentzian/GeneralizedLorentzian.ts';
+import type { Lorentzian } from './lorentzian/Lorentzian.ts';
+import type { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive.ts';
+import type { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 
 export type Shape1DInstance =
   | Gaussian

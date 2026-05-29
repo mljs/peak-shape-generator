@@ -1,6 +1,6 @@
-import { DoubleArray } from 'cheminfo-types';
+import type { DoubleArray } from 'cheminfo-types';
 
-import { GetData1DOptions } from './GetData1DOptions';
+import type { GetData1DOptions } from './GetData1DOptions.ts';
 
 export type Parameter = 'fwhm' | 'mu' | 'gamma';
 
@@ -35,7 +35,7 @@ export interface Shape1DClass {
   getArea(height?: number): number;
   /**
    * Calculate the number of times FWHM allows to reach a specific area coverage.
-   * @param [area=0.9999] Expected area to be covered.
+   * @param [area=0.9999] - Expected area to be covered.
    */
   getFactor(area?: number): number;
   /**

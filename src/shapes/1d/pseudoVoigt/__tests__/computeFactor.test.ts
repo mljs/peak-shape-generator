@@ -1,7 +1,9 @@
-import { getGaussianFactor } from '../../gaussian/Gaussian';
-import { getLorentzianFactor } from '../../lorentzian/Lorentzian';
-import { getPseudoVoigtFactor } from '../PseudoVoigt';
-import { pseudoVoigtFindFactor } from '../computeFactor';
+import { describe, expect, it } from 'vitest';
+
+import { getGaussianFactor } from '../../gaussian/Gaussian.ts';
+import { getLorentzianFactor } from '../../lorentzian/Lorentzian.ts';
+import { getPseudoVoigtFactor } from '../PseudoVoigt.ts';
+import { pseudoVoigtFindFactor } from '../computeFactor.ts';
 
 describe('pseudoVoigtFindFactor', () => {
   describe('input validation', () => {
@@ -18,6 +20,7 @@ describe('pseudoVoigtFindFactor', () => {
   describe('special mu behavior', () => {
     it('falls back to gaussian factor when mu === 1', () => {
       const pTarget = 0.5;
+
       expect(pseudoVoigtFindFactor(pTarget, 1)).toBeCloseTo(
         getGaussianFactor(pTarget),
         12,
@@ -26,6 +29,7 @@ describe('pseudoVoigtFindFactor', () => {
 
     it('falls back to lorentzian factor when mu === 0', () => {
       const pTarget = 0.5;
+
       expect(pseudoVoigtFindFactor(pTarget, 0)).toBeCloseTo(
         getLorentzianFactor(pTarget),
         12,
@@ -43,6 +47,7 @@ describe('pseudoVoigtFindFactor', () => {
       'returns a finite positive factor for pTarget=%p mu=%p',
       (pTarget, mu) => {
         const factor = pseudoVoigtFindFactor(pTarget, mu);
+
         expect(factor).toBeGreaterThan(0);
         expect(Number.isFinite(factor)).toBe(true);
       },
