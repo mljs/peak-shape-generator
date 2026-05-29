@@ -67,7 +67,10 @@ test('setting fwhm scales fwhmG and fwhmL proportionally', () => {
 });
 
 test('getParameters returns fwhmG and fwhmL', () => {
-  expect(new PseudoVoigtTCH().getParameters()).toStrictEqual(['fwhmG', 'fwhmL']);
+  expect(new PseudoVoigtTCH().getParameters()).toStrictEqual([
+    'fwhmG',
+    'fwhmL',
+  ]);
 });
 
 test('fct is normalised to 1 at x=0', () => {

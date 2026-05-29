@@ -70,10 +70,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
       1 -
       (1.36603 * lorentzianFraction -
         0.47719 * lorentzianFraction * lorentzianFraction +
-        0.11116 *
-          lorentzianFraction *
-          lorentzianFraction *
-          lorentzianFraction);
+        0.11116 * lorentzianFraction * lorentzianFraction * lorentzianFraction);
     this._fwhmG = value;
     this._lorentzianWidthFraction = lorentzianFraction;
   }
@@ -90,10 +87,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
       1 -
       (1.36603 * lorentzianFraction -
         0.47719 * lorentzianFraction * lorentzianFraction +
-        0.11116 *
-          lorentzianFraction *
-          lorentzianFraction *
-          lorentzianFraction);
+        0.11116 * lorentzianFraction * lorentzianFraction * lorentzianFraction);
     this._fwhmL = value;
     this._lorentzianWidthFraction = lorentzianFraction;
   }
@@ -181,13 +175,14 @@ export class PseudoVoigtTCH implements Shape1DClass {
  */
 function computeEffectiveWidth(fwhmG: number, fwhmL: number): number {
   return (
-    fwhmG ** 5 +
-    2.69269 * fwhmG ** 4 * fwhmL +
-    2.42843 * fwhmG ** 3 * fwhmL ** 2 +
-    4.47163 * fwhmG ** 2 * fwhmL ** 3 +
-    0.07842 * fwhmG * fwhmL ** 4 +
-    fwhmL ** 5
-  ) ** 0.2;
+    (fwhmG ** 5 +
+      2.69269 * fwhmG ** 4 * fwhmL +
+      2.42843 * fwhmG ** 3 * fwhmL ** 2 +
+      4.47163 * fwhmG ** 2 * fwhmL ** 3 +
+      0.07842 * fwhmG * fwhmL ** 4 +
+      fwhmL ** 5) **
+    0.2
+  );
 }
 
 /**
