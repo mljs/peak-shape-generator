@@ -9,16 +9,18 @@ Generate various peak shapes.
 
 The current supported kinds of shapes:
 
-| Name         |                                                                                                                           Equation                                                                                                                            |
-| ------------ | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Gaussian     |                                                          <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D"/>                                                          |
-| Lorentzian   |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D"/>                                                                        |
-| Pseudo Voigt | <img src="https://tex.cheminfo.org/?tex=y%20%5Ccdot%5Cleft%5Bx_g%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D%20%2B%20x_l%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D%5Cright%5D"/> |
+| Name                        |                                                                                                                           Equation                                                                                                                            |
+| --------------------------- | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Gaussian                    |                                                          <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D"/>                                                          |
+| Lorentzian                  |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D"/>                                                                        |
+| Lorentzian Dispersive       |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B2%5Comega%5Cdelta%7D%7B4%5Cdelta%5E2%20%2B%20%5Comega%5E2%7D"/>                                                                        |
+| Generalized Lorentzian      | <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cleft%5B%281-%5Cgamma%29%5Ccdot%5Cfrac%7B1%7D%7B1%2Bu%7D%20%2B%20%5Cgamma%5Ccdot%5Cfrac%7B1%2B%5Cfrac%7Bu%7D%7B2%7D%7D%7B1%2Bu%2Bu%5E2%7D%5Cright%5D"/> |
+| Pseudo Voigt                | <img src="https://tex.cheminfo.org/v1/?tex=y%20%5Ccdot%5Cleft%5Bmu%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D%20%2B%20%5Cleft(1%20-%20mu%5Cright)%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D%5Cright%5D"/> |
 
 where
 
-| <img src="https://tex.cheminfo.org/?tex=%5Cdelta%20%3D%20%5Cleft(t%20-%20x%5Cright)%5E2%0A"/> | <img src="https://tex.cheminfo.org/?tex=%5Csigma%20%3D%20%5Cfrac%7BFWHM%7D%7B2%5Csqrt%7B2%20%5Ccdot%20ln(2)%7D%7D"/> | <img src="https://tex.cheminfo.org/?tex=%5Comega%20%3D%20FWHM"/> |
-| --------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------- |
+| <img src="https://tex.cheminfo.org/?tex=%5Cdelta%20%3D%20%5Cleft(t%20-%20x%5Cright)%5E2%0A"/> | <img src="https://tex.cheminfo.org/?tex=%5Csigma%20%3D%20%5Cfrac%7BFWHM%7D%7B2%5Csqrt%7B2%20%5Ccdot%20ln(2)%7D%7D"/> | <img src="https://tex.cheminfo.org/?tex=%5Comega%20%3D%20FWHM"/> |<img src="https://tex.cheminfo.org/v1/?tex=u%20%3D%20%5Cleft(%5Cfrac%7B2%5Cdelta%7D%7B%5Comega%7D%5Cright)%5E2"/> |
+|---------------------: | :---------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------- |
 
 ## Installation
 
