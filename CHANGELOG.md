@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/mljs/peak-shape-generator/compare/v5.0.0...v5.1.0) (2026-06-02)
+
+
+### Features
+
+* factor calculation based in mu parameter for pseudoVoigt function ([#89](https://github.com/mljs/peak-shape-generator/issues/89)) ([3cab2a2](https://github.com/mljs/peak-shape-generator/commit/3cab2a28b4eb3013e3e145c07f3108f242567be8))
+
 ## [5.0.0](https://github.com/mljs/peak-shape-generator/compare/v4.3.0...v5.0.0) (2026-05-29)
 
 
