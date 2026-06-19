@@ -1,6 +1,10 @@
 import { ROOT_THREE } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import type {
+  Parameter,
+  Shape1DClass,
+  Shape1DDerivative,
+} from '../Shape1DClass.ts';
 
 export interface GeneralizedLorentzianClassOptions {
   /**
@@ -91,6 +95,15 @@ export class GeneralizedLorentzian implements Shape1DClass {
   public getParameters(): Parameter[] {
     return ['fwhm', 'gamma'];
   }
+
+  public derivative(x: number): Shape1DDerivative {
+    const { fct, dx, dFwhm, dGamma } = generalizedLorentzianDerivative(
+      x,
+      this.fwhm,
+      this.gamma,
+    );
+    return { fct, dx, parameters: [dFwhm, dGamma] };
+  }
 }
 
 export const calculateGeneralizedLorentzianHeight = ({
@@ -120,6 +133,39 @@ export const generalizedLorentzianFct = (
 ) => {
   const u = ((2 * x) / fwhm) ** 2;
   return (1 - gamma) / (1 + u) + (gamma * (1 + u / 2)) / (1 + u + u ** 2);
+};
+
+/**
+ * Analytical value and partial derivatives of the generalized lorentzian function centered at x=0.
+ * @param x - position at which to evaluate.
+ * @param fwhm - full width at half maximum.
+ * @param gamma - kurtosis parameter of the shape.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhm` (`dFwhm`) and `gamma` (`dGamma`).
+ */
+export const generalizedLorentzianDerivative = (
+  x: number,
+  fwhm: number,
+  gamma: number,
+) => {
+  const u = ((2 * x) / fwhm) ** 2;
+  const lorentzian = 1 / (1 + u); // A
+  const rational = (1 + u / 2) / (1 + u + u * u); // B
+  const fct = (1 - gamma) * lorentzian + gamma * rational;
+
+  // dA/du and dB/du
+  const dLorentzianDu = -1 / ((1 + u) * (1 + u));
+  const denominator = 1 + u + u * u;
+  const dRationalDu =
+    -(0.5 + 2 * u + 0.5 * u * u) / (denominator * denominator);
+  const dFctDu = (1 - gamma) * dLorentzianDu + gamma * dRationalDu;
+
+  const duDx = (8 * x) / (fwhm * fwhm);
+  const duDfwhm = (-8 * x * x) / (fwhm * fwhm * fwhm);
+
+  const dx = dFctDu * duDx;
+  const dFwhm = dFctDu * duDfwhm;
+  const dGamma = rational - lorentzian; // B - A
+  return { fct, dx, dFwhm, dGamma };
 };
 
 export const generalizedLorentzianWidthToFWHM = (width: number) => {

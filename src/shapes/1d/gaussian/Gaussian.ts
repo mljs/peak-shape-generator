@@ -5,7 +5,11 @@ import {
 } from '../../../util/constants.ts';
 import erfinv from '../../../util/erfinv.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import type {
+  Parameter,
+  Shape1DClass,
+  Shape1DDerivative,
+} from '../Shape1DClass.ts';
 
 interface CalculateGaussianHeightOptions {
   /**
@@ -94,6 +98,11 @@ export class Gaussian implements Shape1DClass {
   public getParameters(): Parameter[] {
     return ['fwhm'];
   }
+
+  public derivative(x: number): Shape1DDerivative {
+    const { fct, dx, dFwhm } = gaussianDerivative(x, this.fwhm);
+    return { fct, dx, parameters: [dFwhm] };
+  }
 }
 
 /**
@@ -120,6 +129,20 @@ export function calculateGaussianHeight(
  */
 export function gaussianFct(x: number, fwhm: number) {
   return Math.exp(GAUSSIAN_EXP_FACTOR * (x / fwhm) ** 2);
+}
+
+/**
+ * Analytical value and partial derivatives of the gaussian function centered at x=0.
+ * @param x - position at which to evaluate.
+ * @param fwhm - full width at half maximum.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`) and `fwhm` (`dFwhm`).
+ */
+export function gaussianDerivative(x: number, fwhm: number) {
+  const fct = gaussianFct(x, fwhm);
+  const dx = ((2 * GAUSSIAN_EXP_FACTOR * x) / (fwhm * fwhm)) * fct;
+  const dFwhm =
+    ((-2 * GAUSSIAN_EXP_FACTOR * x * x) / (fwhm * fwhm * fwhm)) * fct;
+  return { fct, dx, dFwhm };
 }
 
 /**

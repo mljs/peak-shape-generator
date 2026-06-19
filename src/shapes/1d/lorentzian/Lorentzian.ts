@@ -1,6 +1,10 @@
 import { ROOT_THREE } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import type {
+  Parameter,
+  Shape1DClass,
+  Shape1DDerivative,
+} from '../Shape1DClass.ts';
 
 export interface LorentzianClassOptions {
   /**
@@ -67,6 +71,11 @@ export class Lorentzian implements Shape1DClass {
   public getParameters(): Parameter[] {
     return ['fwhm'];
   }
+
+  public derivative(x: number): Shape1DDerivative {
+    const { fct, dx, dFwhm } = lorentzianDerivative(x, this.fwhm);
+    return { fct, dx, parameters: [dFwhm] };
+  }
 }
 
 export const calculateLorentzianHeight = ({ fwhm = 1, area = 1 }) => {
@@ -80,6 +89,20 @@ export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
 
 export const lorentzianFct = (x: number, fwhm: number) => {
   return fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
+};
+
+/**
+ * Analytical value and partial derivatives of the lorentzian function centered at x=0.
+ * @param x - position at which to evaluate.
+ * @param fwhm - full width at half maximum.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`) and `fwhm` (`dFwhm`).
+ */
+export const lorentzianDerivative = (x: number, fwhm: number) => {
+  const denominator = 4 * x * x + fwhm * fwhm;
+  const fct = (fwhm * fwhm) / denominator;
+  const dx = (-8 * x * fwhm * fwhm) / (denominator * denominator);
+  const dFwhm = (8 * fwhm * x * x) / (denominator * denominator);
+  return { fct, dx, dFwhm };
 };
 
 export const lorentzianWidthToFWHM = (width: number) => {

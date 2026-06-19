@@ -1,5 +1,9 @@
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import type {
+  Parameter,
+  Shape1DClass,
+  Shape1DDerivative,
+} from '../Shape1DClass.ts';
 import type { LorentzianClassOptions } from '../lorentzian/Lorentzian.ts';
 import {
   calculateLorentzianHeight,
@@ -52,10 +56,31 @@ export class LorentzianDispersive implements Shape1DClass {
   public getParameters(): Parameter[] {
     return ['fwhm'];
   }
+
+  public derivative(x: number): Shape1DDerivative {
+    const { fct, dx, dFwhm } = lorentzianDispersiveDerivative(x, this.fwhm);
+    return { fct, dx, parameters: [dFwhm] };
+  }
 }
 
 export const lorentzianDispersiveFct = (x: number, fwhm: number) => {
   return (2 * fwhm * x) / (4 * x ** 2 + fwhm ** 2);
+};
+
+/**
+ * Analytical value and partial derivatives of the dispersive lorentzian function centered at x=0.
+ * @param x - position at which to evaluate.
+ * @param fwhm - full width at half maximum.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`) and `fwhm` (`dFwhm`).
+ */
+export const lorentzianDispersiveDerivative = (x: number, fwhm: number) => {
+  const denominator = 4 * x * x + fwhm * fwhm;
+  const fct = (2 * fwhm * x) / denominator;
+  const dx =
+    (2 * fwhm * (fwhm * fwhm - 4 * x * x)) / (denominator * denominator);
+  const dFwhm =
+    (2 * x * (4 * x * x - fwhm * fwhm)) / (denominator * denominator);
+  return { fct, dx, dFwhm };
 };
 
 export const getLorentzianDispersiveData = (

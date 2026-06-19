@@ -4,6 +4,18 @@ import type { GetData1DOptions } from './GetData1DOptions.ts';
 
 export type Parameter = 'fwhm' | 'mu' | 'gamma' | 'fwhmG' | 'fwhmL';
 
+export interface Shape1DDerivative {
+  /** Value of `fct(x)`. */
+  fct: number;
+  /** Partial derivative of `fct` with respect to `x`, evaluated at `x`. */
+  dx: number;
+  /**
+   * Partial derivatives of `fct` with respect to each shape parameter,
+   * in the same order as `getParameters()`.
+   */
+  parameters: number[];
+}
+
 export interface Shape1DClass {
   fwhm: number;
   /**
@@ -47,4 +59,12 @@ export interface Shape1DClass {
    * Returns an array of the different parameters characterizing the shape
    */
   getParameters(): Parameter[];
+  /**
+   * Analytical partial derivatives of `fct` at `x`, with respect to `x` and to
+   * each shape parameter (in the same order as `getParameters()`). Every shape
+   * provides a closed-form Jacobian, so consumers (e.g. curve fitting) can use
+   * it directly instead of numerical differentiation.
+   * @param x - position at which to evaluate the derivatives.
+   */
+  derivative(x: number): Shape1DDerivative;
 }
