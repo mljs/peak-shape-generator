@@ -73,7 +73,7 @@ export const lorentzianDispersiveFct = (x: number, fwhm: number) => {
  * @param fwhm - full width at half maximum.
  * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`) and `fwhm` (`dFwhm`).
  */
-export const lorentzianDispersiveDerivative = (x: number, fwhm: number) => {
+export function lorentzianDispersiveDerivative(x: number, fwhm: number) {
   const denominator = 4 * x * x + fwhm * fwhm;
   const fct = (2 * fwhm * x) / denominator;
   const dx =
@@ -81,7 +81,7 @@ export const lorentzianDispersiveDerivative = (x: number, fwhm: number) => {
   const dFwhm =
     (2 * x * (4 * x * x - fwhm * fwhm)) / (denominator * denominator);
   return { fct, dx, dFwhm };
-};
+}
 
 export const getLorentzianDispersiveData = (
   shape: LorentzianClassOptions = {},

@@ -189,11 +189,11 @@ export class PseudoVoigtTCH implements Shape1DClass {
  * @param fwhmL - full width at half maximum of the lorentzian component.
  * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhmG` (`dFwhmG`) and `fwhmL` (`dFwhmL`).
  */
-export const pseudoVoigtTCHDerivative = (
+export function pseudoVoigtTCHDerivative(
   x: number,
   fwhmG: number,
   fwhmL: number,
-) => {
+) {
   const effectiveFwhm = computeEffectiveWidth(fwhmG, fwhmL);
   const w = effectiveFwhm ** 5; // the polynomial under the 1/5 power
 
@@ -258,7 +258,7 @@ export const pseudoVoigtTCHDerivative = (
     dFwhmG: dFwhm * dFwhmDfwhmG + dMu * dMuDfwhmG,
     dFwhmL: dFwhm * dFwhmDfwhmL + dMu * dMuDfwhmL,
   };
-};
+}
 
 /**
  * Compute the effective FWHM from gaussian and lorentzian component widths

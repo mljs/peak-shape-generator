@@ -144,7 +144,7 @@ export const pseudoVoigtFct = (x: number, fwhm: number, mu: number) => {
  * @param mu - ratio of gaussian contribution in the shape.
  * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhm` (`dFwhm`) and `mu` (`dMu`).
  */
-export const pseudoVoigtDerivative = (x: number, fwhm: number, mu: number) => {
+export function pseudoVoigtDerivative(x: number, fwhm: number, mu: number) {
   // gaussian and lorentzian derivative math is inlined (rather than calling
   // gaussianDerivative / lorentzianDerivative) to allocate a single object on
   // this hot path; the sub-calls would allocate three.
@@ -162,7 +162,7 @@ export const pseudoVoigtDerivative = (x: number, fwhm: number, mu: number) => {
     dFwhm: (1 - mu) * dLdfwhm + mu * dEdfwhm,
     dMu: e - lorentz,
   };
-};
+}
 
 export const pseudoVoigtWidthToFWHM = (width: number, mu = 0.5) => {
   return width * (mu * ROOT_2LN2_MINUS_ONE + 1);

@@ -97,13 +97,13 @@ export const lorentzianFct = (x: number, fwhm: number) => {
  * @param fwhm - full width at half maximum.
  * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`) and `fwhm` (`dFwhm`).
  */
-export const lorentzianDerivative = (x: number, fwhm: number) => {
+export function lorentzianDerivative(x: number, fwhm: number) {
   const denominator = 4 * x * x + fwhm * fwhm;
   const fct = (fwhm * fwhm) / denominator;
   const dx = (-8 * x * fwhm * fwhm) / (denominator * denominator);
   const dFwhm = (8 * fwhm * x * x) / (denominator * denominator);
   return { fct, dx, dFwhm };
-};
+}
 
 export const lorentzianWidthToFWHM = (width: number) => {
   return width * ROOT_THREE;
