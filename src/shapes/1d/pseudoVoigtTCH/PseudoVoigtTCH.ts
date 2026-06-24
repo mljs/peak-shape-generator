@@ -199,17 +199,17 @@ export function pseudoVoigtTCHDerivative(
 
   // ∂w/∂fwhmG and ∂w/∂fwhmL (derivatives of the TCH width polynomial).
   const dwDfwhmG =
-    5 * fwhmG ** 4 +
-    10.77076 * fwhmG ** 3 * fwhmL +
-    7.28529 * fwhmG ** 2 * fwhmL ** 2 +
-    8.94326 * fwhmG * fwhmL ** 3 +
-    0.07842 * fwhmL ** 4;
+    5 * fwhmG * fwhmG * fwhmG * fwhmG +
+    10.77076 * fwhmG * fwhmG * fwhmG * fwhmL +
+    7.28529 * (fwhmG * fwhmG) * (fwhmL * fwhmL) +
+    8.94326 * fwhmG * (fwhmL * fwhmL * fwhmL) +
+    0.07842 * fwhmL * fwhmL * fwhmL * fwhmL;
   const dwDfwhmL =
-    2.69269 * fwhmG ** 4 +
-    4.85686 * fwhmG ** 3 * fwhmL +
-    13.41489 * fwhmG ** 2 * fwhmL ** 2 +
-    0.31368 * fwhmG * fwhmL ** 3 +
-    5 * fwhmL ** 4;
+    2.69269 * fwhmG * fwhmG * fwhmG * fwhmG +
+    4.85686 * fwhmG * fwhmG * fwhmG * fwhmL +
+    13.41489 * (fwhmG * fwhmG) * (fwhmL * fwhmL) +
+    0.31368 * fwhmG * (fwhmL * fwhmL * fwhmL) +
+    5 * fwhmL * fwhmL * fwhmL * fwhmL;
 
   // F = w^0.2  =>  ∂F/∂· = 0.2 * F / w * ∂w/∂·
   const dFwhmDfwhmG = (0.2 * effectiveFwhm * dwDfwhmG) / w;
@@ -238,7 +238,8 @@ export function pseudoVoigtTCHDerivative(
 
   // pseudoVoigt value and its ∂/∂x, ∂/∂F (dFwhm), ∂/∂mu (dMu) at the effective
   // fwhm, inlined to allocate a single object on this hot path.
-  const e = Math.exp(GAUSSIAN_EXP_FACTOR * (x / effectiveFwhm) ** 2);
+  const ratio = x / effectiveFwhm;
+  const e = Math.exp(GAUSSIAN_EXP_FACTOR * ratio * ratio);
   const denominator2 = 4 * x * x + effectiveFwhm * effectiveFwhm;
   const lorentz = (effectiveFwhm * effectiveFwhm) / denominator2;
   const dEdt =
@@ -263,20 +264,23 @@ export function pseudoVoigtTCHDerivative(
 /**
  * Compute the effective FWHM from gaussian and lorentzian component widths
  * using the Thompson–Cox–Hastings approximation.
- * @param fwhmG - gaussian component FWHM.
- * @param fwhmL - lorentzian component FWHM.
+ * @param g - gaussian component FWHM.
+ * @param l - lorentzian component FWHM.
  * @returns effective combined FWHM.
  */
-function computeEffectiveWidth(fwhmG: number, fwhmL: number): number {
-  return (
-    (fwhmG ** 5 +
-      2.69269 * fwhmG ** 4 * fwhmL +
-      2.42843 * fwhmG ** 3 * fwhmL ** 2 +
-      4.47163 * fwhmG ** 2 * fwhmL ** 3 +
-      0.07842 * fwhmG * fwhmL ** 4 +
-      fwhmL ** 5) **
-    0.2
-  );
+function computeEffectiveWidth(g: number, l: number): number {
+  const g2 = g * g;
+  const l2 = l * l;
+
+  const value =
+    g2 * g2 * g +
+    2.69269 * g2 * g2 * l +
+    2.42843 * g2 * g * l2 +
+    4.47163 * g2 * l2 * l +
+    0.07842 * g * l2 * l2 +
+    l2 * l2 * l;
+
+  return value ** 0.2;
 }
 
 /**

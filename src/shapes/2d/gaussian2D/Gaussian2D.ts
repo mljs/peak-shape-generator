@@ -132,7 +132,9 @@ export const gaussian2DFct = (
   xFWHM: number,
   yFWHM: number,
 ) => {
-  return Math.exp(GAUSSIAN_EXP_FACTOR * ((x / xFWHM) ** 2 + (y / yFWHM) ** 2));
+  const xRatio = x / xFWHM;
+  const yRatio = y / yFWHM;
+  return Math.exp(GAUSSIAN_EXP_FACTOR * (xRatio * xRatio + yRatio * yRatio));
 };
 
 export const getGaussian2DData = (

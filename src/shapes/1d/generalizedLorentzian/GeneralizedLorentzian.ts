@@ -131,8 +131,9 @@ export const generalizedLorentzianFct = (
   fwhm: number,
   gamma: number,
 ) => {
-  const u = ((2 * x) / fwhm) ** 2;
-  return (1 - gamma) / (1 + u) + (gamma * (1 + u / 2)) / (1 + u + u ** 2);
+  const ratio = (2 * x) / fwhm;
+  const u = ratio * ratio;
+  return (1 - gamma) / (1 + u) + (gamma * (1 + u / 2)) / (1 + u + u * u);
 };
 
 /**
@@ -147,7 +148,8 @@ export function generalizedLorentzianDerivative(
   fwhm: number,
   gamma: number,
 ) {
-  const u = ((2 * x) / fwhm) ** 2;
+  const ratio = (2 * x) / fwhm;
+  const u = ratio * ratio;
   const lorentzian = 1 / (1 + u); // A
   const rational = (1 + u / 2) / (1 + u + u * u); // B
   const fct = (1 - gamma) * lorentzian + gamma * rational;
