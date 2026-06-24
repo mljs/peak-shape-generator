@@ -1,5 +1,10 @@
+import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import type {
+  Parameter,
+  Shape1DClass,
+  Shape1DDerivative,
+} from '../Shape1DClass.ts';
 import {
   calculatePseudoVoigtHeight,
   getPseudoVoigtArea,
@@ -164,6 +169,95 @@ export class PseudoVoigtTCH implements Shape1DClass {
   public getParameters(): Parameter[] {
     return ['fwhmG', 'fwhmL'];
   }
+
+  public derivative(x: number): Shape1DDerivative {
+    const { fct, dx, dFwhmG, dFwhmL } = pseudoVoigtTCHDerivative(
+      x,
+      this._fwhmG,
+      this._fwhmL,
+    );
+    return { fct, dx, parameters: [dFwhmG, dFwhmL] };
+  }
+}
+
+/**
+ * Analytical value and partial derivatives of the TCH pseudo-Voigt function centered at x=0.
+ * The effective fwhm `F` and mixing `mu` are functions of `fwhmG` and `fwhmL`, so the
+ * derivatives chain `∂fct/∂F` and `∂fct/∂mu` through `∂F/∂·` and `∂mu/∂·`.
+ * @param x - position at which to evaluate.
+ * @param fwhmG - full width at half maximum of the gaussian component.
+ * @param fwhmL - full width at half maximum of the lorentzian component.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhmG` (`dFwhmG`) and `fwhmL` (`dFwhmL`).
+ */
+export function pseudoVoigtTCHDerivative(
+  x: number,
+  fwhmG: number,
+  fwhmL: number,
+) {
+  const effectiveFwhm = computeEffectiveWidth(fwhmG, fwhmL);
+  const w = effectiveFwhm ** 5; // the polynomial under the 1/5 power
+
+  // ∂w/∂fwhmG and ∂w/∂fwhmL (derivatives of the TCH width polynomial).
+  const dwDfwhmG =
+    5 * fwhmG ** 4 +
+    10.77076 * fwhmG ** 3 * fwhmL +
+    7.28529 * fwhmG ** 2 * fwhmL ** 2 +
+    8.94326 * fwhmG * fwhmL ** 3 +
+    0.07842 * fwhmL ** 4;
+  const dwDfwhmL =
+    2.69269 * fwhmG ** 4 +
+    4.85686 * fwhmG ** 3 * fwhmL +
+    13.41489 * fwhmG ** 2 * fwhmL ** 2 +
+    0.31368 * fwhmG * fwhmL ** 3 +
+    5 * fwhmL ** 4;
+
+  // F = w^0.2  =>  ∂F/∂· = 0.2 * F / w * ∂w/∂·
+  const dFwhmDfwhmG = (0.2 * effectiveFwhm * dwDfwhmG) / w;
+  const dFwhmDfwhmL = (0.2 * effectiveFwhm * dwDfwhmL) / w;
+
+  // lorentzian width fraction L = fwhmL / F
+  const lorentzianFraction = fwhmL / effectiveFwhm;
+  const dLorentzianFractionDfwhmG =
+    (-fwhmL / (effectiveFwhm * effectiveFwhm)) * dFwhmDfwhmG;
+  const dLorentzianFractionDfwhmL =
+    1 / effectiveFwhm - (fwhmL / (effectiveFwhm * effectiveFwhm)) * dFwhmDfwhmL;
+
+  // mu = 1 - (1.36603 L - 0.47719 L^2 + 0.11116 L^3)
+  const dPolyDfraction =
+    1.36603 -
+    0.95438 * lorentzianFraction +
+    0.33348 * lorentzianFraction * lorentzianFraction;
+  const dMuDfwhmG = -dPolyDfraction * dLorentzianFractionDfwhmG;
+  const dMuDfwhmL = -dPolyDfraction * dLorentzianFractionDfwhmL;
+
+  const mu =
+    1 -
+    (1.36603 * lorentzianFraction -
+      0.47719 * lorentzianFraction * lorentzianFraction +
+      0.11116 * lorentzianFraction * lorentzianFraction * lorentzianFraction);
+
+  // pseudoVoigt value and its ∂/∂x, ∂/∂F (dFwhm), ∂/∂mu (dMu) at the effective
+  // fwhm, inlined to allocate a single object on this hot path.
+  const e = Math.exp(GAUSSIAN_EXP_FACTOR * (x / effectiveFwhm) ** 2);
+  const denominator2 = 4 * x * x + effectiveFwhm * effectiveFwhm;
+  const lorentz = (effectiveFwhm * effectiveFwhm) / denominator2;
+  const dEdt =
+    ((2 * GAUSSIAN_EXP_FACTOR * x) / (effectiveFwhm * effectiveFwhm)) * e;
+  const dLdt =
+    (-8 * x * effectiveFwhm * effectiveFwhm) / (denominator2 * denominator2);
+  const dEdfwhm =
+    ((-2 * GAUSSIAN_EXP_FACTOR * x * x) /
+      (effectiveFwhm * effectiveFwhm * effectiveFwhm)) *
+    e;
+  const dLdfwhm = (8 * effectiveFwhm * x * x) / (denominator2 * denominator2);
+  const dFwhm = (1 - mu) * dLdfwhm + mu * dEdfwhm;
+  const dMu = e - lorentz;
+  return {
+    fct: (1 - mu) * lorentz + mu * e,
+    dx: (1 - mu) * dLdt + mu * dEdt,
+    dFwhmG: dFwhm * dFwhmDfwhmG + dMu * dMuDfwhmG,
+    dFwhmL: dFwhm * dFwhmDfwhmL + dMu * dMuDfwhmL,
+  };
 }
 
 /**

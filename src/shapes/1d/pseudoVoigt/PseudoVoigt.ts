@@ -4,7 +4,11 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { Parameter, Shape1DClass } from '../Shape1DClass.ts';
+import type {
+  Parameter,
+  Shape1DClass,
+  Shape1DDerivative,
+} from '../Shape1DClass.ts';
 import { gaussianFct } from '../gaussian/Gaussian.ts';
 import { lorentzianFct } from '../lorentzian/Lorentzian.ts';
 
@@ -111,6 +115,15 @@ export class PseudoVoigt implements Shape1DClass {
   public getParameters(): Parameter[] {
     return ['fwhm', 'mu'];
   }
+
+  public derivative(x: number): Shape1DDerivative {
+    const { fct, dx, dFwhm, dMu } = pseudoVoigtDerivative(
+      x,
+      this.fwhm,
+      this.mu,
+    );
+    return { fct, dx, parameters: [dFwhm, dMu] };
+  }
 }
 
 export const calculatePseudoVoigtHeight = (
@@ -123,6 +136,33 @@ export const calculatePseudoVoigtHeight = (
 export const pseudoVoigtFct = (x: number, fwhm: number, mu: number) => {
   return (1 - mu) * lorentzianFct(x, fwhm) + mu * gaussianFct(x, fwhm);
 };
+
+/**
+ * Analytical value and partial derivatives of the pseudo-Voigt function centered at x=0.
+ * @param x - position at which to evaluate.
+ * @param fwhm - full width at half maximum.
+ * @param mu - ratio of gaussian contribution in the shape.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhm` (`dFwhm`) and `mu` (`dMu`).
+ */
+export function pseudoVoigtDerivative(x: number, fwhm: number, mu: number) {
+  // gaussian and lorentzian derivative math is inlined (rather than calling
+  // gaussianDerivative / lorentzianDerivative) to allocate a single object on
+  // this hot path; the sub-calls would allocate three.
+  const e = Math.exp(GAUSSIAN_EXP_FACTOR * (x / fwhm) ** 2);
+  const denominator = 4 * x * x + fwhm * fwhm;
+  const lorentz = (fwhm * fwhm) / denominator;
+  const dEdt = ((2 * GAUSSIAN_EXP_FACTOR * x) / (fwhm * fwhm)) * e;
+  const dLdt = (-8 * x * fwhm * fwhm) / (denominator * denominator);
+  const dEdfwhm =
+    ((-2 * GAUSSIAN_EXP_FACTOR * x * x) / (fwhm * fwhm * fwhm)) * e;
+  const dLdfwhm = (8 * fwhm * x * x) / (denominator * denominator);
+  return {
+    fct: (1 - mu) * lorentz + mu * e,
+    dx: (1 - mu) * dLdt + mu * dEdt,
+    dFwhm: (1 - mu) * dLdfwhm + mu * dEdfwhm,
+    dMu: e - lorentz,
+  };
+}
 
 export const pseudoVoigtWidthToFWHM = (width: number, mu = 0.5) => {
   return width * (mu * ROOT_2LN2_MINUS_ONE + 1);
