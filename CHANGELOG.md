@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.0](https://github.com/mljs/peak-shape-generator/compare/v5.1.0...v5.2.0) (2026-06-24)
+
+
+### Features
+
+* add analytical derivative to all 1D shapes ([#92](https://github.com/mljs/peak-shape-generator/issues/92)) ([db40190](https://github.com/mljs/peak-shape-generator/commit/db401900e30f8f041f2c3bd4237604ffae58bbbc))
+
 ## [5.1.0](https://github.com/mljs/peak-shape-generator/compare/v5.0.0...v5.1.0) (2026-06-02)
 
 
