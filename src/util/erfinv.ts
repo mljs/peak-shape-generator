@@ -14,9 +14,7 @@ export default function erfinv(x: number): number {
   if (x === 0) return 0;
   const ln1MinusXSqrd = Math.log(1 - x * x);
   const lnEtcBy2Plus2 = ln1MinusXSqrd / 2 + 2 / (Math.PI * a);
-  const firstSqrt = Math.sqrt(
-    lnEtcBy2Plus2 * lnEtcBy2Plus2 - ln1MinusXSqrd / a,
-  );
+  const firstSqrt = Math.sqrt(lnEtcBy2Plus2 ** 2 - ln1MinusXSqrd / a);
   const secondSqrt = Math.sqrt(firstSqrt - lnEtcBy2Plus2);
   return secondSqrt * (x > 0 ? 1 : -1);
 }

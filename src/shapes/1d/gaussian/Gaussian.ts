@@ -128,8 +128,7 @@ export function calculateGaussianHeight(
  * @returns the intensity at x.
  */
 export function gaussianFct(x: number, fwhm: number) {
-  const ratio = x / fwhm;
-  return Math.exp(GAUSSIAN_EXP_FACTOR * ratio * ratio);
+  return Math.exp(GAUSSIAN_EXP_FACTOR * (x / fwhm) ** 2);
 }
 
 /**

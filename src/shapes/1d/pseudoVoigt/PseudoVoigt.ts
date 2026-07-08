@@ -148,8 +148,7 @@ export function pseudoVoigtDerivative(x: number, fwhm: number, mu: number) {
   // gaussian and lorentzian derivative math is inlined (rather than calling
   // gaussianDerivative / lorentzianDerivative) to allocate a single object on
   // this hot path; the sub-calls would allocate three.
-  const ratio = x / fwhm;
-  const e = Math.exp(GAUSSIAN_EXP_FACTOR * ratio * ratio);
+  const e = Math.exp(GAUSSIAN_EXP_FACTOR * (x / fwhm) ** 2);
   const denominator = 4 * x * x + fwhm * fwhm;
   const lorentz = (fwhm * fwhm) / denominator;
   const dEdt = ((2 * GAUSSIAN_EXP_FACTOR * x) / (fwhm * fwhm)) * e;

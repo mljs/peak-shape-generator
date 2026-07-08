@@ -88,7 +88,7 @@ export const getLorentzianArea = (options: GetLorentzianAreaOptions) => {
 };
 
 export const lorentzianFct = (x: number, fwhm: number) => {
-  return (fwhm * fwhm) / (4 * x * x + fwhm * fwhm);
+  return fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
 };
 
 /**

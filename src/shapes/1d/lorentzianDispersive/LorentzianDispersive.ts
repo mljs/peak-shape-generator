@@ -64,7 +64,7 @@ export class LorentzianDispersive implements Shape1DClass {
 }
 
 export const lorentzianDispersiveFct = (x: number, fwhm: number) => {
-  return (2 * fwhm * x) / (4 * x * x + fwhm * fwhm);
+  return (2 * fwhm * x) / (4 * x ** 2 + fwhm ** 2);
 };
 
 /**
