@@ -1,4 +1,5 @@
 import type { Shape2D } from './Shape2D.ts';
+import type { Shape2DInstance } from './Shape2DInstance.ts';
 import { Gaussian2D } from './gaussian2D/Gaussian2D.ts';
 
 /**
@@ -6,7 +7,9 @@ import { Gaussian2D } from './gaussian2D/Gaussian2D.ts';
  * @param shape - shape descriptor specifying the kind and parameters.
  * @returns an instance of the requested 2D shape class.
  */
-export function getShape2D(shape: Shape2D) {
+export function getShape2D<TShape extends Shape2D>(
+  shape: TShape,
+): Shape2DInstance<TShape['kind']> {
   const { kind } = shape;
   switch (kind) {
     case 'gaussian':

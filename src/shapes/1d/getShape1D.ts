@@ -12,24 +12,30 @@ import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
  * @param shape - shape descriptor specifying the kind and parameters.
  * @returns an instance of the requested shape class.
  */
-export function getShape1D(shape: Shape1D): Shape1DInstance {
+export function getShape1D<TShape extends Shape1D>(
+  shape: TShape,
+): Shape1DInstance<TShape['kind']> {
   const { kind } = shape;
 
   switch (kind) {
     case 'gaussian':
-      return new Gaussian(shape);
+      return new Gaussian(shape) as Shape1DInstance<TShape['kind']>;
     case 'lorentzian':
-      return new Lorentzian(shape);
+      return new Lorentzian(shape) as Shape1DInstance<TShape['kind']>;
     case 'pseudoVoigt':
-      return new PseudoVoigt(shape);
+      return new PseudoVoigt(shape) as Shape1DInstance<TShape['kind']>;
     case 'pseudoVoigtTCH':
-      return new PseudoVoigtTCH(shape);
+      return new PseudoVoigtTCH(shape) as Shape1DInstance<TShape['kind']>;
     case 'lorentzianDispersive':
-      return new LorentzianDispersive(shape);
+      return new LorentzianDispersive(shape) as Shape1DInstance<TShape['kind']>;
     case 'generalizedLorentzian':
-      return new GeneralizedLorentzian(shape);
+      return new GeneralizedLorentzian(shape) as Shape1DInstance<
+        TShape['kind']
+      >;
     default: {
-      throw new Error(`Unknown distribution ${kind as string}`);
+      const unHandled: never = kind;
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      throw new Error(`Unknown distribution ${unHandled}`);
     }
   }
 }

@@ -5,10 +5,15 @@ import type { LorentzianDispersive } from './lorentzianDispersive/LorentzianDisp
 import type { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 
-export type Shape1DInstance =
-  | Gaussian
-  | Lorentzian
-  | PseudoVoigt
-  | PseudoVoigtTCH
-  | LorentzianDispersive
-  | GeneralizedLorentzian;
+export interface Shape1DKindInstanceMap {
+  gaussian: Gaussian;
+  lorentzian: Lorentzian;
+  pseudoVoigt: PseudoVoigt;
+  pseudoVoigtTCH: PseudoVoigtTCH;
+  lorentzianDispersive: LorentzianDispersive;
+  generalizedLorentzian: GeneralizedLorentzian;
+}
+
+export type Shape1DInstance<
+  TKind extends keyof Shape1DKindInstanceMap = keyof Shape1DKindInstanceMap,
+> = Shape1DKindInstanceMap[TKind];
