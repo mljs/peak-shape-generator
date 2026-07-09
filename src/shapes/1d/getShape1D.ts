@@ -8,13 +8,15 @@ import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 
 /**
- * Generate a instance of a specific kind of shape.
+ * Generate an instance of a specific kind of shape.
  * @param shape - shape descriptor specifying the kind and parameters.
  * @returns an instance of the requested shape class.
  */
+export function getShape1D<TShape extends Shape1D>(
+  shape: TShape,
+): Shape1DInstance<TShape['kind']>;
 export function getShape1D(shape: Shape1D): Shape1DInstance {
   const { kind } = shape;
-
   switch (kind) {
     case 'gaussian':
       return new Gaussian(shape);
@@ -28,8 +30,7 @@ export function getShape1D(shape: Shape1D): Shape1DInstance {
       return new LorentzianDispersive(shape);
     case 'generalizedLorentzian':
       return new GeneralizedLorentzian(shape);
-    default: {
+    default:
       throw new Error(`Unknown distribution ${kind as string}`);
-    }
   }
 }
