@@ -8,34 +8,29 @@ import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 
 /**
- * Generate a instance of a specific kind of shape.
+ * Generate an instance of a specific kind of shape.
  * @param shape - shape descriptor specifying the kind and parameters.
  * @returns an instance of the requested shape class.
  */
 export function getShape1D<TShape extends Shape1D>(
   shape: TShape,
-): Shape1DInstance<TShape['kind']> {
+): Shape1DInstance<TShape['kind']>;
+export function getShape1D(shape: Shape1D): Shape1DInstance {
   const { kind } = shape;
-
   switch (kind) {
     case 'gaussian':
-      return new Gaussian(shape) as Shape1DInstance<TShape['kind']>;
+      return new Gaussian(shape);
     case 'lorentzian':
-      return new Lorentzian(shape) as Shape1DInstance<TShape['kind']>;
+      return new Lorentzian(shape);
     case 'pseudoVoigt':
-      return new PseudoVoigt(shape) as Shape1DInstance<TShape['kind']>;
+      return new PseudoVoigt(shape);
     case 'pseudoVoigtTCH':
-      return new PseudoVoigtTCH(shape) as Shape1DInstance<TShape['kind']>;
+      return new PseudoVoigtTCH(shape);
     case 'lorentzianDispersive':
-      return new LorentzianDispersive(shape) as Shape1DInstance<TShape['kind']>;
+      return new LorentzianDispersive(shape);
     case 'generalizedLorentzian':
-      return new GeneralizedLorentzian(shape) as Shape1DInstance<
-        TShape['kind']
-      >;
-    default: {
-      const unHandled: never = kind;
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      throw new Error(`Unknown distribution ${unHandled}`);
-    }
+      return new GeneralizedLorentzian(shape);
+    default:
+      throw new Error(`Unknown distribution ${kind as string}`);
   }
 }
