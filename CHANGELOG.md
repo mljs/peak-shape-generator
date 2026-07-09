@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.1](https://github.com/mljs/peak-shape-generator/compare/v5.2.0...v5.2.1) (2026-07-09)
+
+
+### Bug Fixes
+
+* type safe for getShape1D and getShape2D  ([#94](https://github.com/mljs/peak-shape-generator/issues/94)) ([58c6c6f](https://github.com/mljs/peak-shape-generator/commit/58c6c6fcefdcfe2c1bf7e277f79818f9eaa6a6fe))
+
 ## [5.2.0](https://github.com/mljs/peak-shape-generator/compare/v5.1.0...v5.2.0) (2026-06-24)
 
 
