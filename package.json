@@ -1,6 +1,6 @@
 {
   "name": "ml-peak-shape-generator",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Generate various peak shapes",
   "type": "module",
   "exports": {
