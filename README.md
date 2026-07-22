@@ -16,6 +16,7 @@ The current supported kinds of shapes:
 | Lorentzian Dispersive       |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B2%5Comega%5Cdelta%7D%7B4%5Cdelta%5E2%20%2B%20%5Comega%5E2%7D"/>                                                                        |
 | Generalized Lorentzian      | <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cleft%5B%281-%5Cgamma%29%5Ccdot%5Cfrac%7B1%7D%7B1%2Bu%7D%20%2B%20%5Cgamma%5Ccdot%5Cfrac%7B1%2B%5Cfrac%7Bu%7D%7B2%7D%7D%7B1%2Bu%2Bu%5E2%7D%5Cright%5D"/> |
 | Pseudo Voigt                | <img src="https://tex.cheminfo.org/v1/?tex=y%20%5Ccdot%5Cleft%5Bmu%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D%20%2B%20%5Cleft(1%20-%20mu%5Cright)%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D%5Cright%5D"/> |
+| Split Gaussian (asymmetric) | Two gaussian halves sharing the apex: the left half (`t ≤ x`) uses `fwhmLeft`, the right half (`t > x`) uses `fwhmRight`. |
 
 where
 

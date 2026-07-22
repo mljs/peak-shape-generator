@@ -2,7 +2,14 @@ import type { DoubleArray } from 'cheminfo-types';
 
 import type { GetData1DOptions } from './GetData1DOptions.ts';
 
-export type Parameter = 'fwhm' | 'mu' | 'gamma' | 'fwhmG' | 'fwhmL';
+export type Parameter =
+  | 'fwhm'
+  | 'mu'
+  | 'gamma'
+  | 'fwhmG'
+  | 'fwhmL'
+  | 'fwhmLeft'
+  | 'fwhmRight';
 
 /**
  * The exact tuple of parameters a shape exposes. Constraining `T` to

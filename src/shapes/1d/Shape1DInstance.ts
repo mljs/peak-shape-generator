@@ -4,6 +4,7 @@ import type { Lorentzian } from './lorentzian/Lorentzian.ts';
 import type { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive.ts';
 import type { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
+import type { SplitGaussian } from './splitGaussian/SplitGaussian.ts';
 
 export interface Shape1DKindInstanceMap {
   gaussian: Gaussian;
@@ -12,6 +13,7 @@ export interface Shape1DKindInstanceMap {
   pseudoVoigtTCH: PseudoVoigtTCH;
   lorentzianDispersive: LorentzianDispersive;
   generalizedLorentzian: GeneralizedLorentzian;
+  splitGaussian: SplitGaussian;
 }
 
 export type Shape1DInstance<
