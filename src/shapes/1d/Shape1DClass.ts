@@ -4,6 +4,14 @@ import type { GetData1DOptions } from './GetData1DOptions.ts';
 
 export type Parameter = 'fwhm' | 'mu' | 'gamma' | 'fwhmG' | 'fwhmL';
 
+/**
+ * The exact tuple of parameters a shape exposes. Constraining `T` to
+ * `readonly Parameter[]` keeps each shape's precise tuple type while
+ * guaranteeing every entry is a valid `Parameter`, so renaming or removing a
+ * member of `Parameter` breaks any shape that still lists it.
+ */
+export type ParameterTuple<T extends readonly Parameter[]> = T;
+
 export interface Shape1DDerivative {
   /** Value of `fct(x)`. */
   fct: number;

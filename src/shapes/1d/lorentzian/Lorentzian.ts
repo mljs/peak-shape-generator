@@ -1,7 +1,7 @@
 import { ROOT_THREE } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
 import type {
-  Parameter,
+  ParameterTuple,
   Shape1DClass,
   Shape1DDerivative,
 } from '../Shape1DClass.ts';
@@ -68,7 +68,7 @@ export class Lorentzian implements Shape1DClass {
     return calculateLorentzianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters(): Parameter[] {
+  public getParameters(): ParameterTuple<['fwhm']> {
     return ['fwhm'];
   }
 
