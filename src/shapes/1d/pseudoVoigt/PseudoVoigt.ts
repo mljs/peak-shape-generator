@@ -5,7 +5,7 @@ import {
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
 import type {
-  Parameter,
+  ParameterTuple,
   Shape1DClass,
   Shape1DDerivative,
 } from '../Shape1DClass.ts';
@@ -112,7 +112,7 @@ export class PseudoVoigt implements Shape1DClass {
     return calculatePseudoVoigtHeight({ fwhm: this.fwhm, mu: this.mu, area });
   }
 
-  public getParameters(): Parameter[] {
+  public getParameters(): ParameterTuple<['fwhm', 'mu']> {
     return ['fwhm', 'mu'];
   }
 

@@ -1,7 +1,7 @@
 import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
 import type {
-  Parameter,
+  ParameterTuple,
   Shape1DClass,
   Shape1DDerivative,
 } from '../Shape1DClass.ts';
@@ -166,7 +166,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
     });
   }
 
-  public getParameters(): Parameter[] {
+  public getParameters(): ParameterTuple<['fwhmG', 'fwhmL']> {
     return ['fwhmG', 'fwhmL'];
   }
 
