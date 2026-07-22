@@ -15,28 +15,28 @@ import {
 
 export interface SplitGaussianClassOptions {
   /**
-   * Full width at half maximum of the left half (x <= 0).
+   * Full width at half maximum of the lower-x half (x <= 0).
    * @default 500
    */
-  fwhmLeft?: number;
+  fwhmLow?: number;
   /**
-   * Full width at half maximum of the right half (x > 0).
+   * Full width at half maximum of the higher-x half (x > 0).
    * @default 500
    */
-  fwhmRight?: number;
+  fwhmHigh?: number;
 }
 
 interface CalculateSplitGaussianHeightOptions {
   /**
-   * Full width at half maximum of the left half.
+   * Full width at half maximum of the lower-x half.
    * @default 500
    */
-  fwhmLeft?: number;
+  fwhmLow?: number;
   /**
-   * Full width at half maximum of the right half.
+   * Full width at half maximum of the higher-x half.
    * @default 500
    */
-  fwhmRight?: number;
+  fwhmHigh?: number;
   /**
    * @default 1
    */
@@ -50,34 +50,34 @@ interface GetSplitGaussianAreaOptions {
    */
   height?: number;
   /**
-   * Full width at half maximum of the left half.
+   * Full width at half maximum of the lower-x half.
    * @default 500
    */
-  fwhmLeft?: number;
+  fwhmLow?: number;
   /**
-   * Full width at half maximum of the right half.
+   * Full width at half maximum of the higher-x half.
    * @default 500
    */
-  fwhmRight?: number;
+  fwhmHigh?: number;
 }
 
 export class SplitGaussian implements Shape1DClass {
   /**
-   * Full width at half maximum of the left half (x <= 0).
+   * Full width at half maximum of the lower-x half (x <= 0).
    * @default 500
    */
-  public fwhmLeft: number;
+  public fwhmLow: number;
   /**
-   * Full width at half maximum of the right half (x > 0).
+   * Full width at half maximum of the higher-x half (x > 0).
    * @default 500
    */
-  public fwhmRight: number;
+  public fwhmHigh: number;
 
   public constructor(options: SplitGaussianClassOptions = {}) {
-    const { fwhmLeft = 500, fwhmRight = 500 } = options;
+    const { fwhmLow = 500, fwhmHigh = 500 } = options;
 
-    this.fwhmLeft = fwhmLeft;
-    this.fwhmRight = fwhmRight;
+    this.fwhmLow = fwhmLow;
+    this.fwhmHigh = fwhmHigh;
   }
 
   /**
@@ -86,7 +86,7 @@ export class SplitGaussian implements Shape1DClass {
    * @returns the mean full width at half maximum.
    */
   public get fwhm() {
-    return (this.fwhmLeft + this.fwhmRight) / 2;
+    return (this.fwhmLow + this.fwhmHigh) / 2;
   }
 
   /**
@@ -95,9 +95,9 @@ export class SplitGaussian implements Shape1DClass {
    *
    * Because that relation is linear, the value returned for the mean fwhm equals
    * the true total span between the split shape's two (asymmetric) inflection
-   * points, `σleft + σright`. It is therefore an **aggregate**: it does not
-   * capture the asymmetry — `fwhmLeft: 200, fwhmRight: 600` and
-   * `fwhmLeft: fwhmRight: 400` yield the same width. Use `fwhmLeft` / `fwhmRight`
+   * points, `σlow + σhigh`. It is therefore an **aggregate**: it does not
+   * capture the asymmetry — `fwhmLow: 200, fwhmHigh: 600` and
+   * `fwhmLow: fwhmHigh: 400` yield the same width. Use `fwhmLow` / `fwhmHigh`
    * directly when each half-width matters.
    * @param fwhm - full width at half maximum. Defaults to the mean of both halves.
    * @returns the aggregate width between the inflection points.
@@ -111,7 +111,7 @@ export class SplitGaussian implements Shape1DClass {
    * maximum, using the plain gaussian relation.
    *
    * This is the inverse of `fwhmToWidth` only for the **aggregate** (mean) fwhm;
-   * it cannot recover the individual `fwhmLeft` / `fwhmRight`, since a single
+   * it cannot recover the individual `fwhmLow` / `fwhmHigh`, since a single
    * width does not encode the asymmetry.
    * @param width - width between the inflection points.
    * @returns the corresponding (aggregate) full width at half maximum.
@@ -121,18 +121,18 @@ export class SplitGaussian implements Shape1DClass {
   }
 
   public fct(x: number) {
-    return splitGaussianFct(x, this.fwhmLeft, this.fwhmRight);
+    return splitGaussianFct(x, this.fwhmLow, this.fwhmHigh);
   }
 
   public getArea(
     height = calculateSplitGaussianHeight({
-      fwhmLeft: this.fwhmLeft,
-      fwhmRight: this.fwhmRight,
+      fwhmLow: this.fwhmLow,
+      fwhmHigh: this.fwhmHigh,
     }),
   ) {
     return getSplitGaussianArea({
-      fwhmLeft: this.fwhmLeft,
-      fwhmRight: this.fwhmRight,
+      fwhmLow: this.fwhmLow,
+      fwhmHigh: this.fwhmHigh,
       height,
     });
   }
@@ -147,88 +147,84 @@ export class SplitGaussian implements Shape1DClass {
 
   public calculateHeight(area = 1) {
     return calculateSplitGaussianHeight({
-      fwhmLeft: this.fwhmLeft,
-      fwhmRight: this.fwhmRight,
+      fwhmLow: this.fwhmLow,
+      fwhmHigh: this.fwhmHigh,
       area,
     });
   }
 
-  public getParameters(): ParameterTuple<['fwhmLeft', 'fwhmRight']> {
-    return ['fwhmLeft', 'fwhmRight'];
+  public getParameters(): ParameterTuple<['fwhmLow', 'fwhmHigh']> {
+    return ['fwhmLow', 'fwhmHigh'];
   }
 
   public derivative(x: number): Shape1DDerivative {
-    const { fct, dx, dFwhmLeft, dFwhmRight } = splitGaussianDerivative(
+    const { fct, dx, dFwhmLow, dFwhmHigh } = splitGaussianDerivative(
       x,
-      this.fwhmLeft,
-      this.fwhmRight,
+      this.fwhmLow,
+      this.fwhmHigh,
     );
-    return { fct, dx, parameters: [dFwhmLeft, dFwhmRight] };
+    return { fct, dx, parameters: [dFwhmLow, dFwhmHigh] };
   }
 }
 
 /**
  * Calculate the peak height for a given area and both half-widths.
- * @param options - fwhmLeft, fwhmRight and area.
+ * @param options - fwhmLow, fwhmHigh and area.
  * @returns the peak height.
  */
 export function calculateSplitGaussianHeight(
   options: CalculateSplitGaussianHeightOptions,
 ) {
-  const { fwhmLeft = 500, fwhmRight = 500, area = 1 } = options;
-  return (4 * area) / ROOT_PI_OVER_LN2 / (fwhmLeft + fwhmRight);
+  const { fwhmLow = 500, fwhmHigh = 500, area = 1 } = options;
+  return (4 * area) / ROOT_PI_OVER_LN2 / (fwhmLow + fwhmHigh);
 }
 
 /**
  * Evaluate the split (asymmetric) gaussian function centered at x=0.
- * The left half (x <= 0) uses `fwhmLeft`, the right half (x > 0) uses `fwhmRight`.
+ * The lower-x half (x <= 0) uses `fwhmLow`, the higher-x half (x > 0) uses `fwhmHigh`.
  * @param x - position at which to evaluate.
- * @param fwhmLeft - full width at half maximum of the left half.
- * @param fwhmRight - full width at half maximum of the right half.
+ * @param fwhmLow - full width at half maximum of the lower-x half.
+ * @param fwhmHigh - full width at half maximum of the higher-x half.
  * @returns the intensity at x.
  */
-export function splitGaussianFct(
-  x: number,
-  fwhmLeft: number,
-  fwhmRight: number,
-) {
-  return x <= 0 ? gaussianFct(x, fwhmLeft) : gaussianFct(x, fwhmRight);
+export function splitGaussianFct(x: number, fwhmLow: number, fwhmHigh: number) {
+  return x <= 0 ? gaussianFct(x, fwhmLow) : gaussianFct(x, fwhmHigh);
 }
 
 /**
  * Analytical value and partial derivatives of the split gaussian function centered at x=0.
  * Each half's fwhm only affects its own side, so the off-side derivative is 0.
  * @param x - position at which to evaluate.
- * @param fwhmLeft - full width at half maximum of the left half.
- * @param fwhmRight - full width at half maximum of the right half.
- * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhmLeft` (`dFwhmLeft`) and `fwhmRight` (`dFwhmRight`).
+ * @param fwhmLow - full width at half maximum of the lower-x half.
+ * @param fwhmHigh - full width at half maximum of the higher-x half.
+ * @returns the value `fct` and its partial derivatives with respect to `x` (`dx`), `fwhmLow` (`dFwhmLow`) and `fwhmHigh` (`dFwhmHigh`).
  */
 export function splitGaussianDerivative(
   x: number,
-  fwhmLeft: number,
-  fwhmRight: number,
+  fwhmLow: number,
+  fwhmHigh: number,
 ) {
   if (x <= 0) {
-    const { fct, dx, dFwhm } = gaussianDerivative(x, fwhmLeft);
-    return { fct, dx, dFwhmLeft: dFwhm, dFwhmRight: 0 };
+    const { fct, dx, dFwhm } = gaussianDerivative(x, fwhmLow);
+    return { fct, dx, dFwhmLow: dFwhm, dFwhmHigh: 0 };
   }
-  const { fct, dx, dFwhm } = gaussianDerivative(x, fwhmRight);
-  return { fct, dx, dFwhmLeft: 0, dFwhmRight: dFwhm };
+  const { fct, dx, dFwhm } = gaussianDerivative(x, fwhmHigh);
+  return { fct, dx, dFwhmLow: 0, dFwhmHigh: dFwhm };
 }
 
 /**
  * Calculate the area under a split gaussian peak.
- * @param options - fwhmLeft, fwhmRight and height.
+ * @param options - fwhmLow, fwhmHigh and height.
  * @returns the area.
  */
 export function getSplitGaussianArea(options: GetSplitGaussianAreaOptions) {
-  const { fwhmLeft = 500, fwhmRight = 500, height = 1 } = options;
-  return (height * ROOT_PI_OVER_LN2 * (fwhmLeft + fwhmRight)) / 4;
+  const { fwhmLow = 500, fwhmHigh = 500, height = 1 } = options;
+  return (height * ROOT_PI_OVER_LN2 * (fwhmLow + fwhmHigh)) / 4;
 }
 
 /**
  * Generate an intensity array for a split gaussian shape.
- * @param shape - split gaussian shape parameters (fwhm, fwhmLeft, fwhmRight).
+ * @param shape - split gaussian shape parameters (fwhm, fwhmLow, fwhmHigh).
  * @param options - sampling options (length, factor, height).
  * @returns Float64Array of intensity values.
  */
@@ -236,17 +232,17 @@ export function getSplitGaussianData(
   shape: SplitGaussianClassOptions = {},
   options: GetData1DOptions = {},
 ) {
-  const { fwhmLeft = 500, fwhmRight = 500 } = shape;
+  const { fwhmLow = 500, fwhmHigh = 500 } = shape;
 
   const {
     factor = getGaussianFactor(),
-    height = calculateSplitGaussianHeight({ fwhmLeft, fwhmRight }),
+    height = calculateSplitGaussianHeight({ fwhmLow, fwhmHigh }),
   } = options;
   let { length } = options;
 
   if (!length) {
     length = Math.min(
-      Math.ceil(Math.max(fwhmLeft, fwhmRight) * factor),
+      Math.ceil(Math.max(fwhmLow, fwhmHigh) * factor),
       2 ** 25 - 1,
     );
     if (length % 2 === 0) length++;
@@ -255,7 +251,7 @@ export function getSplitGaussianData(
   const center = (length - 1) / 2;
   const data = new Float64Array(length);
   for (let i = 0; i < length; i++) {
-    data[i] = splitGaussianFct(i - center, fwhmLeft, fwhmRight) * height;
+    data[i] = splitGaussianFct(i - center, fwhmLow, fwhmHigh) * height;
   }
 
   return data;

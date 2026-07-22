@@ -17,8 +17,8 @@ test('returns a Gaussian instance for gaussian input', () => {
 test('returns a SplitGaussian instance for splitGaussian input', () => {
   const shape = getShape1D({
     kind: 'splitGaussian',
-    fwhmLeft: 10,
-    fwhmRight: 30,
+    fwhmLow: 10,
+    fwhmHigh: 30,
   });
 
   expectTypeOf(shape).toEqualTypeOf<SplitGaussian>();
