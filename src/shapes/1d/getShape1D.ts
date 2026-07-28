@@ -6,6 +6,7 @@ import { Lorentzian } from './lorentzian/Lorentzian.ts';
 import { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive.ts';
 import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
+import { SplitGaussian } from './splitGaussian/SplitGaussian.ts';
 
 /**
  * Generate an instance of a specific kind of shape.
@@ -30,6 +31,8 @@ export function getShape1D(shape: Shape1D): Shape1DInstance {
       return new LorentzianDispersive(shape);
     case 'generalizedLorentzian':
       return new GeneralizedLorentzian(shape);
+    case 'splitGaussian':
+      return new SplitGaussian(shape);
     default:
       throw new Error(`Unknown distribution ${kind as string}`);
   }
