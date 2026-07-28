@@ -1,4 +1,5 @@
 import {
+  GAUSSIAN_CUTOFF,
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2_MINUS_ONE,
   ROOT_PI_OVER_LN2,
@@ -134,7 +135,13 @@ export const calculatePseudoVoigtHeight = (
 };
 
 export const pseudoVoigtFct = (x: number, fwhm: number, mu: number) => {
-  return (1 - mu) * lorentzianFct(x, fwhm) + mu * gaussianFct(x, fwhm);
+  // at mu = 1 the shape *is* the gaussian: there is no lorentzian half left to
+  // carry the tail, so the gaussian is evaluated however far out it is asked for
+  if (mu === 1) return gaussianFct(x, fwhm);
+  const lorentzian = (1 - mu) * lorentzianFct(x, fwhm);
+  const z = x / fwhm;
+  if (z * z > GAUSSIAN_CUTOFF) return lorentzian;
+  return lorentzian + mu * gaussianFct(x, fwhm);
 };
 
 /**
@@ -148,7 +155,18 @@ export function pseudoVoigtDerivative(x: number, fwhm: number, mu: number) {
   // gaussian and lorentzian derivative math is inlined (rather than calling
   // gaussianDerivative / lorentzianDerivative) to allocate a single object on
   // this hot path; the sub-calls would allocate three.
-  const e = Math.exp(GAUSSIAN_EXP_FACTOR * (x / fwhm) ** 2);
+  //
+  // Past {@link GAUSSIAN_CUTOFF} the gaussian half has underflowed, so it is
+  // dropped here under the same condition as in `pseudoVoigtFct` — including its
+  // mu = 1 exemption, so the two stay consistent — which also settles what the
+  // derivatives are out there: `dx` and `dFwhm` keep only their lorentzian
+  // halves, and `dMu` becomes `-lorentz`, the value the shape loses by trading
+  // its lorentzian half for a gaussian one that contributes nothing.
+  const z = x / fwhm;
+  const e =
+    mu !== 1 && z * z > GAUSSIAN_CUTOFF
+      ? 0
+      : Math.exp(GAUSSIAN_EXP_FACTOR * z * z);
   const denominator = 4 * x * x + fwhm * fwhm;
   const lorentz = (fwhm * fwhm) / denominator;
   const dEdt = ((2 * GAUSSIAN_EXP_FACTOR * x) / (fwhm * fwhm)) * e;

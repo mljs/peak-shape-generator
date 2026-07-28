@@ -1,5 +1,7 @@
 import Benchmark from 'benchmark';
 
+import { pseudoVoigtFct } from '../src/shapes/1d/pseudoVoigt/PseudoVoigt.ts';
+
 /**
  * A pseudo-Voigt is `(1 - mu) * lorentzian + mu * gaussian`, and a renderer
  * evaluates it over a whole window. The gaussian half underflows a few line
@@ -85,26 +87,46 @@ function sweepGuarded() {
   return total;
 }
 
+/**
+ * Sum the shape the package actually exports, so the benchmark measures the
+ * library rather than a transcription of it.
+ * @returns the sum.
+ */
+function sweepLibrary() {
+  let total = 0;
+  for (let index = 0; index < SIZE; index++) {
+    total += pseudoVoigtFct(positions[index], FWHM, MU);
+  }
+  return total;
+}
+
 const currentTotal = sweepCurrent();
 const guardedTotal = sweepGuarded();
+const libraryTotal = sweepLibrary();
+if (libraryTotal !== currentTotal) {
+  throw new Error('the library no longer agrees with the reference sweep');
+}
 // eslint-disable-next-line no-console
 console.log(
   `sum over ${SIZE} points  current ${currentTotal.toPrecision(17)}  guarded ${guardedTotal.toPrecision(17)}  difference ${Math.abs(currentTotal - guardedTotal).toExponential(2)}`,
 );
 
-new Benchmark.Suite()
+const suite = new Benchmark.Suite();
+
+suite
   .add('current', sweepCurrent, { minSamples: 30 })
   .add('guarded', sweepGuarded, { minSamples: 30 })
+  .add('library', sweepLibrary, { minSamples: 30 })
   .on('cycle', (event) => {
     const { name, hz, stats } = event.target;
     const nsPerPoint = (1e9 / hz / SIZE).toFixed(2);
     // eslint-disable-next-line no-console
     console.log(
-      `${name.padEnd(8)} ${(hz * SIZE / 1e6).toFixed(1).padStart(7)} Mpoints/s  ${nsPerPoint.padStart(6)} ns/point  +-${stats.rme.toFixed(2)}%`,
+      `${name.padEnd(8)} ${((hz * SIZE) / 1e6).toFixed(1).padStart(7)} Mpoints/s  ${nsPerPoint.padStart(6)} ns/point  +-${stats.rme.toFixed(2)}%`,
     );
   })
-  .on('complete', function onComplete() {
+  .on('complete', () => {
     // eslint-disable-next-line no-console
-    console.log(`fastest: ${this.filter('fastest').map('name').join(', ')}`);
+    console.log(`fastest: ${suite.filter('fastest').map('name').join(', ')}`);
   })
   .run();
