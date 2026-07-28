@@ -55,3 +55,40 @@ test('PseudoVoigtTCH.derivative returns parameters in getParameters() order', ()
   expect(parameters[0]).toBeCloseTo(expected.dFwhmG, 12);
   expect(parameters[1]).toBeCloseTo(expected.dFwhmL, 12);
 });
+
+test('the derivative stays consistent with the shape past the gaussian cutoff', () => {
+  const fwhmG = 0.2;
+  const fwhmL = 0.3;
+  const shape = new PseudoVoigtTCH({ fwhmG, fwhmL });
+  const h = 1e-7;
+  for (const z of [4, 6, 12, 40]) {
+    const x = z * shape.fwhm;
+    const { fct, dx } = pseudoVoigtTCHDerivative(x, fwhmG, fwhmL);
+
+    // the value keeps agreeing with `fct`, which drops the same underflowed half
+    expect(fct).toBe(shape.fct(x));
+
+    const numericalDx =
+      (pseudoVoigtTCHDerivative(x + h, fwhmG, fwhmL).fct -
+        pseudoVoigtTCHDerivative(x - h, fwhmG, fwhmL).fct) /
+      (2 * h);
+
+    expect(dx).toBeCloseTo(numericalDx, 10);
+  }
+});
+
+test('a shape with no lorentzian width keeps its gaussian half past the cutoff', () => {
+  const shape = new PseudoVoigtTCH({ fwhm: 0.2 });
+  shape.mu = 1;
+
+  expect(shape.fwhmL).toBe(0);
+
+  for (const z of [4, 6, 12]) {
+    const x = z * shape.fwhm;
+    const { fct } = pseudoVoigtTCHDerivative(x, shape.fwhmG, shape.fwhmL);
+
+    expect(fct).toBeGreaterThan(0);
+    // the derivative rebuilds the effective fwhm, so it agrees to rounding only
+    expect(fct / shape.fct(x)).toBeCloseTo(1, 10);
+  }
+});

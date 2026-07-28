@@ -1,4 +1,7 @@
-import { GAUSSIAN_EXP_FACTOR } from '../../../util/constants.ts';
+import {
+  GAUSSIAN_CUTOFF,
+  GAUSSIAN_EXP_FACTOR,
+} from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
 import type {
   ParameterTuple,
@@ -238,7 +241,16 @@ export function pseudoVoigtTCHDerivative(
 
   // pseudoVoigt value and its ∂/∂x, ∂/∂F (dFwhm), ∂/∂mu (dMu) at the effective
   // fwhm, inlined to allocate a single object on this hot path.
-  const e = Math.exp(GAUSSIAN_EXP_FACTOR * (x / effectiveFwhm) ** 2);
+  //
+  // Past {@link GAUSSIAN_CUTOFF} the gaussian half has underflowed and is
+  // dropped under the same condition as in `pseudoVoigtFct` — which this shape's
+  // own `fct` delegates to, so the value and its derivatives stay consistent out
+  // there. `fwhmL = 0` gives `mu = 1`, the pure gaussian that is never dropped.
+  const z = x / effectiveFwhm;
+  const e =
+    mu !== 1 && z * z > GAUSSIAN_CUTOFF
+      ? 0
+      : Math.exp(GAUSSIAN_EXP_FACTOR * z * z);
   const denominator2 = 4 * x * x + effectiveFwhm * effectiveFwhm;
   const lorentz = (effectiveFwhm * effectiveFwhm) / denominator2;
   const dEdt =
