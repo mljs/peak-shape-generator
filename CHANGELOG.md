@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.4.0](https://github.com/mljs/peak-shape-generator/compare/v5.3.1...v5.4.0) (2026-07-28)
+
+
+### Features
+
+* allow to set fwhm on a SplitGaussian ([#104](https://github.com/mljs/peak-shape-generator/issues/104)) ([157ce2b](https://github.com/mljs/peak-shape-generator/commit/157ce2bfed9a7cfd8e5e8b5a607652387250df4b))
+
 ## [5.3.1](https://github.com/mljs/peak-shape-generator/compare/v5.3.0...v5.3.1) (2026-07-28)
 
 
