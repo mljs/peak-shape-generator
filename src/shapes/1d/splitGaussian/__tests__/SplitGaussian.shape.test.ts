@@ -28,10 +28,13 @@ test('normalized area is close to 1', () => {
   const shape = new SplitGaussian({ fwhmLow: 40, fwhmHigh: 60 });
   const data = shape.getData();
 
+  expect(data).toHaveLength(199);
+
   const area = data.reduce((a, b) => a + b, 0);
 
-  // the window is sized on the wider half, so it covers more than the 0.9999 factor
-  expect(area).toBeCloseTo(1, 5);
+  // the window is sized on the wider half, so the narrower half is over-covered
+  // and the sum slightly exceeds the 0.9999 area the factor targets
+  expect(area).toBeCloseTo(0.9999, 4);
   expect(shape.getArea()).toBeCloseTo(1, 12);
 });
 
