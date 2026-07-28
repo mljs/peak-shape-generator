@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.1](https://github.com/mljs/peak-shape-generator/compare/v5.3.0...v5.3.1) (2026-07-28)
+
+
+### Bug Fixes
+
+* get gaussian factor was overestimating the value ([9d4cb31](https://github.com/mljs/peak-shape-generator/commit/9d4cb3166fb4a4ca0465d0334fdb9063d1958d1f))
+
 ## [5.3.0](https://github.com/mljs/peak-shape-generator/compare/v5.2.1...v5.3.0) (2026-07-28)
 
 
