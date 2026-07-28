@@ -5,11 +5,7 @@ import {
 } from '../../../util/constants.ts';
 import erfinv from '../../../util/erfinv.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type {
-  ParameterTuple,
-  Shape1DClass,
-  Shape1DDerivative,
-} from '../Shape1DClass.ts';
+import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 
 interface CalculateGaussianHeightOptions {
   /**
@@ -95,7 +91,7 @@ export class Gaussian implements Shape1DClass {
     return calculateGaussianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters(): ParameterTuple<['fwhm']> {
+  public getParameters(): GaussianParameter[] {
     return ['fwhm'];
   }
 
@@ -104,6 +100,9 @@ export class Gaussian implements Shape1DClass {
     return { fct, dx, parameters: [dFwhm] };
   }
 }
+
+/** Parameters characterizing a gaussian shape. */
+export type GaussianParameter = 'fwhm';
 
 /**
  * Calculate the peak height for a given area and fwhm.

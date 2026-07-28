@@ -24,6 +24,7 @@ export type { GaussianShape2D, Shape2D } from './shapes/2d/Shape2D.ts';
 export type {
   Shape1DClass,
   Shape1DDerivative,
+  Shape1DParameter,
 } from './shapes/1d/Shape1DClass.ts';
 export type { Shape2DClass } from './shapes/2d/Shape2DClass.ts';
 export type { Shape1DInstance } from './shapes/1d/Shape1DInstance.ts';

@@ -1,9 +1,5 @@
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type {
-  ParameterTuple,
-  Shape1DClass,
-  Shape1DDerivative,
-} from '../Shape1DClass.ts';
+import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import type { LorentzianClassOptions } from '../lorentzian/Lorentzian.ts';
 import {
   calculateLorentzianHeight,
@@ -53,7 +49,7 @@ export class LorentzianDispersive implements Shape1DClass {
     return calculateLorentzianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters(): ParameterTuple<['fwhm']> {
+  public getParameters(): LorentzianDispersiveParameter[] {
     return ['fwhm'];
   }
 
@@ -62,6 +58,9 @@ export class LorentzianDispersive implements Shape1DClass {
     return { fct, dx, parameters: [dFwhm] };
   }
 }
+
+/** Parameters characterizing a dispersive lorentzian shape. */
+export type LorentzianDispersiveParameter = 'fwhm';
 
 export const lorentzianDispersiveFct = (x: number, fwhm: number) => {
   return (2 * fwhm * x) / (4 * x ** 2 + fwhm ** 2);
