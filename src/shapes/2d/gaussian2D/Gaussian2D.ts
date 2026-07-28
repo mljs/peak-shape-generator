@@ -88,8 +88,8 @@ export class Gaussian2D implements Shape2DClass {
     );
   }
 
-  public getFactor(volume = 1) {
-    return getGaussianFactor(volume);
+  public getFactor(volume?: number) {
+    return getGaussian2DFactor(volume);
   }
 
   public getVolume(
@@ -126,6 +126,21 @@ export class Gaussian2D implements Shape2DClass {
   }
 }
 
+/**
+ * Calculate the width factor corresponding to a given volume coverage fraction.
+ * The factor delimits a rectangular window, and the shape is separable, so the
+ * enclosed volume is the product of the coverage of both axes. Each axis
+ * therefore has to cover the square root of the target volume.
+ * @param volume - target volume fraction (0–1). Defaults to `0.9999`.
+ * @returns the factor by which to multiply fwhm, on each axis, to cover the given volume.
+ */
+export const getGaussian2DFactor = (volume = 0.9999) => {
+  if (volume >= 1) {
+    throw new Error('volume should be (0 - 1)');
+  }
+  return getGaussianFactor(Math.sqrt(volume));
+};
+
 export const gaussian2DFct = (
   x: number,
   y: number,
@@ -145,7 +160,7 @@ export const getGaussian2DData = (
   fwhm = ensureFWHM2D(fwhm, sd);
 
   const { height = calculateGaussian2DHeight({ fwhm, volume: 1 }) } = options;
-  let { factor = getGaussianFactor(), length = { x: 0, y: 0 } } = options;
+  let { factor = getGaussian2DFactor(), length = { x: 0, y: 0 } } = options;
 
   factor = ensureXYNumber(factor);
 

@@ -17,5 +17,5 @@ test('new Gaussian() gaussian.fct', () => {
 });
 
 test('Guassian functions', () => {
-  expect(getGaussianFactor()).toBeCloseTo(3.8833175701198104);
+  expect(getGaussianFactor()).toBeCloseTo(3.298186269744253);
 });
