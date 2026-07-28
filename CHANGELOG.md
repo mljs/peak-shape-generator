@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.3.0](https://github.com/mljs/peak-shape-generator/compare/v5.2.1...v5.3.0) (2026-07-28)
+
+
+### Features
+
+* add asymmetric split gaussian shape ([#97](https://github.com/mljs/peak-shape-generator/issues/97)) ([3d0b6f7](https://github.com/mljs/peak-shape-generator/commit/3d0b6f7a5e6dabb16c234d2ff9f6b7118c643fcd))
+
+
+### Performance Improvements
+
+* skip the pseudo-Voigt gaussian half where it has underflowed ([#98](https://github.com/mljs/peak-shape-generator/issues/98)) ([9236967](https://github.com/mljs/peak-shape-generator/commit/9236967cdda8ec7ed14f259da760ce93aa3075ed))
+
 ## [5.2.1](https://github.com/mljs/peak-shape-generator/compare/v5.2.0...v5.2.1) (2026-07-09)
 
 
