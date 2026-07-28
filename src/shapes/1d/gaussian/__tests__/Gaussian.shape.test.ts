@@ -1,7 +1,7 @@
-import erfinv from 'compute-erfinv';
 import { expect, test } from 'vitest';
 
 import { ROOT_2LN2, ROOT_PI_OVER_LN2 } from '../../../../util/constants.ts';
+import { pseudoVoigtFindFactor } from '../../pseudoVoigt/computeFactor.ts';
 import {
   Gaussian,
   calculateGaussianHeight,
@@ -13,7 +13,7 @@ test('height 1', () => {
   const gaussian = new Gaussian({ fwhm: 10 });
   const data = gaussian.getData({ height: 1 });
 
-  expect(data).toHaveLength(39);
+  expect(data).toHaveLength(33);
 
   const center = (data.length - 1) / 2;
 
@@ -21,7 +21,7 @@ test('height 1', () => {
 
   const area = data.reduce((a, b) => a + b, 0);
 
-  expect(area).toBeCloseTo((ROOT_PI_OVER_LN2 * 10) / 2, 3);
+  expect(area).toBeCloseTo(((ROOT_PI_OVER_LN2 * 10) / 2) * 0.9999, 3);
   expect(gaussian.getParameters()).toStrictEqual(['fwhm']);
 });
 
@@ -37,11 +37,11 @@ test('fwhm fixed and normalized', () => {
   const gaussian = new Gaussian({ fwhm: 50 });
   const data = gaussian.getData();
 
-  expect(data).toHaveLength(195);
+  expect(data).toHaveLength(165);
 
   const area = data.reduce((a, b) => a + b, 0);
 
-  expect(area).toBeCloseTo(0.9999, 2);
+  expect(area).toBeCloseTo(0.9999, 4);
 
   const computedArea = gaussian.getArea();
 
@@ -59,7 +59,7 @@ test('sd fixed', () => {
 
   const area = data.reduce((a, b) => a + b, 0);
 
-  expect(area).toBeCloseTo(height * Math.sqrt(2 * Math.PI) * sd, 2);
+  expect(area).toBeCloseTo(height * Math.sqrt(2 * Math.PI) * sd * 0.9999, 2);
 });
 
 test('odd fwhm', () => {
@@ -125,17 +125,63 @@ test('height calculations', () => {
   expect(height).toBeCloseTo(expectedHeight, 4);
 });
 
-test('factor should be close', () => {
-  const gaussian = new Gaussian({ fwhm: 100 });
-  for (let i = 1; i < 11; i++) {
-    const area = i * 0.1;
+test('factor covers the requested area', () => {
+  const gaussian = new Gaussian({ fwhm: 1000 });
+  const areas = [0.98, 0.96, 0.7, 0.4, 0.2];
+  for (const area of areas) {
+    const data = gaussian.getData({ factor: gaussian.getFactor(area) });
+    const sum = data.reduce((a, b) => a + b, 0);
 
-    expect(gaussian.getFactor(area)).toBeCloseTo(
-      Math.sqrt(2) * erfinv(area),
-      1,
-    );
+    expect(sum).toBeCloseTo(area, 2);
   }
 });
+
+test('factor integrates to the requested area', () => {
+  const gaussian = new Gaussian({ fwhm: 1 });
+  const total = gaussian.getArea(1);
+  const areas = [0.2, 0.4, 0.7, 0.9, 0.96, 0.98, 0.995, 0.9999];
+  for (const area of areas) {
+    const halfWidth = gaussian.getFactor(area) / 2;
+
+    expect(integrate(gaussian, halfWidth) / total).toBeCloseTo(area, 3);
+  }
+});
+
+test('factor is consistent with the pseudo-Voigt gaussian limit', () => {
+  const gaussian = new Gaussian({ fwhm: 1 });
+  const areas = [0.2, 0.7, 0.98];
+  for (const area of areas) {
+    const factor = gaussian.getFactor(area);
+    const bisected = pseudoVoigtFindFactor(area, 0.999999);
+
+    // the residual is the accuracy of the erfinv approximation
+    expect(Math.abs(factor - bisected) / factor).toBeLessThan(1e-3);
+  }
+});
+
+test('factor throws when the area cannot be reached', () => {
+  const gaussian = new Gaussian({ fwhm: 1 });
+
+  expect(() => gaussian.getFactor(1)).toThrow('area should be (0 - 1)');
+  expect(() => gaussian.getFactor(1.2)).toThrow('area should be (0 - 1)');
+});
+
+/**
+ * Numerically integrate the shape over [-halfWidth, halfWidth] with the
+ * trapezoidal rule, independently of any closed-form area formula.
+ * @param gaussian - the shape to integrate.
+ * @param halfWidth - half of the integration window.
+ * @returns the integral over the window.
+ */
+function integrate(gaussian: Gaussian, halfWidth: number) {
+  const nbSteps = 100000;
+  const step = (2 * halfWidth) / nbSteps;
+  let sum = (gaussian.fct(-halfWidth) + gaussian.fct(halfWidth)) / 2;
+  for (let index = 1; index < nbSteps; index++) {
+    sum += gaussian.fct(-halfWidth + index * step);
+  }
+  return sum * step;
+}
 
 function getNbChanges(y: Float64Array) {
   const yPrime = [0];

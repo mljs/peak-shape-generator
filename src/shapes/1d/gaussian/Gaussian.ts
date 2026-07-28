@@ -1,6 +1,7 @@
 import {
   GAUSSIAN_EXP_FACTOR,
   ROOT_2LN2,
+  ROOT_LN2,
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants.ts';
 import erfinv from '../../../util/erfinv.ts';
@@ -177,12 +178,15 @@ export function getGaussianArea(options: GetGaussianAreaOptions) {
 }
 
 /**
- * Calculate the half-width factor corresponding to a given area coverage fraction.
+ * Calculate the width factor corresponding to a given area coverage fraction.
  * @param area - target area fraction (0–1). Defaults to `0.9999`.
  * @returns the factor by which to multiply fwhm to cover the given area.
  */
 export function getGaussianFactor(area = 0.9999) {
-  return Math.sqrt(2) * erfinv(area);
+  if (area >= 1) {
+    throw new Error('area should be (0 - 1)');
+  }
+  return erfinv(area) / ROOT_LN2;
 }
 
 /**

@@ -1,10 +1,10 @@
-import erfinv from 'compute-erfinv';
 import { expect, test } from 'vitest';
 
 import { ROOT_2LN2 } from '../../../../util/constants.ts';
 import {
   gaussianFwhmToWidth,
   gaussianWidthToFWHM,
+  getGaussianFactor,
 } from '../../../1d/gaussian/Gaussian.ts';
 import { Gaussian2D } from '../Gaussian2D.ts';
 
@@ -14,7 +14,7 @@ test('height 1', () => {
   });
   const data = gaussian2D.getData({ height: 1 });
 
-  expect(data).toHaveLength(39);
+  expect(data).toHaveLength(35);
 
   const xCenter = (data.length - 1) / 2;
   const yCenter = (data[0].length - 1) / 2;
@@ -23,7 +23,7 @@ test('height 1', () => {
 
   const volume = getVolume(data);
 
-  expect(volume).toBeCloseTo((100 * Math.PI) / Math.LN2 / 4, 2);
+  expect(volume).toBeCloseTo(((100 * Math.PI) / Math.LN2 / 4) * 0.9999, 2);
 });
 
 test('check gaussian2D continuous', () => {
@@ -38,11 +38,11 @@ test('fwhm fixed and normalized', () => {
   const gaussian2D = new Gaussian2D({ fwhm: 50 });
   const data = gaussian2D.getData();
 
-  expect(data).toHaveLength(195);
+  expect(data).toHaveLength(173);
 
   const volume = getVolume(data);
 
-  expect(volume).toBeCloseTo(0.9999, 2);
+  expect(volume).toBeCloseTo(0.9999, 4);
 
   const computeSurface = gaussian2D.getVolume();
 
@@ -62,7 +62,7 @@ test('sd fixed', () => {
 
   const volume = getVolume(data);
 
-  expect(volume).toBeCloseTo(height * 2 * Math.PI * sd * sd, 0);
+  expect(volume).toBeCloseTo(height * 2 * Math.PI * sd * sd * 0.9999, 0);
 });
 
 test('odd fwhm', () => {
@@ -118,16 +118,37 @@ test('change height should change area', () => {
   expect(gaussian2D.getVolume(2)).toBeCloseTo(2 * volume, 4);
 });
 
-test('factor should be close', () => {
+test('factor covers the requested volume', () => {
   const gaussian2D = new Gaussian2D({ fwhm: 100 });
-  for (let i = 1; i < 11; i++) {
-    const volume: number = i * 0.1;
+  const volumes = [0.98, 0.96, 0.7, 0.4, 0.2];
+  for (const volume of volumes) {
+    const data = gaussian2D.getData({
+      factor: gaussian2D.getFactor(volume),
+    });
 
-    expect(gaussian2D.getFactor(volume)).toBeCloseTo(
-      Math.sqrt(2) * erfinv(volume),
-      1,
-    );
+    expect(getVolume(data)).toBeCloseTo(volume, 2);
   }
+});
+
+test('factor covers the square root of the volume on each axis', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+
+  expect(gaussian2D.getFactor(0.9)).toBeCloseTo(
+    getGaussianFactor(Math.sqrt(0.9)),
+    10,
+  );
+});
+
+test('default factor is finite', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+
+  expect(gaussian2D.getFactor()).toBeCloseTo(3.4383781513674276);
+});
+
+test('factor throws when the volume cannot be reached', () => {
+  const gaussian2D = new Gaussian2D({ fwhm: 100 });
+
+  expect(() => gaussian2D.getFactor(1)).toThrow('volume should be (0 - 1)');
 });
 
 function getVolume(data: Float64Array[]) {
