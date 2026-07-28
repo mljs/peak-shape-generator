@@ -1,10 +1,6 @@
 import { ROOT_PI_OVER_LN2 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type {
-  ParameterTuple,
-  Shape1DClass,
-  Shape1DDerivative,
-} from '../Shape1DClass.ts';
+import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import {
   gaussianDerivative,
   gaussianFct,
@@ -144,7 +140,7 @@ export class SplitGaussian implements Shape1DClass {
     });
   }
 
-  public getParameters(): ParameterTuple<['fwhmLow', 'fwhmHigh']> {
+  public getParameters(): SplitGaussianParameter[] {
     return ['fwhmLow', 'fwhmHigh'];
   }
 
@@ -157,6 +153,9 @@ export class SplitGaussian implements Shape1DClass {
     return { fct, dx, parameters: [dFwhmLow, dFwhmHigh] };
   }
 }
+
+/** Parameters characterizing a split gaussian shape. */
+export type SplitGaussianParameter = 'fwhmLow' | 'fwhmHigh';
 
 /**
  * Calculate the peak height for a given area and both half-widths.

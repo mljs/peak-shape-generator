@@ -1,17 +1,29 @@
 import type { DoubleArray } from 'cheminfo-types';
 
 import type { GetData1DOptions } from './GetData1DOptions.ts';
-
-export type Parameter =
-  'fwhm' | 'mu' | 'gamma' | 'fwhmG' | 'fwhmL' | 'fwhmLow' | 'fwhmHigh';
+import type { GaussianParameter } from './gaussian/Gaussian.ts';
+import type { GeneralizedLorentzianParameter } from './generalizedLorentzian/GeneralizedLorentzian.ts';
+import type { LorentzianParameter } from './lorentzian/Lorentzian.ts';
+import type { LorentzianDispersiveParameter } from './lorentzianDispersive/LorentzianDispersive.ts';
+import type { PseudoVoigtParameter } from './pseudoVoigt/PseudoVoigt.ts';
+import type { PseudoVoigtTCHParameter } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
+import type { SplitGaussianParameter } from './splitGaussian/SplitGaussian.ts';
 
 /**
- * The exact tuple of parameters a shape exposes. Constraining `T` to
- * `readonly Parameter[]` keeps each shape's precise tuple type while
- * guaranteeing every entry is a valid `Parameter`, so renaming or removing a
- * member of `Parameter` breaks any shape that still lists it.
+ * Every parameter a 1D shape can expose: the combination of the parameters of
+ * all the shapes. Indexing a tuple of them, rather than writing a union,
+ * because shapes that share a parameter would make duplicate union
+ * constituents.
  */
-export type ParameterTuple<T extends readonly Parameter[]> = T;
+export type Shape1DParameter = [
+  GaussianParameter,
+  GeneralizedLorentzianParameter,
+  LorentzianParameter,
+  LorentzianDispersiveParameter,
+  PseudoVoigtParameter,
+  PseudoVoigtTCHParameter,
+  SplitGaussianParameter,
+][number];
 
 export interface Shape1DDerivative {
   /** Value of `fct(x)`. */
@@ -67,7 +79,7 @@ export interface Shape1DClass {
   /**
    * Returns an array of the different parameters characterizing the shape
    */
-  getParameters(): Parameter[];
+  getParameters(): Shape1DParameter[];
   /**
    * Analytical partial derivatives of `fct` at `x`, with respect to `x` and to
    * each shape parameter (in the same order as `getParameters()`). Every shape

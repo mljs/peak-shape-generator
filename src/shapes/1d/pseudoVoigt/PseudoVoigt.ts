@@ -5,11 +5,7 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type {
-  ParameterTuple,
-  Shape1DClass,
-  Shape1DDerivative,
-} from '../Shape1DClass.ts';
+import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import { gaussianFct } from '../gaussian/Gaussian.ts';
 import { lorentzianFct } from '../lorentzian/Lorentzian.ts';
 
@@ -113,7 +109,7 @@ export class PseudoVoigt implements Shape1DClass {
     return calculatePseudoVoigtHeight({ fwhm: this.fwhm, mu: this.mu, area });
   }
 
-  public getParameters(): ParameterTuple<['fwhm', 'mu']> {
+  public getParameters(): PseudoVoigtParameter[] {
     return ['fwhm', 'mu'];
   }
 
@@ -126,6 +122,9 @@ export class PseudoVoigt implements Shape1DClass {
     return { fct, dx, parameters: [dFwhm, dMu] };
   }
 }
+
+/** Parameters characterizing a pseudo-Voigt shape. */
+export type PseudoVoigtParameter = 'fwhm' | 'mu';
 
 export const calculatePseudoVoigtHeight = (
   options: CalculatePseudoVoightHeightOptions = {},

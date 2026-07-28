@@ -3,11 +3,7 @@ import {
   GAUSSIAN_EXP_FACTOR,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type {
-  ParameterTuple,
-  Shape1DClass,
-  Shape1DDerivative,
-} from '../Shape1DClass.ts';
+import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import {
   calculatePseudoVoigtHeight,
   getPseudoVoigtArea,
@@ -169,7 +165,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
     });
   }
 
-  public getParameters(): ParameterTuple<['fwhmG', 'fwhmL']> {
+  public getParameters(): PseudoVoigtTCHParameter[] {
     return ['fwhmG', 'fwhmL'];
   }
 
@@ -182,6 +178,9 @@ export class PseudoVoigtTCH implements Shape1DClass {
     return { fct, dx, parameters: [dFwhmG, dFwhmL] };
   }
 }
+
+/** Parameters characterizing a TCH pseudo-Voigt shape. */
+export type PseudoVoigtTCHParameter = 'fwhmG' | 'fwhmL';
 
 /**
  * Analytical value and partial derivatives of the TCH pseudo-Voigt function centered at x=0.
