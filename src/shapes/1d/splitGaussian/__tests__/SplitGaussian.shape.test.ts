@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 
 import { ROOT_PI_OVER_LN2 } from '../../../../util/constants.ts';
+import { getGaussianData } from '../../gaussian/Gaussian.ts';
 import {
   SplitGaussian,
   calculateSplitGaussianHeight,
@@ -29,8 +30,9 @@ test('normalized area is close to 1', () => {
 
   const area = data.reduce((a, b) => a + b, 0);
 
-  expect(area).toBeCloseTo(0.9999, 2);
-  expect(shape.getArea()).toBeCloseTo(1, 2);
+  // the window is sized on the wider half, so it covers more than the 0.9999 factor
+  expect(area).toBeCloseTo(1, 5);
+  expect(shape.getArea()).toBeCloseTo(1, 12);
 });
 
 test('equal halves reduce to a symmetric gaussian area', () => {
@@ -41,6 +43,22 @@ test('equal halves reduce to a symmetric gaussian area', () => {
     (ROOT_PI_OVER_LN2 * 50) / 2,
     6,
   );
+});
+
+test('equal halves produce the same data as a gaussian', () => {
+  const data = new SplitGaussian({ fwhmLow: 50, fwhmHigh: 50 }).getData();
+
+  expect(data).toStrictEqual(getGaussianData({ fwhm: 50 }));
+});
+
+test('length option is honored, apex stays at the center', () => {
+  const shape = new SplitGaussian({ fwhmLow: 10, fwhmHigh: 30 });
+  const data = shape.getData({ length: 101, height: 1 });
+
+  expect(data).toHaveLength(101);
+  expect(data[50]).toBe(1);
+  expect(data[40]).toBe(shape.fct(-10));
+  expect(data[60]).toBe(shape.fct(10));
 });
 
 test('height calculation is consistent with the area', () => {

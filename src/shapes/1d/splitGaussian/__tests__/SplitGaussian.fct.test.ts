@@ -19,8 +19,18 @@ test('splitGaussianFct with equal halves matches a symmetric gaussian', () => {
   expect(splitGaussianFct(0.1, 0.2, 0.2)).toBeCloseTo(0.5);
 });
 
-test('fwhm getter returns the mean of both halves', () => {
+test('fwhm is the distance between both half-maximum crossings', () => {
   const shape = new SplitGaussian({ fwhmLow: 200, fwhmHigh: 600 });
 
+  expect(shape.fct(-100)).toBeCloseTo(0.5, 12);
+  expect(shape.fct(300)).toBeCloseTo(0.5, 12);
   expect(shape.fwhm).toBe(400);
+});
+
+test('both halves default to 500', () => {
+  const shape = new SplitGaussian();
+
+  expect(shape.fwhmLow).toBe(500);
+  expect(shape.fwhmHigh).toBe(500);
+  expect(shape.fwhm).toBe(500);
 });

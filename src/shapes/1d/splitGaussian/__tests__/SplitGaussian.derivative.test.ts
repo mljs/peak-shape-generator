@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 
+import { gaussianDerivative } from '../../gaussian/Gaussian.ts';
 import {
   SplitGaussian,
   splitGaussianDerivative,
@@ -41,6 +42,29 @@ test('splitGaussianDerivative matches numerical derivatives on each side', () =>
 
     expect(dFwhmHigh).toBeCloseTo(numericalDFwhmHigh, 6);
   }
+});
+
+test('each side is the gaussian of its own half', () => {
+  const lower = splitGaussianDerivative(-0.1, fwhmLow, fwhmHigh);
+  const higher = splitGaussianDerivative(0.1, fwhmLow, fwhmHigh);
+
+  expect(lower.dFwhmLow).toBe(gaussianDerivative(-0.1, fwhmLow).dFwhm);
+  expect(lower.dFwhmHigh).toBe(0);
+  expect(higher.dFwhmHigh).toBe(gaussianDerivative(0.1, fwhmHigh).dFwhm);
+  expect(higher.dFwhmLow).toBe(0);
+});
+
+test('the apex is a smooth maximum', () => {
+  const { fct, dx, dFwhmLow, dFwhmHigh } = splitGaussianDerivative(
+    0,
+    fwhmLow,
+    fwhmHigh,
+  );
+
+  expect(fct).toBe(1);
+  expect(dx).toBeCloseTo(0, 12);
+  expect(dFwhmLow).toBeCloseTo(0, 12);
+  expect(dFwhmHigh).toBeCloseTo(0, 12);
 });
 
 test('SplitGaussian.derivative returns parameters in getParameters() order', () => {

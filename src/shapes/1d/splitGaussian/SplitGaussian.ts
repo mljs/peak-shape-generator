@@ -81,9 +81,10 @@ export class SplitGaussian implements Shape1DClass {
   }
 
   /**
-   * Full width at half maximum of the whole peak, the mean of both halves.
-   * A symmetric peak has no split; use a `Gaussian` for that case.
-   * @returns the mean full width at half maximum.
+   * Full width at half maximum of the peak. The half-maximum crossings are at
+   * `-fwhmLow / 2` and `fwhmHigh / 2`, so the width between them is the mean of
+   * both halves.
+   * @returns the full width at half maximum.
    */
   public get fwhm() {
     return (this.fwhmLow + this.fwhmHigh) / 2;
@@ -91,16 +92,9 @@ export class SplitGaussian implements Shape1DClass {
 
   /**
    * Convert a full width at half maximum to the width between the inflection
-   * points, using the plain gaussian relation on the mean fwhm by default.
-   *
-   * Because that relation is linear, the value returned for the mean fwhm equals
-   * the true total span between the split shape's two (asymmetric) inflection
-   * points, `σlow + σhigh`. It is therefore an **aggregate**: it does not
-   * capture the asymmetry — `fwhmLow: 200, fwhmHigh: 600` and
-   * `fwhmLow: fwhmHigh: 400` yield the same width. Use `fwhmLow` / `fwhmHigh`
-   * directly when each half-width matters.
-   * @param fwhm - full width at half maximum. Defaults to the mean of both halves.
-   * @returns the aggregate width between the inflection points.
+   * points. For this peak's own fwhm the result is exactly `σlow + σhigh`.
+   * @param fwhm - full width at half maximum. Defaults to the peak's fwhm.
+   * @returns the width between the inflection points.
    */
   public fwhmToWidth(fwhm = this.fwhm) {
     return gaussianFwhmToWidth(fwhm);
@@ -108,13 +102,10 @@ export class SplitGaussian implements Shape1DClass {
 
   /**
    * Convert a width between the inflection points back to a full width at half
-   * maximum, using the plain gaussian relation.
-   *
-   * This is the inverse of `fwhmToWidth` only for the **aggregate** (mean) fwhm;
-   * it cannot recover the individual `fwhmLow` / `fwhmHigh`, since a single
-   * width does not encode the asymmetry.
+   * maximum. A single width does not encode the asymmetry, so it cannot recover
+   * `fwhmLow` and `fwhmHigh` individually.
    * @param width - width between the inflection points.
-   * @returns the corresponding (aggregate) full width at half maximum.
+   * @returns the corresponding full width at half maximum.
    */
   public widthToFWHM(width: number) {
     return gaussianWidthToFWHM(width);
@@ -224,7 +215,7 @@ export function getSplitGaussianArea(options: GetSplitGaussianAreaOptions) {
 
 /**
  * Generate an intensity array for a split gaussian shape.
- * @param shape - split gaussian shape parameters (fwhm, fwhmLow, fwhmHigh).
+ * @param shape - split gaussian shape parameters (fwhmLow, fwhmHigh).
  * @param options - sampling options (length, factor, height).
  * @returns Float64Array of intensity values.
  */
