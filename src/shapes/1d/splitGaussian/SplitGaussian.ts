@@ -87,6 +87,27 @@ export class SplitGaussian implements Shape1DClass {
   }
 
   /**
+   * Set the full width at half maximum. Both halves are scaled by the same
+   * ratio, so their mean becomes `value` while the asymmetry between them is
+   * preserved. A peak with no width has no ratio to preserve, so both halves
+   * take `value` and the peak stays symmetric.
+   * @param value - the new full width at half maximum.
+   */
+  public set fwhm(value: number) {
+    const { fwhm } = this;
+
+    if (fwhm === 0) {
+      this.fwhmLow = value;
+      this.fwhmHigh = value;
+      return;
+    }
+
+    const ratio = value / fwhm;
+    this.fwhmLow *= ratio;
+    this.fwhmHigh *= ratio;
+  }
+
+  /**
    * Convert a full width at half maximum to the width between the inflection
    * points. For this peak's own fwhm the result is exactly `σlow + σhigh`.
    * @param fwhm - full width at half maximum. Defaults to the peak's fwhm.
