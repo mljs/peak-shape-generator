@@ -5,6 +5,7 @@ import {
   getGaussianFactor,
 } from '../../1d/gaussian/Gaussian.ts';
 import type { GetData2DOptions } from '../GetData2DOptions.ts';
+import type { GaussianShape2D } from '../Shape2D.ts';
 import type { Shape2DClass } from '../Shape2DClass.ts';
 
 export interface XYNumber {
@@ -62,6 +63,7 @@ export interface GetGaussian2DVolumeOptions {
 }
 
 export class Gaussian2D implements Shape2DClass {
+  public readonly kind = 'gaussian' as const;
   public fwhmX: number;
   public fwhmY: number;
 
@@ -90,6 +92,14 @@ export class Gaussian2D implements Shape2DClass {
 
   public getFactor(volume?: number) {
     return getGaussian2DFactor(volume);
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape2D`.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): GaussianShape2D {
+    return { kind: this.kind, fwhm: { x: this.fwhmX, y: this.fwhmY } };
   }
 
   public getVolume(
@@ -123,6 +133,14 @@ export class Gaussian2D implements Shape2DClass {
     fwhm = ensureXYNumber(fwhm);
     this.fwhmX = fwhm.x;
     this.fwhmY = fwhm.y;
+  }
+
+  /**
+   * Full width at half maximum on each axis.
+   * @returns the fwhm of both axes.
+   */
+  public get fwhm(): XYNumber {
+    return { x: this.fwhmX, y: this.fwhmY };
   }
 }
 

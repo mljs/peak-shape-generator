@@ -5,6 +5,7 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { PseudoVoigtShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import { gaussianFct } from '../gaussian/Gaussian.ts';
 import { lorentzianFct } from '../lorentzian/Lorentzian.ts';
@@ -58,6 +59,7 @@ interface CalculatePseudoVoightHeightOptions {
 }
 
 export class PseudoVoigt implements Shape1DClass {
+  public readonly kind = 'pseudoVoigt' as const;
   public fwhm: number;
   /**
    * Ratio of gaussian contribution in the shape
@@ -111,6 +113,14 @@ export class PseudoVoigt implements Shape1DClass {
 
   public getParameters(): PseudoVoigtParameter[] {
     return ['fwhm', 'mu'];
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): PseudoVoigtShape1D {
+    return { kind: this.kind, fwhm: this.fwhm, mu: this.mu };
   }
 
   public derivative(x: number): Shape1DDerivative {

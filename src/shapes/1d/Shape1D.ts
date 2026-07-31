@@ -36,6 +36,9 @@ export interface SplitGaussianShape1D extends SplitGaussianClassOptions {
   kind: 'splitGaussian';
 }
 
+/** Discriminant of every 1D shape. */
+export type Shape1DKind = Shape1D['kind'];
+
 export type Shape1D =
   | GaussianShape1D
   | LorentzianShape1D

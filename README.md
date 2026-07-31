@@ -9,14 +9,17 @@ Generate various peak shapes.
 
 The current supported kinds of shapes:
 
-| Name                        |                                                                                                                           Equation                                                                                                                            |
-| --------------------------- | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Gaussian                    |                                                          <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D"/>                                                          |
-| Lorentzian                  |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D"/>                                                                        |
-| Lorentzian Dispersive       |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B2%5Comega%5Cdelta%7D%7B4%5Cdelta%5E2%20%2B%20%5Comega%5E2%7D"/>                                                                        |
-| Generalized Lorentzian      | <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cleft%5B%281-%5Cgamma%29%5Ccdot%5Cfrac%7B1%7D%7B1%2Bu%7D%20%2B%20%5Cgamma%5Ccdot%5Cfrac%7B1%2B%5Cfrac%7Bu%7D%7B2%7D%7D%7B1%2Bu%2Bu%5E2%7D%5Cright%5D"/> |
-| Pseudo Voigt                | <img src="https://tex.cheminfo.org/v1/?tex=y%20%5Ccdot%5Cleft%5Bmu%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D%20%2B%20%5Cleft(1%20-%20mu%5Cright)%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D%5Cright%5D"/> |
-| Split Gaussian (asymmetric) | Two gaussian halves sharing the apex: the lower-x half (`t ≤ x`) uses `fwhmLow`, the higher-x half (`t > x`) uses `fwhmHigh`. |
+| Name                        | `kind`                  |                                                                                                                           Equation                                                                                                                            |
+| --------------------------- | ----------------------- | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Gaussian                    | `gaussian`              |                                                          <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D"/>                                                          |
+| Lorentzian                  | `lorentzian`            |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D"/>                                                                        |
+| Lorentzian Dispersive       | `lorentzianDispersive`  |                                                                       <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cfrac%7B2%5Comega%5Cdelta%7D%7B4%5Cdelta%5E2%20%2B%20%5Comega%5E2%7D"/>                                                                        |
+| Generalized Lorentzian      | `generalizedLorentzian` | <img src="https://tex.cheminfo.org/?tex=y%5Ccdot%5Cleft%5B%281-%5Cgamma%29%5Ccdot%5Cfrac%7B1%7D%7B1%2Bu%7D%20%2B%20%5Cgamma%5Ccdot%5Cfrac%7B1%2B%5Cfrac%7Bu%7D%7B2%7D%7D%7B1%2Bu%2Bu%5E2%7D%5Cright%5D"/> |
+| Pseudo Voigt                | `pseudoVoigt`           | <img src="https://tex.cheminfo.org/v1/?tex=y%20%5Ccdot%5Cleft%5Bmu%5Ccdot%20exp%5Cleft%5B-%5Cfrac%7B1%7D%7B2%7D%5Cfrac%7B%5Cdelta%7D%7B%5Csigma%5E2%7D%5Cright%5D%20%2B%20%5Cleft(1%20-%20mu%5Cright)%5Ccdot%5Cfrac%7B%5Comega%5E2%7D%7B4%5Cdelta%20%2B%20%5Comega%5E2%7D%5Cright%5D"/> |
+| Pseudo Voigt (TCH)          | `pseudoVoigtTCH`        | The pseudo Voigt above, with independent gaussian and lorentzian widths `fwhmG` and `fwhmL`. The effective `fwhm` and `mu` are derived from them through the Thompson–Cox–Hastings approximation. |
+| Split Gaussian (asymmetric) | `splitGaussian`         | Two gaussian halves sharing the apex: the lower-x half (`t ≤ x`) uses `fwhmLow`, the higher-x half (`t > x`) uses `fwhmHigh`. |
+
+The only 2D shape is `gaussian`, whose widths are set per axis.
 
 where
 
@@ -57,27 +60,26 @@ let data = getPseudoVoigtData({ fwhm: 500 }, { factor: 5 });
 It is also possible to take an instance of each kind of shape:
 
 ```js
-import { Gaussian, gaussianFct, Gaussian2D } from 'ml-peak-shape-shape';
+import { Gaussian, gaussianFct, Gaussian2D } from 'ml-peak-shape-generator';
 
 const gaussianShape = new Gaussian({ fwhm: 500 });
 // It is possible to set a new value for fwhm
 gaussianShape.fwhm = 300;
 
 // By default the height value ensure a volume equal 1.
-const gaussian2DShape = new Gaussian2D({ fwhm: 500 });
+const symmetric2DShape = new Gaussian2D({ fwhm: 500 });
 
 // It is possible to set values for sd, fwhm and factor for each axes.
 const gaussian2DShape = new Gaussian2D({ fwhm: { x: 300, y: 500 } });
 
 // It is possible to set new value for fwhm by:
-gaussian2D.fwhm = { x: 300, y: 500 };
+gaussian2DShape.fwhm = { x: 300, y: 500 };
 // or set the same value for both axes.
-gaussian2D.fwhm = 400;
+gaussian2DShape.fwhm = 400;
 
-//An instance of any shape has the same methods accessible for each
-//shape e.g. fct or getData, but these use the internal parameters. e.g:
+// An instance of any shape has the same methods accessible for each
+// shape e.g. fct or getData, but these use the internal parameters. e.g:
 
-const gaussianShape = new Gaussian({ fwhm: 500 });
 gaussianShape.fct(5);
 gaussianFct(5, 500);
 // getData
@@ -87,10 +89,57 @@ gaussianShape.getData({ factor: 3.5 });
 ```js
 import { getShape1D, getShape2D } from 'ml-peak-shape-generator';
 
-// If you want to dynamically select a shape you can use the `getShapeGenerator` method. It returns a instance of required kind of shape.
+// If you want to dynamically select a shape you can use `getShape1D` /
+// `getShape2D`. They return an instance of the required kind of shape.
 
-let shapeGenerator = getShape1D({ kind: 'lorentzian', sd: 500 });
-let shapeGenerator = getShape2D({ kind: 'gaussian', sd: 500 });
+const lorentzian = getShape1D({ kind: 'lorentzian', fwhm: 500 });
+const gaussian2D = getShape2D({ kind: 'gaussian', sd: 500 });
+```
+
+## Descriptors, instances and serialization
+
+A shape exists in two forms: a **descriptor** — a plain object such as
+`{ kind: 'gaussian', fwhm: 500 }` — and an **instance**, the class that computes
+the curve. `getShape1D` / `getShape2D` turn a descriptor into an instance.
+
+An instance carries its own `kind` and serializes back to a descriptor, so a
+shape survives a trip through JSON:
+
+```js
+import { getShape1D } from 'ml-peak-shape-generator';
+
+const shape = getShape1D({ kind: 'pseudoVoigt', fwhm: 500, mu: 0.3 });
+
+shape.kind; // 'pseudoVoigt'
+JSON.stringify(shape); // '{"kind":"pseudoVoigt","fwhm":500,"mu":0.3}'
+
+const restored = getShape1D(JSON.parse(JSON.stringify(shape)));
+restored.fct(5) === shape.fct(5); // true
+```
+
+`toJSON` emits the parameters the shape is defined by — those `getParameters()`
+reports — so a round trip preserves both the curve and its analytical
+derivatives. A `splitGaussian` therefore emits `fwhmLow` and `fwhmHigh` rather
+than its mean `fwhm`, and a `pseudoVoigtTCH` emits its component widths `fwhmG`
+and `fwhmL`. Options that are alternative ways to express a width, such as `sd`,
+are resolved first and emitted as the resulting `fwhm`.
+
+Because an instance is itself a valid descriptor, handing one back to the
+factory copies it:
+
+```js
+const copy = getShape1D(shape); // a new instance with the same parameters
+```
+
+The `kind` strings are exported as types:
+
+```ts
+import type { Shape1DKind, Shape2DKind } from 'ml-peak-shape-generator';
+
+// Shape1DKind: 'gaussian' | 'lorentzian' | 'lorentzianDispersive' |
+//              'pseudoVoigt' | 'pseudoVoigtTCH' | 'generalizedLorentzian' |
+//              'splitGaussian'
+// Shape2DKind: 'gaussian'
 ```
 
 It is also possible to get a function that allows to calculate y for any x

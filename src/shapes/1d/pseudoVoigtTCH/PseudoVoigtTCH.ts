@@ -3,6 +3,7 @@ import {
   GAUSSIAN_EXP_FACTOR,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { PseudoVoigtTCHShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import {
   calculatePseudoVoigtHeight,
@@ -43,6 +44,7 @@ export interface PseudoVoigtTCHClassOptions {
  * via the Thompson–Cox–Hastings approximation.
  */
 export class PseudoVoigtTCH implements Shape1DClass {
+  public readonly kind = 'pseudoVoigtTCH' as const;
   private _fwhmG: number;
   private _fwhmL: number;
   private _fwhm: number;
@@ -58,10 +60,10 @@ export class PseudoVoigtTCH implements Shape1DClass {
     this._fwhmL = 0;
     this._lorentzianWidthFraction = lorentzianWidthFraction(1 - mu);
 
-    if (fwhmG && fwhmL) {
+    if (fwhmG !== undefined && fwhmL !== undefined) {
       this._fwhmG = fwhmG;
       this.fwhmL = fwhmL;
-    } else if (fwhm) {
+    } else if (fwhm !== undefined) {
       this.fwhm = fwhm;
     }
   }
@@ -104,7 +106,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
     const lorentzianFraction = lorentzianWidthFraction(1 - value);
     this._lorentzianWidthFraction = lorentzianFraction;
     this._fwhmL = this._fwhm * lorentzianFraction;
-    this._fwhmG = this._fwhm * (1 - lorentzianFraction);
+    this._fwhmG = this._fwhm * gaussianWidthFraction(lorentzianFraction);
     this._mu = value;
   }
 
@@ -116,7 +118,7 @@ export class PseudoVoigtTCH implements Shape1DClass {
     const lorentzianFraction =
       this._lorentzianWidthFraction || lorentzianWidthFraction(1 - this._mu);
     this._fwhmL = value * lorentzianFraction;
-    this._fwhmG = value * (1 - lorentzianFraction);
+    this._fwhmG = value * gaussianWidthFraction(lorentzianFraction);
     this._fwhm = value;
   }
 
@@ -167,6 +169,18 @@ export class PseudoVoigtTCH implements Shape1DClass {
 
   public getParameters(): PseudoVoigtTCHParameter[] {
     return ['fwhmG', 'fwhmL'];
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   * The component widths are emitted rather than `fwhm`/`mu`, because they are
+   * the state this shape is defined by: `getParameters` reports them and
+   * `derivative` differentiates with respect to them. The effective width and
+   * the mixing ratio are re-derived from them exactly.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): PseudoVoigtTCHShape1D {
+    return { kind: this.kind, fwhmG: this._fwhmG, fwhmL: this._fwhmL };
   }
 
   public derivative(x: number): Shape1DDerivative {
@@ -309,4 +323,38 @@ function lorentzianWidthFraction(lorentzianFraction: number): number {
     fraction -= f / df;
   }
   return fraction;
+}
+
+/**
+ * Solve for the gaussian width fraction fwhmG/fwhm that pairs with a given
+ * lorentzian width fraction fwhmL/fwhm. Writing fwhmG = g·fwhm and
+ * fwhmL = q·fwhm in {@link computeEffectiveWidth} makes fwhm cancel, so `g` is
+ * the root of the TCH width polynomial evaluated at 1. Solving it — rather than
+ * taking `1 - q` — is what keeps `computeEffectiveWidth(fwhmG, fwhmL)` equal to
+ * `fwhm`, and therefore keeps `fct` and `derivative` describing one same curve.
+ * @param lorentzianFraction - the lorentzian width fraction fwhmL/fwhm.
+ * @returns the gaussian width fraction fwhmG/fwhm.
+ */
+function gaussianWidthFraction(lorentzianFraction: number): number {
+  const q = lorentzianFraction;
+  let g = 1 - q;
+  for (let i = 0; i < 8; i++) {
+    const f =
+      g ** 5 +
+      2.69269 * g ** 4 * q +
+      2.42843 * g ** 3 * q ** 2 +
+      4.47163 * g ** 2 * q ** 3 +
+      0.07842 * g * q ** 4 +
+      q ** 5 -
+      1;
+    const df =
+      5 * g ** 4 +
+      10.77076 * g ** 3 * q +
+      7.28529 * g ** 2 * q ** 2 +
+      8.94326 * g * q ** 3 +
+      0.07842 * q ** 4;
+    if (df === 0) break;
+    g -= f / df;
+  }
+  return g;
 }

@@ -1,5 +1,6 @@
 import { ROOT_PI_OVER_LN2 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { SplitGaussianShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import {
   gaussianDerivative,
@@ -58,6 +59,7 @@ interface GetSplitGaussianAreaOptions {
 }
 
 export class SplitGaussian implements Shape1DClass {
+  public readonly kind = 'splitGaussian' as const;
   /**
    * Full width at half maximum of the lower-x half (x <= 0).
    * @default 500
@@ -163,6 +165,18 @@ export class SplitGaussian implements Shape1DClass {
 
   public getParameters(): SplitGaussianParameter[] {
     return ['fwhmLow', 'fwhmHigh'];
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): SplitGaussianShape1D {
+    return {
+      kind: this.kind,
+      fwhmLow: this.fwhmLow,
+      fwhmHigh: this.fwhmHigh,
+    };
   }
 
   public derivative(x: number): Shape1DDerivative {

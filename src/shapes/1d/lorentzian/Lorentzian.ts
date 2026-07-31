@@ -1,5 +1,6 @@
 import { ROOT_THREE } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { LorentzianShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 
 export interface LorentzianClassOptions {
@@ -24,6 +25,7 @@ export interface GetLorentzianAreaOptions {
 }
 
 export class Lorentzian implements Shape1DClass {
+  public readonly kind = 'lorentzian' as const;
   /**
    * Full width at half maximum.
    * @default 500
@@ -66,6 +68,14 @@ export class Lorentzian implements Shape1DClass {
 
   public getParameters(): LorentzianParameter[] {
     return ['fwhm'];
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): LorentzianShape1D {
+    return { kind: this.kind, fwhm: this.fwhm };
   }
 
   public derivative(x: number): Shape1DDerivative {

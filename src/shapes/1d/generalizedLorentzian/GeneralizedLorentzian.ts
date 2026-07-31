@@ -1,5 +1,6 @@
 import { ROOT_THREE } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { GeneralizedLorentzianShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 
 export interface GeneralizedLorentzianClassOptions {
@@ -37,6 +38,7 @@ interface GetGeneralizedLorentzianAreaOptions {
  * {@link https://www.ebyte.it/stan/Talk_ML_UserMeeting_SMASH_2010_GeneralizedLorentzian.html}
  */
 export class GeneralizedLorentzian implements Shape1DClass {
+  public readonly kind = 'generalizedLorentzian' as const;
   /**
    * Full width at half maximum.
    * @default 500
@@ -90,6 +92,14 @@ export class GeneralizedLorentzian implements Shape1DClass {
 
   public getParameters(): GeneralizedLorentzianParameter[] {
     return ['fwhm', 'gamma'];
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): GeneralizedLorentzianShape1D {
+    return { kind: this.kind, fwhm: this.fwhm, gamma: this.gamma };
   }
 
   public derivative(x: number): Shape1DDerivative {

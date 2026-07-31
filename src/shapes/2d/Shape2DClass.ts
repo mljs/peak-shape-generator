@@ -1,9 +1,14 @@
 import type { DoubleArray } from 'cheminfo-types';
 
 import type { GetData2DOptions } from './GetData2DOptions.ts';
+import type { Shape2D, Shape2DKind } from './Shape2D.ts';
 import type { XYNumber } from './XYNumber.ts';
 
 export interface Shape2DClass {
+  /**
+   * Kind of shape, so that an instance is also a valid `Shape2D` descriptor.
+   */
+  readonly kind: Shape2DKind;
   /**
    * Full width at half maximum.
    * Could specify the value for each axis by a xy object or both by a number.
@@ -35,4 +40,8 @@ export interface Shape2DClass {
    * @returns z values.
    */
   getData(options?: GetData2DOptions): DoubleArray[];
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape2D`.
+   */
+  toJSON(): Shape2D;
 }
