@@ -15,9 +15,16 @@ test('constructor with fwhmG and fwhmL derives effectiveFwhm and mu', () => {
 
 test('constructor with fwhm only uses mu default 0.5', () => {
   const shape = new PseudoVoigtTCH({ fwhm: 200 });
+  const recombined = new PseudoVoigtTCH({
+    fwhmG: shape.fwhmG,
+    fwhmL: shape.fwhmL,
+  });
 
   expect(shape.fwhm).toBe(200);
-  expect(shape.fwhmG + shape.fwhmL).toBeCloseTo(200, 4);
+  expect(shape.mu).toBe(0.5);
+  // the components describe the same shape: recombining them gives fwhm and mu back
+  expect(recombined.fwhm).toBeCloseTo(200, 10);
+  expect(recombined.mu).toBeCloseTo(0.5, 10);
 });
 
 test('pure gaussian (fwhmL = 0) gives mu close to 1', () => {
@@ -52,9 +59,15 @@ test('setting fwhmL updates effectiveFwhm and mu', () => {
 test('setting mu redistributes fwhmG and fwhmL', () => {
   const shape = new PseudoVoigtTCH({ fwhm: 100 });
   shape.mu = 0.8;
+  const recombined = new PseudoVoigtTCH({
+    fwhmG: shape.fwhmG,
+    fwhmL: shape.fwhmL,
+  });
 
   expect(shape.mu).toBeCloseTo(0.8, 4);
-  expect(shape.fwhmG + shape.fwhmL).toBeCloseTo(100, 4);
+  expect(shape.fwhm).toBe(100);
+  expect(recombined.fwhm).toBeCloseTo(100, 10);
+  expect(recombined.mu).toBeCloseTo(0.8, 10);
 });
 
 test('setting fwhm scales fwhmG and fwhmL proportionally', () => {
@@ -64,6 +77,26 @@ test('setting fwhm scales fwhmG and fwhmL proportionally', () => {
 
   expect(shape.fwhm).toBe(200);
   expect(shape.fwhmL / shape.fwhm).toBeCloseTo(prevRatio, 4);
+});
+
+test('fct and derivative describe the same curve whichever pair built the shape', () => {
+  for (const mu of [0, 0.25, 0.5, 0.75, 1]) {
+    const shape = new PseudoVoigtTCH({ fwhm: 10, mu });
+
+    expect(shape.derivative(2).fct).toBeCloseTo(shape.fct(2), 12);
+  }
+});
+
+test('a zero component width is a valid shape', () => {
+  const gaussian = new PseudoVoigtTCH({ fwhmG: 10, fwhmL: 0 });
+  const lorentzian = new PseudoVoigtTCH({ fwhmG: 0, fwhmL: 10 });
+
+  expect(gaussian.fwhm).toBeCloseTo(10, 10);
+  expect(gaussian.mu).toBe(1);
+  expect(gaussian.fct(0)).toBeCloseTo(1, 10);
+  expect(lorentzian.fwhm).toBeCloseTo(10, 10);
+  expect(lorentzian.mu).toBe(0);
+  expect(lorentzian.fct(0)).toBeCloseTo(1, 10);
 });
 
 test('getParameters returns fwhmG and fwhmL', () => {

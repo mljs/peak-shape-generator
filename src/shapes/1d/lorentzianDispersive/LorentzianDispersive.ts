@@ -1,4 +1,5 @@
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
+import type { LorentzianDispersiveShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import type { LorentzianClassOptions } from '../lorentzian/Lorentzian.ts';
 import {
@@ -9,6 +10,7 @@ import {
 } from '../lorentzian/Lorentzian.ts';
 
 export class LorentzianDispersive implements Shape1DClass {
+  public readonly kind = 'lorentzianDispersive' as const;
   /**
    * Full width at half maximum.
    * @default 500
@@ -51,6 +53,14 @@ export class LorentzianDispersive implements Shape1DClass {
 
   public getParameters(): LorentzianDispersiveParameter[] {
     return ['fwhm'];
+  }
+
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   * @returns the shape descriptor.
+   */
+  public toJSON(): LorentzianDispersiveShape1D {
+    return { kind: this.kind, fwhm: this.fwhm };
   }
 
   public derivative(x: number): Shape1DDerivative {

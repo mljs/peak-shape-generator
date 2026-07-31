@@ -18,9 +18,14 @@ export type {
   PseudoVoigtShape1D,
   PseudoVoigtTCHShape1D,
   Shape1D,
+  Shape1DKind,
   SplitGaussianShape1D,
 } from './shapes/1d/Shape1D.ts';
-export type { GaussianShape2D, Shape2D } from './shapes/2d/Shape2D.ts';
+export type {
+  GaussianShape2D,
+  Shape2D,
+  Shape2DKind,
+} from './shapes/2d/Shape2D.ts';
 export type {
   Shape1DClass,
   Shape1DDerivative,

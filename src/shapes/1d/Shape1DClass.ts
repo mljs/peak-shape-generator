@@ -1,6 +1,7 @@
 import type { DoubleArray } from 'cheminfo-types';
 
 import type { GetData1DOptions } from './GetData1DOptions.ts';
+import type { Shape1D, Shape1DKind } from './Shape1D.ts';
 import type { GaussianParameter } from './gaussian/Gaussian.ts';
 import type { GeneralizedLorentzianParameter } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import type { LorentzianParameter } from './lorentzian/Lorentzian.ts';
@@ -38,6 +39,10 @@ export interface Shape1DDerivative {
 }
 
 export interface Shape1DClass {
+  /**
+   * Kind of shape, so that an instance is also a valid `Shape1D` descriptor.
+   */
+  readonly kind: Shape1DKind;
   fwhm: number;
   /**
    * Calculate the height depending of fwhm and area.
@@ -80,6 +85,10 @@ export interface Shape1DClass {
    * Returns an array of the different parameters characterizing the shape
    */
   getParameters(): Shape1DParameter[];
+  /**
+   * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
+   */
+  toJSON(): Shape1D;
   /**
    * Analytical partial derivatives of `fct` at `x`, with respect to `x` and to
    * each shape parameter (in the same order as `getParameters()`). Every shape
