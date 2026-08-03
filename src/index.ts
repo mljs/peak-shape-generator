@@ -19,8 +19,9 @@ export type {
   PseudoVoigtTCHShape1D,
   Shape1D,
   Shape1DKind,
+  Shape1DWithFWHM,
   SplitGaussianShape1D,
-} from './shapes/1d/Shape1D.ts';
+} from './shapes/1d/shape_1d.ts';
 export type {
   GaussianShape2D,
   Shape2D,

@@ -6,8 +6,8 @@ import {
 } from '../../../util/constants.ts';
 import erfinv from '../../../util/erfinv.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { GaussianShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
+import type { GaussianShape1D } from '../shape_1d.ts';
 
 interface CalculateGaussianHeightOptions {
   /**

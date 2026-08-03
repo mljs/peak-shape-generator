@@ -1,9 +1,9 @@
 import { expect, expectTypeOf, test } from 'vitest';
 
-import type { Shape1D } from '../Shape1D.ts';
 import type { Shape1DInstance } from '../Shape1DInstance.ts';
 import { Gaussian } from '../gaussian/Gaussian.ts';
 import { getShape1D } from '../getShape1D.ts';
+import type { Shape1D } from '../shape_1d.ts';
 import { SplitGaussian } from '../splitGaussian/SplitGaussian.ts';
 
 test('returns a Gaussian instance for gaussian input', () => {

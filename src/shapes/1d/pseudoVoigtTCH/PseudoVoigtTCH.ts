@@ -3,7 +3,6 @@ import {
   GAUSSIAN_EXP_FACTOR,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { PseudoVoigtTCHShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import {
   calculatePseudoVoigtHeight,
@@ -14,6 +13,7 @@ import {
   pseudoVoigtFwhmToWidth,
   pseudoVoigtWidthToFWHM,
 } from '../pseudoVoigt/PseudoVoigt.ts';
+import type { PseudoVoigtTCHShape1D } from '../shape_1d.ts';
 
 export interface PseudoVoigtTCHClassOptions {
   /**

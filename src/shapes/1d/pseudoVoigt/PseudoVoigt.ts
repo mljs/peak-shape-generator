@@ -5,10 +5,10 @@ import {
   ROOT_PI_OVER_LN2,
 } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { PseudoVoigtShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import { gaussianFct } from '../gaussian/Gaussian.ts';
 import { lorentzianFct } from '../lorentzian/Lorentzian.ts';
+import type { PseudoVoigtShape1D } from '../shape_1d.ts';
 
 import { pseudoVoigtFindFactor } from './computeFactor.ts';
 
