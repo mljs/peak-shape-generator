@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.5.0](https://github.com/mljs/peak-shape-generator/compare/v5.4.0...v5.5.0) (2026-08-03)
+
+
+### Features
+
+* add toJSON on Shapes and get a clone using getShape1D(instance) ([#106](https://github.com/mljs/peak-shape-generator/issues/106)) ([2e8336e](https://github.com/mljs/peak-shape-generator/commit/2e8336e80ddc4485dd525a464ec5142bdb76898b))
+
+
+### Bug Fixes
+
+* expose union type of shapes that have a fwhm ([#108](https://github.com/mljs/peak-shape-generator/issues/108)) ([09d75e9](https://github.com/mljs/peak-shape-generator/commit/09d75e9e6b8418f888939d6557390609288d2542))
+
 ## [5.4.0](https://github.com/mljs/peak-shape-generator/compare/v5.3.1...v5.4.0) (2026-07-28)
 
 
