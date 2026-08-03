@@ -1,5 +1,4 @@
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { LorentzianDispersiveShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
 import type { LorentzianClassOptions } from '../lorentzian/Lorentzian.ts';
 import {
@@ -8,6 +7,7 @@ import {
   lorentzianFwhmToWidth,
   lorentzianWidthToFWHM,
 } from '../lorentzian/Lorentzian.ts';
+import type { LorentzianDispersiveShape1D } from '../shape_1d.ts';
 
 export class LorentzianDispersive implements Shape1DClass {
   public readonly kind = 'lorentzianDispersive' as const;

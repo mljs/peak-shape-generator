@@ -1,9 +1,9 @@
 import { expect, expectTypeOf, test } from 'vitest';
 
-import type { Shape1D } from '../Shape1D.ts';
 import type { Shape1DInstance } from '../Shape1DInstance.ts';
 import { getShape1D } from '../getShape1D.ts';
 import { PseudoVoigtTCH } from '../pseudoVoigtTCH/PseudoVoigtTCH.ts';
+import type { Shape1D } from '../shape_1d.ts';
 
 interface ShapeCase {
   shape: Shape1D;

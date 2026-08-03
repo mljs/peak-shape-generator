@@ -1,7 +1,7 @@
 import { ROOT_THREE } from '../../../util/constants.ts';
 import type { GetData1DOptions } from '../GetData1DOptions.ts';
-import type { GeneralizedLorentzianShape1D } from '../Shape1D.ts';
 import type { Shape1DClass, Shape1DDerivative } from '../Shape1DClass.ts';
+import type { GeneralizedLorentzianShape1D } from '../shape_1d.ts';
 
 export interface GeneralizedLorentzianClassOptions {
   /**

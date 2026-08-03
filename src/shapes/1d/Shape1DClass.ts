@@ -1,13 +1,13 @@
 import type { DoubleArray } from 'cheminfo-types';
 
 import type { GetData1DOptions } from './GetData1DOptions.ts';
-import type { Shape1D, Shape1DKind } from './Shape1D.ts';
 import type { GaussianParameter } from './gaussian/Gaussian.ts';
 import type { GeneralizedLorentzianParameter } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import type { LorentzianParameter } from './lorentzian/Lorentzian.ts';
 import type { LorentzianDispersiveParameter } from './lorentzianDispersive/LorentzianDispersive.ts';
 import type { PseudoVoigtParameter } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCHParameter } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
+import type { Shape1D, Shape1DKind } from './shape_1d.ts';
 import type { SplitGaussianParameter } from './splitGaussian/SplitGaussian.ts';
 
 /**
