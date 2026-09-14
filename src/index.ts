@@ -32,6 +32,9 @@ export type {
   Shape1DDerivative,
   Shape1DParameter,
 } from './shapes/1d/Shape1DClass.ts';
-export type { Shape2DClass } from './shapes/2d/Shape2DClass.ts';
+export type {
+  Shape2DClass,
+  Shape2DDerivative,
+} from './shapes/2d/Shape2DClass.ts';
 export type { Shape1DInstance } from './shapes/1d/Shape1DInstance.ts';
 export type { Shape2DInstance } from './shapes/2d/Shape2DInstance.ts';

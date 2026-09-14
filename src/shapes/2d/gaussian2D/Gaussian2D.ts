@@ -6,7 +6,7 @@ import {
 } from '../../1d/gaussian/Gaussian.ts';
 import type { GetData2DOptions } from '../GetData2DOptions.ts';
 import type { GaussianShape2D } from '../Shape2D.ts';
-import type { Shape2DClass } from '../Shape2DClass.ts';
+import type { Shape2DClass, Shape2DDerivative } from '../Shape2DClass.ts';
 
 export interface XYNumber {
   x: number;
@@ -79,6 +79,16 @@ export class Gaussian2D implements Shape2DClass {
 
   public fct(x: number, y: number) {
     return gaussian2DFct(x, y, this.fwhmX, this.fwhmY);
+  }
+
+  public derivative(x: number, y: number): Shape2DDerivative {
+    const { fct, dx, dy, dFwhmX, dFwhmY } = gaussian2DDerivative(
+      x,
+      y,
+      this.fwhmX,
+      this.fwhmY,
+    );
+    return { fct, dx, dy, parameters: [dFwhmX, dFwhmY] };
   }
 
   public getData(options: GetData2DOptions = {}) {
@@ -167,6 +177,31 @@ export const gaussian2DFct = (
 ) => {
   return Math.exp(GAUSSIAN_EXP_FACTOR * ((x / xFWHM) ** 2 + (y / yFWHM) ** 2));
 };
+
+/**
+ * Calculate a Gaussian2D value and its partial derivatives with respect to
+ * `x`, `y`, `xFWHM`, and `yFWHM`.
+ * @param x - x coordinate.
+ * @param y - y coordinate.
+ * @param xFWHM - full width at half maximum along the x axis.
+ * @param yFWHM - full width at half maximum along the y axis.
+ * @returns the value and partial derivatives of the Gaussian2D function.
+ */
+export function gaussian2DDerivative(
+  x: number,
+  y: number,
+  xFWHM: number,
+  yFWHM: number,
+) {
+  const fct = gaussian2DFct(x, y, xFWHM, yFWHM);
+  const dx = ((2 * GAUSSIAN_EXP_FACTOR * x) / (xFWHM * xFWHM)) * fct;
+  const dy = ((2 * GAUSSIAN_EXP_FACTOR * y) / (yFWHM * yFWHM)) * fct;
+  const dFwhmX =
+    ((-2 * GAUSSIAN_EXP_FACTOR * x * x) / (xFWHM * xFWHM * xFWHM)) * fct;
+  const dFwhmY =
+    ((-2 * GAUSSIAN_EXP_FACTOR * y * y) / (yFWHM * yFWHM * yFWHM)) * fct;
+  return { fct, dx, dy, dFwhmX, dFwhmY };
+}
 
 export const getGaussian2DData = (
   shape: Gaussian2DClassOptions,

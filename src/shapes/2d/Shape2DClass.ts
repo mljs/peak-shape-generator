@@ -4,6 +4,20 @@ import type { GetData2DOptions } from './GetData2DOptions.ts';
 import type { Shape2D, Shape2DKind } from './Shape2D.ts';
 import type { XYNumber } from './XYNumber.ts';
 
+export interface Shape2DDerivative {
+  /** Value of `fct(x, y)`. */
+  fct: number;
+  /** Partial derivative of `fct` with respect to `x`, evaluated at `(x, y)`. */
+  dx: number;
+  /** Partial derivative of `fct` with respect to `y`, evaluated at `(x, y)`. */
+  dy: number;
+  /**
+   * Partial derivatives of `fct` with respect to `fwhmX` and `fwhmY`, in that
+   * order.
+   */
+  parameters: number[];
+}
+
 export interface Shape2DClass {
   /**
    * Kind of shape, so that an instance is also a valid `Shape2D` descriptor.
@@ -31,6 +45,11 @@ export interface Shape2DClass {
    * @returns - the z value of bi-dimensional gaussian with the current parameters.
    */
   fct(x: number, y: number): number;
+  /**
+   * Analytical partial derivatives of `fct` at `(x, y)`, with respect to `x`,
+   * `y`, and each shape parameter.
+   */
+  derivative(x: number, y: number): Shape2DDerivative;
   widthToFWHM(width: number): number;
   fwhmToWidth(fwhm?: number): number;
   getVolume(height?: number): number;
