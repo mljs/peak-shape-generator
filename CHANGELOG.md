@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.6.0](https://github.com/mljs/peak-shape-generator/compare/v5.5.0...v5.6.0) (2026-09-15)
+
+
+### Features
+
+* add derivative to Gaussian2D ([#112](https://github.com/mljs/peak-shape-generator/issues/112)) ([f51886f](https://github.com/mljs/peak-shape-generator/commit/f51886ff4bcf88f0ab2f837dbaa9e9c973f0465e))
+
 ## [5.5.0](https://github.com/mljs/peak-shape-generator/compare/v5.4.0...v5.5.0) (2026-08-03)
 
 
