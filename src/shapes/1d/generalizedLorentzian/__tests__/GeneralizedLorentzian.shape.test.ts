@@ -39,10 +39,10 @@ describe('lorentzian', () => {
 
 describe('GeneralizedLorentzian class and utilities', () => {
   it('constructor sets defaults and custom values', () => {
-    const def = new GeneralizedLorentzian();
+    const defaultOptions = new GeneralizedLorentzian();
 
-    expect(def.fwhm).toBe(500);
-    expect(def.gamma).toBe(0.5);
+    expect(defaultOptions.fwhm).toBe(500);
+    expect(defaultOptions.gamma).toBe(0.5);
 
     const custom = new GeneralizedLorentzian({ fwhm: 10, gamma: 1.5 });
 
@@ -59,10 +59,10 @@ describe('GeneralizedLorentzian class and utilities', () => {
 
   it('fct returns expected value for known input', () => {
     const gLorentzian = new GeneralizedLorentzian({ fwhm: 2, gamma: 1 });
-    const val = gLorentzian.fct(0);
+    const value = gLorentzian.fct(0);
 
-    expect(typeof val).toBe('number');
-    expect(val).toBeGreaterThan(0);
+    expect(typeof value).toBe('number');
+    expect(value).toBeGreaterThan(0);
   });
 
   it('getArea and calculateHeight are consistent', () => {
@@ -138,7 +138,7 @@ describe('GeneralizedLorentzian class and utilities', () => {
   it('getGeneralizedLorentzianArea matches manual calculation', () => {
     const area = getGeneralizedLorentzianArea({ fwhm: 2, height: 3, gamma: 1 });
 
-    expect(area).toBeCloseTo((3 * 2 * (3.14159 - 0.420894 * 1)) / 2);
+    expect(area).toBeCloseTo((3 * 2 * (Math.PI - 0.420894)) / 2);
   });
 
   it('calculateGeneralizedLorentzianHeight matches manual calculation', () => {
@@ -148,6 +148,6 @@ describe('GeneralizedLorentzian class and utilities', () => {
       gamma: 1,
     });
 
-    expect(h).toBeCloseTo((3 / 2 / (3.14159 - 0.420894 * 1)) * 2);
+    expect(h).toBeCloseTo((3 / 2 / (Math.PI - 0.420894)) * 2);
   });
 });

@@ -5,11 +5,17 @@ import type { Shape2D, Shape2DKind } from './Shape2D.ts';
 import type { XYNumber } from './XYNumber.ts';
 
 export interface Shape2DDerivative {
-  /** Value of `fct(x, y)`. */
+  /**
+   * Value of `fct(x, y)`.
+   */
   fct: number;
-  /** Partial derivative of `fct` with respect to `x`, evaluated at `(x, y)`. */
+  /**
+   * Partial derivative of `fct` with respect to `x`, evaluated at `(x, y)`.
+   */
   dx: number;
-  /** Partial derivative of `fct` with respect to `y`, evaluated at `(x, y)`. */
+  /**
+   * Partial derivative of `fct` with respect to `y`, evaluated at `(x, y)`.
+   */
   dy: number;
   /**
    * Partial derivatives of `fct` with respect to `fwhmX` and `fwhmY`, in that

@@ -1,6 +1,6 @@
 import Benchmark from 'benchmark';
 
-import { pseudoVoigtFct } from '../src/shapes/1d/pseudoVoigt/PseudoVoigt.ts';
+import { pseudoVoigtFct } from '../src/index.ts';
 
 /**
  * A pseudo-Voigt is `(1 - mu) * lorentzian + mu * gaussian`, and a renderer
@@ -18,16 +18,18 @@ import { pseudoVoigtFct } from '../src/shapes/1d/pseudoVoigt/PseudoVoigt.ts';
 
 const GAUSSIAN_EXP_FACTOR = -4 * Math.LN2;
 
-/** Beyond this z², `exp(GAUSSIAN_EXP_FACTOR * z²)` is below 1.4e-17. */
+/**
+ * Beyond this z², `exp(GAUSSIAN_EXP_FACTOR * z²)` is below 1.4e-17.
+ */
 const GAUSSIAN_CUTOFF = 14;
 
 /**
  * The current implementation, copied so both variants are measured in one
  * process against the same data.
- * @param x - distance from the centre.
- * @param fwhm - full width at half maximum.
- * @param mu - ratio of gaussian contribution.
- * @returns the value of the shape.
+ * @param {number} x - distance from the centre.
+ * @param {number} fwhm - full width at half maximum.
+ * @param {number} mu - ratio of gaussian contribution.
+ * @returns {number} the value of the shape.
  */
 function currentFct(x, fwhm, mu) {
   const lorentzian = fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
@@ -37,10 +39,10 @@ function currentFct(x, fwhm, mu) {
 
 /**
  * The same shape, skipping the gaussian half where it has underflowed.
- * @param x - distance from the centre.
- * @param fwhm - full width at half maximum.
- * @param mu - ratio of gaussian contribution.
- * @returns the value of the shape.
+ * @param {number} x - distance from the centre.
+ * @param {number} fwhm - full width at half maximum.
+ * @param {number} mu - ratio of gaussian contribution.
+ * @returns {number} the value of the shape.
  */
 function guardedFct(x, fwhm, mu) {
   const lorentzian = fwhm ** 2 / (4 * x ** 2 + fwhm ** 2);
@@ -65,7 +67,7 @@ for (let index = 0; index < SIZE; index++) {
 
 /**
  * Sum the current implementation over every position.
- * @returns the sum.
+ * @returns {number} the sum.
  */
 function sweepCurrent() {
   let total = 0;
@@ -77,7 +79,7 @@ function sweepCurrent() {
 
 /**
  * Sum the guarded implementation over every position.
- * @returns the sum.
+ * @returns {number} the sum.
  */
 function sweepGuarded() {
   let total = 0;
@@ -90,7 +92,7 @@ function sweepGuarded() {
 /**
  * Sum the shape the package actually exports, so the benchmark measures the
  * library rather than a transcription of it.
- * @returns the sum.
+ * @returns {number} the sum.
  */
 function sweepLibrary() {
   let total = 0;
@@ -106,7 +108,7 @@ const libraryTotal = sweepLibrary();
 if (libraryTotal !== currentTotal) {
   throw new Error('the library no longer agrees with the reference sweep');
 }
-// eslint-disable-next-line no-console
+
 console.log(
   `sum over ${SIZE} points  current ${currentTotal.toPrecision(17)}  guarded ${guardedTotal.toPrecision(17)}  difference ${Math.abs(currentTotal - guardedTotal).toExponential(2)}`,
 );
@@ -120,13 +122,11 @@ suite
   .on('cycle', (event) => {
     const { name, hz, stats } = event.target;
     const nsPerPoint = (1e9 / hz / SIZE).toFixed(2);
-    // eslint-disable-next-line no-console
     console.log(
       `${name.padEnd(8)} ${((hz * SIZE) / 1e6).toFixed(1).padStart(7)} Mpoints/s  ${nsPerPoint.padStart(6)} ns/point  +-${stats.rme.toFixed(2)}%`,
     );
   })
   .on('complete', () => {
-    // eslint-disable-next-line no-console
     console.log(`fastest: ${suite.filter('fastest').map('name').join(', ')}`);
   })
   .run();

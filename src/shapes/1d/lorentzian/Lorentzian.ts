@@ -25,48 +25,48 @@ export interface GetLorentzianAreaOptions {
 }
 
 export class Lorentzian implements Shape1DClass {
-  public readonly kind = 'lorentzian' as const;
+  readonly kind = 'lorentzian' as const;
   /**
    * Full width at half maximum.
    * @default 500
    */
-  public fwhm: number;
+  fwhm: number;
 
-  public constructor(options: LorentzianClassOptions = {}) {
+  constructor(options: LorentzianClassOptions = {}) {
     const { fwhm = 500 } = options;
 
     this.fwhm = fwhm;
   }
 
-  public fwhmToWidth(fwhm = this.fwhm) {
+  fwhmToWidth(fwhm = this.fwhm) {
     return lorentzianFwhmToWidth(fwhm);
   }
 
-  public widthToFWHM(width: number) {
+  widthToFWHM(width: number) {
     return lorentzianWidthToFWHM(width);
   }
 
-  public fct(x: number) {
+  fct(x: number) {
     return lorentzianFct(x, this.fwhm);
   }
 
-  public getArea(height = 1) {
+  getArea(height = 1) {
     return getLorentzianArea({ fwhm: this.fwhm, height });
   }
 
-  public getFactor(area?: number) {
+  getFactor(area?: number) {
     return getLorentzianFactor(area);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     return getLorentzianData(this, options);
   }
 
-  public calculateHeight(area = 1) {
+  calculateHeight(area = 1) {
     return calculateLorentzianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters(): LorentzianParameter[] {
+  getParameters(): LorentzianParameter[] {
     return ['fwhm'];
   }
 
@@ -74,17 +74,19 @@ export class Lorentzian implements Shape1DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): LorentzianShape1D {
+  toJSON(): LorentzianShape1D {
     return { kind: this.kind, fwhm: this.fwhm };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhm } = lorentzianDerivative(x, this.fwhm);
     return { fct, dx, parameters: [dFwhm] };
   }
 }
 
-/** Parameters characterizing a lorentzian shape. */
+/**
+ * Parameters characterizing a lorentzian shape.
+ */
 export type LorentzianParameter = 'fwhm';
 
 export const calculateLorentzianHeight = ({ fwhm = 1, area = 1 }) => {

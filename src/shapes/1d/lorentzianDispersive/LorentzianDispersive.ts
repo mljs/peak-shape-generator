@@ -10,48 +10,48 @@ import {
 import type { LorentzianDispersiveShape1D } from '../shape_1d.ts';
 
 export class LorentzianDispersive implements Shape1DClass {
-  public readonly kind = 'lorentzianDispersive' as const;
+  readonly kind = 'lorentzianDispersive' as const;
   /**
    * Full width at half maximum.
    * @default 500
    */
-  public fwhm: number;
+  fwhm: number;
 
-  public constructor(options: LorentzianClassOptions = {}) {
+  constructor(options: LorentzianClassOptions = {}) {
     const { fwhm = 500 } = options;
 
     this.fwhm = fwhm;
   }
 
-  public fwhmToWidth(fwhm = this.fwhm) {
+  fwhmToWidth(fwhm = this.fwhm) {
     return lorentzianFwhmToWidth(fwhm);
   }
 
-  public widthToFWHM(width: number) {
+  widthToFWHM(width: number) {
     return lorentzianWidthToFWHM(width);
   }
 
-  public fct(x: number) {
+  fct(x: number) {
     return lorentzianDispersiveFct(x, this.fwhm);
   }
 
-  public getArea() {
+  getArea() {
     return 0;
   }
 
-  public getFactor(area?: number) {
+  getFactor(area?: number) {
     return getLorentzianFactor(area);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     return getLorentzianDispersiveData(this, options);
   }
 
-  public calculateHeight(area = 1) {
+  calculateHeight(area = 1) {
     return calculateLorentzianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters(): LorentzianDispersiveParameter[] {
+  getParameters(): LorentzianDispersiveParameter[] {
     return ['fwhm'];
   }
 
@@ -59,17 +59,19 @@ export class LorentzianDispersive implements Shape1DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): LorentzianDispersiveShape1D {
+  toJSON(): LorentzianDispersiveShape1D {
     return { kind: this.kind, fwhm: this.fwhm };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhm } = lorentzianDispersiveDerivative(x, this.fwhm);
     return { fct, dx, parameters: [dFwhm] };
   }
 }
 
-/** Parameters characterizing a dispersive lorentzian shape. */
+/**
+ * Parameters characterizing a dispersive lorentzian shape.
+ */
 export type LorentzianDispersiveParameter = 'fwhm';
 
 export const lorentzianDispersiveFct = (x: number, fwhm: number) => {

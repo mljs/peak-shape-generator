@@ -9,5 +9,7 @@ export interface GaussianShape2D extends Gaussian2DClassOptions {
 
 export type Shape2D = GaussianShape2D;
 
-/** Discriminant of every 2D shape. */
+/**
+ * Discriminant of every 2D shape.
+ */
 export type Shape2DKind = Shape2D['kind'];

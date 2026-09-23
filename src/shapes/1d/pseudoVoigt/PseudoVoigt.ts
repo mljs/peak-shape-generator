@@ -59,42 +59,42 @@ interface CalculatePseudoVoightHeightOptions {
 }
 
 export class PseudoVoigt implements Shape1DClass {
-  public readonly kind = 'pseudoVoigt' as const;
-  public fwhm: number;
+  readonly kind = 'pseudoVoigt' as const;
+  fwhm: number;
   /**
    * Ratio of gaussian contribution in the shape
    * @default 0.5
    */
-  public mu: number;
+  mu: number;
 
-  public constructor(options: PseudoVoigtClassOptions = {}) {
+  constructor(options: PseudoVoigtClassOptions = {}) {
     const { fwhm = 500, mu = 0.5 } = options;
 
     this.mu = mu;
     this.fwhm = fwhm;
   }
 
-  public fwhmToWidth(fwhm = this.fwhm, mu = this.mu) {
+  fwhmToWidth(fwhm = this.fwhm, mu = this.mu) {
     return pseudoVoigtFwhmToWidth(fwhm, mu);
   }
 
-  public widthToFWHM(width: number, mu: number = this.mu) {
+  widthToFWHM(width: number, mu: number = this.mu) {
     return pseudoVoigtWidthToFWHM(width, mu);
   }
 
-  public fct(x: number) {
+  fct(x: number) {
     return pseudoVoigtFct(x, this.fwhm, this.mu);
   }
 
-  public getArea(height = 1) {
+  getArea(height = 1) {
     return getPseudoVoigtArea({ fwhm: this.fwhm, height, mu: this.mu });
   }
 
-  public getFactor(area?: number) {
+  getFactor(area?: number) {
     return getPseudoVoigtFactor(area, this.mu);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     const {
       length,
       factor,
@@ -107,11 +107,11 @@ export class PseudoVoigt implements Shape1DClass {
     return getPseudoVoigtData(this, { factor, length, height });
   }
 
-  public calculateHeight(area = 1) {
+  calculateHeight(area = 1) {
     return calculatePseudoVoigtHeight({ fwhm: this.fwhm, mu: this.mu, area });
   }
 
-  public getParameters(): PseudoVoigtParameter[] {
+  getParameters(): PseudoVoigtParameter[] {
     return ['fwhm', 'mu'];
   }
 
@@ -119,11 +119,11 @@ export class PseudoVoigt implements Shape1DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): PseudoVoigtShape1D {
+  toJSON(): PseudoVoigtShape1D {
     return { kind: this.kind, fwhm: this.fwhm, mu: this.mu };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhm, dMu } = pseudoVoigtDerivative(
       x,
       this.fwhm,
@@ -133,7 +133,9 @@ export class PseudoVoigt implements Shape1DClass {
   }
 }
 
-/** Parameters characterizing a pseudo-Voigt shape. */
+/**
+ * Parameters characterizing a pseudo-Voigt shape.
+ */
 export type PseudoVoigtParameter = 'fwhm' | 'mu';
 
 export const calculatePseudoVoigtHeight = (
@@ -172,22 +174,22 @@ export function pseudoVoigtDerivative(x: number, fwhm: number, mu: number) {
   // halves, and `dMu` becomes `-lorentz`, the value the shape loses by trading
   // its lorentzian half for a gaussian one that contributes nothing.
   const z = x / fwhm;
-  const e =
+  const exp =
     mu !== 1 && z * z > GAUSSIAN_CUTOFF
       ? 0
       : Math.exp(GAUSSIAN_EXP_FACTOR * z * z);
   const denominator = 4 * x * x + fwhm * fwhm;
   const lorentz = (fwhm * fwhm) / denominator;
-  const dEdt = ((2 * GAUSSIAN_EXP_FACTOR * x) / (fwhm * fwhm)) * e;
+  const dEdt = ((2 * GAUSSIAN_EXP_FACTOR * x) / (fwhm * fwhm)) * exp;
   const dLdt = (-8 * x * fwhm * fwhm) / (denominator * denominator);
   const dEdfwhm =
-    ((-2 * GAUSSIAN_EXP_FACTOR * x * x) / (fwhm * fwhm * fwhm)) * e;
+    ((-2 * GAUSSIAN_EXP_FACTOR * x * x) / (fwhm * fwhm * fwhm)) * exp;
   const dLdfwhm = (8 * fwhm * x * x) / (denominator * denominator);
   return {
-    fct: (1 - mu) * lorentz + mu * e,
+    fct: (1 - mu) * lorentz + mu * exp,
     dx: (1 - mu) * dLdt + mu * dEdt,
     dFwhm: (1 - mu) * dLdfwhm + mu * dEdfwhm,
-    dMu: e - lorentz,
+    dMu: exp - lorentz,
   };
 }
 

@@ -63,11 +63,11 @@ export interface GetGaussian2DVolumeOptions {
 }
 
 export class Gaussian2D implements Shape2DClass {
-  public readonly kind = 'gaussian' as const;
-  public fwhmX: number;
-  public fwhmY: number;
+  readonly kind = 'gaussian' as const;
+  fwhmX: number;
+  fwhmY: number;
 
-  public constructor(options: Gaussian2DClassOptions = {}) {
+  constructor(options: Gaussian2DClassOptions = {}) {
     const { sd } = options;
     let { fwhm = 20 } = options;
 
@@ -77,11 +77,11 @@ export class Gaussian2D implements Shape2DClass {
     this.fwhmY = fwhm.y;
   }
 
-  public fct(x: number, y: number) {
+  fct(x: number, y: number) {
     return gaussian2DFct(x, y, this.fwhmX, this.fwhmY);
   }
 
-  public derivative(x: number, y: number): Shape2DDerivative {
+  derivative(x: number, y: number): Shape2DDerivative {
     const { fct, dx, dy, dFwhmX, dFwhmY } = gaussian2DDerivative(
       x,
       y,
@@ -91,7 +91,7 @@ export class Gaussian2D implements Shape2DClass {
     return { fct, dx, dy, parameters: [dFwhmX, dFwhmY] };
   }
 
-  public getData(options: GetData2DOptions = {}) {
+  getData(options: GetData2DOptions = {}) {
     return getGaussian2DData(
       {
         fwhm: { x: this.fwhmX, y: this.fwhmY },
@@ -100,7 +100,7 @@ export class Gaussian2D implements Shape2DClass {
     );
   }
 
-  public getFactor(volume?: number) {
+  getFactor(volume?: number) {
     return getGaussian2DFactor(volume);
   }
 
@@ -108,11 +108,11 @@ export class Gaussian2D implements Shape2DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape2D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): GaussianShape2D {
+  toJSON(): GaussianShape2D {
     return { kind: this.kind, fwhm: { x: this.fwhmX, y: this.fwhmY } };
   }
 
-  public getVolume(
+  getVolume(
     height = calculateGaussian2DHeight({
       fwhm: { x: this.fwhmX, y: this.fwhmY },
       volume: 1,
@@ -124,22 +124,22 @@ export class Gaussian2D implements Shape2DClass {
     });
   }
 
-  public widthToFWHM(width: number) {
+  widthToFWHM(width: number) {
     return gaussianWidthToFWHM(width);
   }
 
-  public fwhmToWidth(fwhm: number) {
+  fwhmToWidth(fwhm: number) {
     return gaussianFwhmToWidth(fwhm);
   }
 
-  public calculateHeight(volume = 1) {
+  calculateHeight(volume = 1) {
     return calculateGaussian2DHeight({
       volume,
       fwhm: { x: this.fwhmX, y: this.fwhmY },
     });
   }
 
-  public set fwhm(fwhm: number | XYNumber) {
+  set fwhm(fwhm: number | XYNumber) {
     fwhm = ensureXYNumber(fwhm);
     this.fwhmX = fwhm.x;
     this.fwhmY = fwhm.y;
@@ -149,7 +149,7 @@ export class Gaussian2D implements Shape2DClass {
    * Full width at half maximum on each axis.
    * @returns the fwhm of both axes.
    */
-  public get fwhm(): XYNumber {
+  get fwhm(): XYNumber {
     return { x: this.fwhmX, y: this.fwhmY };
   }
 }
@@ -212,31 +212,36 @@ export const getGaussian2DData = (
 
   fwhm = ensureFWHM2D(fwhm, sd);
 
-  const { height = calculateGaussian2DHeight({ fwhm, volume: 1 }) } = options;
-  let { factor = getGaussian2DFactor(), length = { x: 0, y: 0 } } = options;
+  const {
+    height = calculateGaussian2DHeight({ fwhm, volume: 1 }),
+    factor = getGaussian2DFactor(),
+    length = { x: 0, y: 0 },
+  } = options;
 
-  factor = ensureXYNumber(factor);
+  const xyFactor = ensureXYNumber(factor);
 
-  length = ensureXYNumber(length);
+  const xyLength = ensureXYNumber(length);
 
   for (const axis of ['x', 'y'] as const) {
-    if (!length[axis]) {
-      length[axis] = Math.min(
-        Math.ceil(fwhm[axis] * factor[axis]),
-        2 ** 25 - 1,
-      );
-      if (length[axis] % 2 === 0) length[axis]++;
+    if (xyLength[axis] > 0) {
+      continue;
     }
+
+    xyLength[axis] = Math.min(
+      Math.ceil(fwhm[axis] * xyFactor[axis]),
+      2 ** 25 - 1,
+    );
+    if (xyLength[axis] % 2 === 0) xyLength[axis]++;
   }
 
-  const xCenter = (length.x - 1) / 2;
-  const yCenter = (length.y - 1) / 2;
-  const data = new Array(length.x);
-  for (let i = 0; i < length.x; i++) {
-    data[i] = new Float64Array(length.y);
+  const xCenter = (xyLength.x - 1) / 2;
+  const yCenter = (xyLength.y - 1) / 2;
+  const data = new Array(xyLength.x);
+  for (let i = 0; i < xyLength.x; i++) {
+    data[i] = new Float64Array(xyLength.y);
   }
-  for (let i = 0; i < length.x; i++) {
-    for (let j = 0; j < length.y; j++) {
+  for (let i = 0; i < xyLength.x; i++) {
+    for (let j = 0; j < xyLength.y; j++) {
       data[i][j] =
         gaussian2DFct(i - xCenter, j - yCenter, fwhm.x, fwhm.y) * height;
     }
@@ -275,9 +280,10 @@ function ensureFWHM2D(fwhm?: number | XYNumber, sd?: number | XYNumber) {
       x: gaussianWidthToFWHM(2 * sdObject.x),
       y: gaussianWidthToFWHM(2 * sdObject.y),
     };
-  } else if (fwhm !== undefined) {
-    return ensureXYNumber(fwhm);
-  } else {
-    throw new Error('ensureFWHM2D must have either fwhm or sd defined');
   }
+  if (fwhm !== undefined) {
+    return ensureXYNumber(fwhm);
+  }
+
+  throw new Error('ensureFWHM2D must have either fwhm or sd defined');
 }

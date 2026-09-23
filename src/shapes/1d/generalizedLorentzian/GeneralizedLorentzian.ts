@@ -38,38 +38,38 @@ interface GetGeneralizedLorentzianAreaOptions {
  * {@link https://www.ebyte.it/stan/Talk_ML_UserMeeting_SMASH_2010_GeneralizedLorentzian.html}
  */
 export class GeneralizedLorentzian implements Shape1DClass {
-  public readonly kind = 'generalizedLorentzian' as const;
+  readonly kind = 'generalizedLorentzian' as const;
   /**
    * Full width at half maximum.
    * @default 500
    */
-  public fwhm: number;
+  fwhm: number;
   /**
    * kurtosis parameter of the shape, between -1 to 2
    * @default 1
    */
-  public gamma: number;
+  gamma: number;
 
-  public constructor(options: GeneralizedLorentzianClassOptions = {}) {
+  constructor(options: GeneralizedLorentzianClassOptions = {}) {
     const { fwhm = 500, gamma = 0.5 } = options;
 
     this.fwhm = fwhm;
     this.gamma = gamma;
   }
 
-  public fwhmToWidth(fwhm = this.fwhm) {
+  fwhmToWidth(fwhm = this.fwhm) {
     return generalizedLorentzianFwhmToWidth(fwhm);
   }
 
-  public widthToFWHM(width: number) {
+  widthToFWHM(width: number) {
     return generalizedLorentzianWidthToFWHM(width);
   }
 
-  public fct(x: number) {
+  fct(x: number) {
     return generalizedLorentzianFct(x, this.fwhm, this.gamma);
   }
 
-  public getArea(height = 1) {
+  getArea(height = 1) {
     return getGeneralizedLorentzianArea({
       fwhm: this.fwhm,
       height,
@@ -77,20 +77,20 @@ export class GeneralizedLorentzian implements Shape1DClass {
     });
   }
 
-  public getFactor(area?: number) {
+  getFactor(area?: number) {
     return getGeneralizedLorentzianFactor(area);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     return getGeneralizedLorentzianData(this, options);
   }
 
-  public calculateHeight(area = 1) {
+  calculateHeight(area = 1) {
     const { gamma, fwhm } = this;
     return calculateGeneralizedLorentzianHeight({ fwhm, area, gamma });
   }
 
-  public getParameters(): GeneralizedLorentzianParameter[] {
+  getParameters(): GeneralizedLorentzianParameter[] {
     return ['fwhm', 'gamma'];
   }
 
@@ -98,11 +98,11 @@ export class GeneralizedLorentzian implements Shape1DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): GeneralizedLorentzianShape1D {
+  toJSON(): GeneralizedLorentzianShape1D {
     return { kind: this.kind, fwhm: this.fwhm, gamma: this.gamma };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhm, dGamma } = generalizedLorentzianDerivative(
       x,
       this.fwhm,
@@ -112,7 +112,9 @@ export class GeneralizedLorentzian implements Shape1DClass {
   }
 }
 
-/** Parameters characterizing a generalized lorentzian shape. */
+/**
+ * Parameters characterizing a generalized lorentzian shape.
+ */
 export type GeneralizedLorentzianParameter = 'fwhm' | 'gamma';
 
 export const calculateGeneralizedLorentzianHeight = ({
@@ -120,6 +122,7 @@ export const calculateGeneralizedLorentzianHeight = ({
   gamma = 1,
   area = 1,
 }) => {
+  // eslint-disable-next-line unicorn/prefer-math-constants
   return (area / fwhm / (3.14159 - 0.420894 * gamma)) * 2;
 };
 
@@ -132,6 +135,7 @@ export const getGeneralizedLorentzianArea = (
   options: GetGeneralizedLorentzianAreaOptions,
 ) => {
   const { fwhm = 500, height = 1, gamma = 1 } = options;
+  // eslint-disable-next-line unicorn/prefer-math-constants
   return (height * fwhm * (3.14159 - 0.420894 * gamma)) / 2;
 };
 

@@ -41,10 +41,10 @@ test('pure lorentzian (fwhmG = 0) gives mu close to 0', () => {
 
 test('setting fwhmG updates effectiveFwhm, mu, and fwhmL stays', () => {
   const shape = new PseudoVoigtTCH({ fwhmG: 100, fwhmL: 50 });
-  const prevFwhmL = shape.fwhmL;
+  const previousFwhmL = shape.fwhmL;
   shape.fwhmG = 200;
 
-  expect(shape.fwhmL).toBe(prevFwhmL);
+  expect(shape.fwhmL).toBe(previousFwhmL);
   expect(shape.fwhm).toBeGreaterThan(200);
 });
 
@@ -72,11 +72,11 @@ test('setting mu redistributes fwhmG and fwhmL', () => {
 
 test('setting fwhm scales fwhmG and fwhmL proportionally', () => {
   const shape = new PseudoVoigtTCH({ fwhmG: 60, fwhmL: 40 });
-  const prevRatio = shape.fwhmL / shape.fwhm;
+  const previousRatio = shape.fwhmL / shape.fwhm;
   shape.fwhm = 200;
 
   expect(shape.fwhm).toBe(200);
-  expect(shape.fwhmL / shape.fwhm).toBeCloseTo(prevRatio, 4);
+  expect(shape.fwhmL / shape.fwhm).toBeCloseTo(previousRatio, 4);
 });
 
 test('fct and derivative describe the same curve whichever pair built the shape', () => {

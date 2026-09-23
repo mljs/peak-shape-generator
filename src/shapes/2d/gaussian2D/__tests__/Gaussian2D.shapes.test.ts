@@ -71,8 +71,7 @@ test('odd fwhm', () => {
 
   expect(data).toHaveLength(101);
 
-  const lenG = data.length;
-  const center = Math.floor((lenG - 1) / 2);
+  const center = Math.floor((data.length - 1) / 2);
 
   expect(data[center][center]).toBeCloseTo(1, 4);
   expect(data[center - 1][center]).toBeCloseTo(data[center + 1][center], 4);
@@ -85,8 +84,7 @@ test('even fwhm', () => {
 
   expect(data).toHaveLength(100);
 
-  const lenG = data.length;
-  const center = Math.floor((lenG - 1) / 2);
+  const center = Math.floor((data.length - 1) / 2);
 
   expect(data[center][center]).toBeCloseTo(data[center + 1][center], 4);
   expect(data[0][center]).toBeCloseTo(data.at(-1)[center], 4);
@@ -169,17 +167,16 @@ function getNbChanges(y: Float64Array) {
     yPrime[i] = y[i] - y[i - 1];
   }
 
-  let positive = true;
+  let isPositive = true;
   let nbChanges = 0;
   for (let i = 1; i < yPrime.length; i++) {
     const diff = yPrime[i] - yPrime[i - 1];
 
-    if (diff > 0 && !positive) {
-      positive = true;
+    if (diff > 0 && !isPositive) {
+      isPositive = true;
       nbChanges++;
-    }
-    if (diff < 0 && positive) {
-      positive = false;
+    } else if (diff < 0 && isPositive) {
+      isPositive = false;
       nbChanges++;
     }
   }

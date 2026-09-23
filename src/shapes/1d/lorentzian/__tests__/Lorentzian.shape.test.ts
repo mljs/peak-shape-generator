@@ -65,8 +65,7 @@ test('fwhm 10, factor 500', () => {
 test('odd fwhm', () => {
   const lorentzian = new Lorentzian({ fwhm: 11 });
   const data = lorentzian.getData({ length: 11, height: 2 });
-  const lenG = data.length;
-  const center = Math.floor((lenG - 1) / 2);
+  const center = Math.floor((data.length - 1) / 2);
 
   expect(data[center]).toBeCloseTo(2, 4);
   expect(data[center - 1]).toBeCloseTo(data[center + 1], 4);
@@ -76,8 +75,7 @@ test('odd fwhm', () => {
 test('even fwhm', () => {
   const lorentzian = new Lorentzian({ fwhm: 10 });
   const data = lorentzian.getData({ length: 10, height: 1 });
-  const lenG = data.length;
-  const center = Math.floor((lenG - 1) / 2);
+  const center = Math.floor((data.length - 1) / 2);
 
   expect(data[center]).toBeCloseTo(data[center + 1], 4);
   expect(data[0]).toBeCloseTo(data.at(-1), 4);

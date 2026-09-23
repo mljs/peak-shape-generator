@@ -27,7 +27,8 @@ export function pseudoVoigtFindFactor(
 
   if (mu === 1) {
     return getGaussianFactor(pTarget);
-  } else if (mu === 0) {
+  }
+  if (mu === 0) {
     return getLorentzianFactor(pTarget);
   }
 
@@ -38,9 +39,9 @@ export function pseudoVoigtFindFactor(
   while (pPseudoVoigt(hi, mu) < pTarget && it++ < 200) hi *= 2;
   for (let i = 0; i < maxIter; i++) {
     const mid = 0.5 * (lo + hi);
-    const val = pPseudoVoigt(mid, mu);
-    if (Math.abs(val - pTarget) < tol) return mid;
-    if (val < pTarget) {
+    const value = pPseudoVoigt(mid, mu);
+    if (Math.abs(value - pTarget) < tol) return mid;
+    if (value < pTarget) {
       lo = mid;
     } else {
       hi = mid;
