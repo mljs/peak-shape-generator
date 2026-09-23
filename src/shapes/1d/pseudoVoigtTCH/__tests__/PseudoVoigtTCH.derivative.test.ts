@@ -8,9 +8,10 @@ const h = 1e-6;
 
 /**
  * Effective fct(x) of a TCH pseudo-Voigt built from independent component widths.
- * @param x
- * @param g
- * @param l
+ * @param x - The x-coordinate at which to evaluate the function.
+ * @param g - The full width at half maximum (FWHM) of the Gaussian component.
+ * @param l - The full width at half maximum (FWHM) of the Lorentzian component.
+ * @returns The value of the TCH pseudo-Voigt function at the given x-coordinate.
  */
 function tchFct(x: number, g: number, l: number): number {
   return new PseudoVoigtTCH({ fwhmG: g, fwhmL: l }).fct(x);

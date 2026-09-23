@@ -28,15 +28,11 @@ test('returns a SplitGaussian instance for splitGaussian input', () => {
 });
 
 test('returns the broad union for widened Shape1D input', () => {
-  const useGaussian = true as boolean;
-  const shape: Shape1D = useGaussian
-    ? { kind: 'gaussian', fwhm: 10 }
-    : { kind: 'lorentzian', fwhm: 10 };
+  const shape: Shape1D = { kind: 'gaussian', fwhm: 10 };
 
   const instance = getShape1D(shape);
-  const broadInstance = instance;
 
-  expectTypeOf(broadInstance).toExtend<Shape1DInstance>();
+  expectTypeOf(instance).toExtend<Shape1DInstance>();
 
   expect(instance.fwhm).toBe(10);
 });

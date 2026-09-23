@@ -32,19 +32,13 @@ function throughJSON<TShape extends Shape2DInstance>(
 }
 
 test('every instance carries the kind of its descriptor', () => {
-  const kinds = [];
-  for (const shape of shapes) {
-    kinds.push(getShape2D(shape).kind);
-  }
+  const kinds = Array.from(shapes, (shape) => getShape2D(shape).kind);
 
   expect(kinds).toStrictEqual(['gaussian', 'gaussian', 'gaussian']);
 });
 
 test('toJSON emits both axes, whichever option built the shape', () => {
-  const descriptors = [];
-  for (const shape of shapes) {
-    descriptors.push(getShape2D(shape).toJSON());
-  }
+  const descriptors = Array.from(shapes, (shape) => getShape2D(shape).toJSON());
 
   expect(descriptors).toStrictEqual([
     { kind: 'gaussian', fwhm: { x: 10, y: 30 } },

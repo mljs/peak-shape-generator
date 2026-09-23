@@ -76,8 +76,7 @@ test('fwhm 10, factor 500', () => {
 test('odd fwhm', () => {
   const lorentzian = new LorentzianDispersive({ fwhm: 11 });
   const data = lorentzian.getData({ length: 11, height: 2 });
-  const lenG = data.length;
-  const center = Math.floor((lenG - 1) / 2);
+  const center = Math.floor((data.length - 1) / 2);
 
   expect(data[center]).toBeCloseTo(0, 4);
   expect(data[center - 1]).toBeCloseTo(-data[center + 1], 4);
@@ -88,8 +87,7 @@ test('odd fwhm', () => {
 test('even fwhm', () => {
   const lorentzian = new LorentzianDispersive({ fwhm: 10 });
   const data = lorentzian.getData({ length: 10, height: 1 });
-  const lenG = data.length;
-  const center = Math.floor((lenG - 1) / 2);
+  const center = Math.floor((data.length - 1) / 2);
 
   expect(data[center]).toBeCloseTo(-data[center + 1], 4);
   // in the infinity both should be zero but in the practice:

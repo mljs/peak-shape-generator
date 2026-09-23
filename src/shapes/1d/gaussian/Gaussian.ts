@@ -53,48 +53,48 @@ interface GetGaussianAreaOptions {
 }
 
 export class Gaussian implements Shape1DClass {
-  public readonly kind = 'gaussian' as const;
+  readonly kind = 'gaussian' as const;
   /**
    * Full width at half maximum.
    * @default 500
    */
-  public fwhm: number;
+  fwhm: number;
 
-  public constructor(options: GaussianClassOptions = {}) {
+  constructor(options: GaussianClassOptions = {}) {
     const { fwhm = 500, sd } = options;
 
     this.fwhm = sd ? gaussianWidthToFWHM(2 * sd) : fwhm;
   }
 
-  public fwhmToWidth(fwhm = this.fwhm) {
+  fwhmToWidth(fwhm = this.fwhm) {
     return gaussianFwhmToWidth(fwhm);
   }
 
-  public widthToFWHM(width: number) {
+  widthToFWHM(width: number) {
     return gaussianWidthToFWHM(width);
   }
 
-  public fct(x: number) {
+  fct(x: number) {
     return gaussianFct(x, this.fwhm);
   }
 
-  public getArea(height = calculateGaussianHeight({ fwhm: this.fwhm })) {
+  getArea(height = calculateGaussianHeight({ fwhm: this.fwhm })) {
     return getGaussianArea({ fwhm: this.fwhm, height });
   }
 
-  public getFactor(area?: number) {
+  getFactor(area?: number) {
     return getGaussianFactor(area);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     return getGaussianData(this, options);
   }
 
-  public calculateHeight(area = 1) {
+  calculateHeight(area = 1) {
     return calculateGaussianHeight({ fwhm: this.fwhm, area });
   }
 
-  public getParameters(): GaussianParameter[] {
+  getParameters(): GaussianParameter[] {
     return ['fwhm'];
   }
 
@@ -102,17 +102,19 @@ export class Gaussian implements Shape1DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): GaussianShape1D {
+  toJSON(): GaussianShape1D {
     return { kind: this.kind, fwhm: this.fwhm };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhm } = gaussianDerivative(x, this.fwhm);
     return { fct, dx, parameters: [dFwhm] };
   }
 }
 
-/** Parameters characterizing a gaussian shape. */
+/**
+ * Parameters characterizing a gaussian shape.
+ */
 export type GaussianParameter = 'fwhm';
 
 /**

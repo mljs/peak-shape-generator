@@ -27,9 +27,13 @@ export type Shape1DParameter = [
 ][number];
 
 export interface Shape1DDerivative {
-  /** Value of `fct(x)`. */
+  /**
+   * Value of `fct(x)`.
+   */
   fct: number;
-  /** Partial derivative of `fct` with respect to `x`, evaluated at `x`. */
+  /**
+   * Partial derivative of `fct` with respect to `x`, evaluated at `x`.
+   */
   dx: number;
   /**
    * Partial derivatives of `fct` with respect to each shape parameter,

@@ -44,130 +44,131 @@ export interface PseudoVoigtTCHClassOptions {
  * via the Thompson–Cox–Hastings approximation.
  */
 export class PseudoVoigtTCH implements Shape1DClass {
-  public readonly kind = 'pseudoVoigtTCH' as const;
-  private _fwhmG: number;
-  private _fwhmL: number;
-  private _fwhm: number;
-  private _mu: number;
-  private _lorentzianWidthFraction: number;
+  #fwhmG: number;
+  #fwhmL: number;
+  #fwhm: number;
+  #mu: number;
+  #lorentzianWidthFraction: number;
 
-  public constructor(options: PseudoVoigtTCHClassOptions = {}) {
+  readonly kind = 'pseudoVoigtTCH' as const;
+
+  constructor(options: PseudoVoigtTCHClassOptions = {}) {
     const { fwhmG, fwhmL, fwhm, mu = 0.5 } = options;
 
-    this._mu = mu;
-    this._fwhm = 0;
-    this._fwhmG = 0;
-    this._fwhmL = 0;
-    this._lorentzianWidthFraction = lorentzianWidthFraction(1 - mu);
+    this.#mu = mu;
+    this.#fwhm = 0;
+    this.#fwhmG = 0;
+    this.#fwhmL = 0;
+    this.#lorentzianWidthFraction = lorentzianWidthFraction(1 - mu);
 
     if (fwhmG !== undefined && fwhmL !== undefined) {
-      this._fwhmG = fwhmG;
+      this.#fwhmG = fwhmG;
       this.fwhmL = fwhmL;
     } else if (fwhm !== undefined) {
       this.fwhm = fwhm;
     }
   }
 
-  public set fwhmG(value: number) {
-    const effectiveFwhm = computeEffectiveWidth(value, this._fwhmL);
-    const lorentzianFraction = this._fwhmL / effectiveFwhm;
-    this._fwhm = effectiveFwhm;
-    this._mu =
+  set fwhmG(value: number) {
+    const effectiveFwhm = computeEffectiveWidth(value, this.#fwhmL);
+    const lorentzianFraction = this.#fwhmL / effectiveFwhm;
+    this.#fwhm = effectiveFwhm;
+    this.#mu =
       1 -
       (1.36603 * lorentzianFraction -
         0.47719 * lorentzianFraction * lorentzianFraction +
         0.11116 * lorentzianFraction * lorentzianFraction * lorentzianFraction);
-    this._fwhmG = value;
-    this._lorentzianWidthFraction = lorentzianFraction;
+    this.#fwhmG = value;
+    this.#lorentzianWidthFraction = lorentzianFraction;
   }
 
-  public get fwhmG(): number {
-    return this._fwhmG;
+  get fwhmG(): number {
+    return this.#fwhmG;
   }
 
-  public set fwhmL(value: number) {
-    const effectiveFwhm = computeEffectiveWidth(this._fwhmG, value);
+  set fwhmL(value: number) {
+    const effectiveFwhm = computeEffectiveWidth(this.#fwhmG, value);
     const lorentzianFraction = value / effectiveFwhm;
-    this._fwhm = effectiveFwhm;
-    this._mu =
+    this.#fwhm = effectiveFwhm;
+    this.#mu =
       1 -
       (1.36603 * lorentzianFraction -
         0.47719 * lorentzianFraction * lorentzianFraction +
         0.11116 * lorentzianFraction * lorentzianFraction * lorentzianFraction);
-    this._fwhmL = value;
-    this._lorentzianWidthFraction = lorentzianFraction;
+    this.#fwhmL = value;
+    this.#lorentzianWidthFraction = lorentzianFraction;
   }
 
-  public get fwhmL(): number {
-    return this._fwhmL;
+  get fwhmL(): number {
+    return this.#fwhmL;
   }
 
-  public set mu(value: number) {
+  set mu(value: number) {
     const lorentzianFraction = lorentzianWidthFraction(1 - value);
-    this._lorentzianWidthFraction = lorentzianFraction;
-    this._fwhmL = this._fwhm * lorentzianFraction;
-    this._fwhmG = this._fwhm * gaussianWidthFraction(lorentzianFraction);
-    this._mu = value;
+    this.#lorentzianWidthFraction = lorentzianFraction;
+    this.#fwhmL = this.#fwhm * lorentzianFraction;
+    this.#fwhmG = this.#fwhm * gaussianWidthFraction(lorentzianFraction);
+    this.#mu = value;
   }
 
-  public get mu(): number {
-    return this._mu;
+  get mu(): number {
+    return this.#mu;
   }
 
-  public set fwhm(value: number) {
+  set fwhm(value: number) {
     const lorentzianFraction =
-      this._lorentzianWidthFraction || lorentzianWidthFraction(1 - this._mu);
-    this._fwhmL = value * lorentzianFraction;
-    this._fwhmG = value * gaussianWidthFraction(lorentzianFraction);
-    this._fwhm = value;
+      this.#lorentzianWidthFraction || lorentzianWidthFraction(1 - this.#mu);
+    this.#fwhmL = value * lorentzianFraction;
+    this.#fwhmG = value * gaussianWidthFraction(lorentzianFraction);
+    this.#fwhm = value;
   }
 
-  public get fwhm(): number {
-    return this._fwhm;
+  get fwhm(): number {
+    return this.#fwhm;
   }
 
-  public fwhmToWidth(fwhm = this._fwhm, mu = this._mu): number {
+  fwhmToWidth(fwhm = this.#fwhm, mu = this.#mu): number {
     return pseudoVoigtFwhmToWidth(fwhm, mu);
   }
 
-  public widthToFWHM(width: number, mu: number = this._mu): number {
+  widthToFWHM(width: number, mu: number = this.#mu): number {
     return pseudoVoigtWidthToFWHM(width, mu);
   }
 
-  public fct(x: number): number {
-    return pseudoVoigtFct(x, this._fwhm, this._mu);
+  fct(x: number): number {
+    return pseudoVoigtFct(x, this.#fwhm, this.#mu);
   }
 
-  public getArea(height = 1): number {
-    return getPseudoVoigtArea({ fwhm: this._fwhm, height, mu: this._mu });
+  getArea(height = 1): number {
+    return getPseudoVoigtArea({ fwhm: this.#fwhm, height, mu: this.#mu });
   }
 
-  public getFactor(area?: number): number {
-    return getPseudoVoigtFactor(area, this._mu);
+  getFactor(area?: number): number {
+    return getPseudoVoigtFactor(area, this.#mu);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     const {
       length,
       factor,
       height = calculatePseudoVoigtHeight({
-        fwhm: this._fwhm,
-        mu: this._mu,
+        fwhm: this.#fwhm,
+        mu: this.#mu,
         area: 1,
       }),
     } = options;
     return getPseudoVoigtData(this, { factor, length, height });
   }
 
-  public calculateHeight(area = 1): number {
+  calculateHeight(area = 1): number {
     return calculatePseudoVoigtHeight({
-      fwhm: this._fwhm,
-      mu: this._mu,
+      fwhm: this.#fwhm,
+      mu: this.#mu,
       area,
     });
   }
 
-  public getParameters(): PseudoVoigtTCHParameter[] {
+  getParameters(): PseudoVoigtTCHParameter[] {
     return ['fwhmG', 'fwhmL'];
   }
 
@@ -179,21 +180,23 @@ export class PseudoVoigtTCH implements Shape1DClass {
    * the mixing ratio are re-derived from them exactly.
    * @returns the shape descriptor.
    */
-  public toJSON(): PseudoVoigtTCHShape1D {
-    return { kind: this.kind, fwhmG: this._fwhmG, fwhmL: this._fwhmL };
+  toJSON(): PseudoVoigtTCHShape1D {
+    return { kind: this.kind, fwhmG: this.#fwhmG, fwhmL: this.#fwhmL };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhmG, dFwhmL } = pseudoVoigtTCHDerivative(
       x,
-      this._fwhmG,
-      this._fwhmL,
+      this.#fwhmG,
+      this.#fwhmL,
     );
     return { fct, dx, parameters: [dFwhmG, dFwhmL] };
   }
 }
 
-/** Parameters characterizing a TCH pseudo-Voigt shape. */
+/**
+ * Parameters characterizing a TCH pseudo-Voigt shape.
+ */
 export type PseudoVoigtTCHParameter = 'fwhmG' | 'fwhmL';
 
 /**
@@ -260,25 +263,25 @@ export function pseudoVoigtTCHDerivative(
   // own `fct` delegates to, so the value and its derivatives stay consistent out
   // there. `fwhmL = 0` gives `mu = 1`, the pure gaussian that is never dropped.
   const z = x / effectiveFwhm;
-  const e =
+  const exp =
     mu !== 1 && z * z > GAUSSIAN_CUTOFF
       ? 0
       : Math.exp(GAUSSIAN_EXP_FACTOR * z * z);
   const denominator2 = 4 * x * x + effectiveFwhm * effectiveFwhm;
   const lorentz = (effectiveFwhm * effectiveFwhm) / denominator2;
   const dEdt =
-    ((2 * GAUSSIAN_EXP_FACTOR * x) / (effectiveFwhm * effectiveFwhm)) * e;
+    ((2 * GAUSSIAN_EXP_FACTOR * x) / (effectiveFwhm * effectiveFwhm)) * exp;
   const dLdt =
     (-8 * x * effectiveFwhm * effectiveFwhm) / (denominator2 * denominator2);
   const dEdfwhm =
     ((-2 * GAUSSIAN_EXP_FACTOR * x * x) /
       (effectiveFwhm * effectiveFwhm * effectiveFwhm)) *
-    e;
+    exp;
   const dLdfwhm = (8 * effectiveFwhm * x * x) / (denominator2 * denominator2);
   const dFwhm = (1 - mu) * dLdfwhm + mu * dEdfwhm;
-  const dMu = e - lorentz;
+  const dMu = exp - lorentz;
   return {
-    fct: (1 - mu) * lorentz + mu * e,
+    fct: (1 - mu) * lorentz + mu * exp,
     dx: (1 - mu) * dLdt + mu * dEdt,
     dFwhmG: dFwhm * dFwhmDfwhmG + dMu * dMuDfwhmG,
     dFwhmL: dFwhm * dFwhmDfwhmL + dMu * dMuDfwhmL,

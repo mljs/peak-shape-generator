@@ -59,19 +59,19 @@ interface GetSplitGaussianAreaOptions {
 }
 
 export class SplitGaussian implements Shape1DClass {
-  public readonly kind = 'splitGaussian' as const;
+  readonly kind = 'splitGaussian' as const;
   /**
    * Full width at half maximum of the lower-x half (x <= 0).
    * @default 500
    */
-  public fwhmLow: number;
+  fwhmLow: number;
   /**
    * Full width at half maximum of the higher-x half (x > 0).
    * @default 500
    */
-  public fwhmHigh: number;
+  fwhmHigh: number;
 
-  public constructor(options: SplitGaussianClassOptions = {}) {
+  constructor(options: SplitGaussianClassOptions = {}) {
     const { fwhmLow = 500, fwhmHigh = 500 } = options;
 
     this.fwhmLow = fwhmLow;
@@ -84,7 +84,7 @@ export class SplitGaussian implements Shape1DClass {
    * both halves.
    * @returns the full width at half maximum.
    */
-  public get fwhm() {
+  get fwhm() {
     return (this.fwhmLow + this.fwhmHigh) / 2;
   }
 
@@ -95,7 +95,7 @@ export class SplitGaussian implements Shape1DClass {
    * take `value` and the peak stays symmetric.
    * @param value - the new full width at half maximum.
    */
-  public set fwhm(value: number) {
+  set fwhm(value: number) {
     const { fwhm } = this;
 
     if (fwhm === 0) {
@@ -115,7 +115,7 @@ export class SplitGaussian implements Shape1DClass {
    * @param fwhm - full width at half maximum. Defaults to the peak's fwhm.
    * @returns the width between the inflection points.
    */
-  public fwhmToWidth(fwhm = this.fwhm) {
+  fwhmToWidth(fwhm = this.fwhm) {
     return gaussianFwhmToWidth(fwhm);
   }
 
@@ -126,15 +126,15 @@ export class SplitGaussian implements Shape1DClass {
    * @param width - width between the inflection points.
    * @returns the corresponding full width at half maximum.
    */
-  public widthToFWHM(width: number) {
+  widthToFWHM(width: number) {
     return gaussianWidthToFWHM(width);
   }
 
-  public fct(x: number) {
+  fct(x: number) {
     return splitGaussianFct(x, this.fwhmLow, this.fwhmHigh);
   }
 
-  public getArea(
+  getArea(
     height = calculateSplitGaussianHeight({
       fwhmLow: this.fwhmLow,
       fwhmHigh: this.fwhmHigh,
@@ -147,15 +147,15 @@ export class SplitGaussian implements Shape1DClass {
     });
   }
 
-  public getFactor(area?: number) {
+  getFactor(area?: number) {
     return getGaussianFactor(area);
   }
 
-  public getData(options: GetData1DOptions = {}) {
+  getData(options: GetData1DOptions = {}) {
     return getSplitGaussianData(this, options);
   }
 
-  public calculateHeight(area = 1) {
+  calculateHeight(area = 1) {
     return calculateSplitGaussianHeight({
       fwhmLow: this.fwhmLow,
       fwhmHigh: this.fwhmHigh,
@@ -163,7 +163,7 @@ export class SplitGaussian implements Shape1DClass {
     });
   }
 
-  public getParameters(): SplitGaussianParameter[] {
+  getParameters(): SplitGaussianParameter[] {
     return ['fwhmLow', 'fwhmHigh'];
   }
 
@@ -171,7 +171,7 @@ export class SplitGaussian implements Shape1DClass {
    * Descriptor of this shape, so `JSON.stringify` round-trips through `getShape1D`.
    * @returns the shape descriptor.
    */
-  public toJSON(): SplitGaussianShape1D {
+  toJSON(): SplitGaussianShape1D {
     return {
       kind: this.kind,
       fwhmLow: this.fwhmLow,
@@ -179,7 +179,7 @@ export class SplitGaussian implements Shape1DClass {
     };
   }
 
-  public derivative(x: number): Shape1DDerivative {
+  derivative(x: number): Shape1DDerivative {
     const { fct, dx, dFwhmLow, dFwhmHigh } = splitGaussianDerivative(
       x,
       this.fwhmLow,
@@ -189,7 +189,9 @@ export class SplitGaussian implements Shape1DClass {
   }
 }
 
-/** Parameters characterizing a split gaussian shape. */
+/**
+ * Parameters characterizing a split gaussian shape.
+ */
 export type SplitGaussianParameter = 'fwhmLow' | 'fwhmHigh';
 
 /**
@@ -213,7 +215,7 @@ export function calculateSplitGaussianHeight(
  * @returns the intensity at x.
  */
 export function splitGaussianFct(x: number, fwhmLow: number, fwhmHigh: number) {
-  return x <= 0 ? gaussianFct(x, fwhmLow) : gaussianFct(x, fwhmHigh);
+  return gaussianFct(x, x <= 0 ? fwhmLow : fwhmHigh);
 }
 
 /**

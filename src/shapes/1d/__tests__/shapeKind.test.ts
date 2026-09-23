@@ -7,7 +7,9 @@ import type { Shape1D } from '../shape_1d.ts';
 
 interface ShapeCase {
   shape: Shape1D;
-  /** The values `getParameters()` reports, which a round trip has to preserve. */
+  /**
+   * The values `getParameters()` reports, which a round trip has to preserve.
+   */
   parameters: Record<string, number>;
 }
 
