@@ -95,6 +95,12 @@ export class Pap implements Shape1DClass {
     return fwhm;
   }
 
+  /**
+   * Identity conversion, since this shape is parameterized by its standard
+   * deviation.
+   * @param width - standard deviation.
+   * @returns the same value.
+   */
   widthToFWHM(width: number) {
     return width;
   }
