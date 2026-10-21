@@ -103,7 +103,9 @@ export class Pap implements Shape1DClass {
     return papFct(x, this.fwhm, this.a);
   }
 
-  getArea(height = calculatePapHeight({ fwhm: this.fwhm, a: this.a, area: 1 })) {
+  getArea(
+    height = calculatePapHeight({ fwhm: this.fwhm, a: this.a, area: 1 }),
+  ) {
     // area for height 1
     const area1 = papArea({ fwhm: this.fwhm, a: this.a, height: 1 });
     return height * area1;
@@ -167,7 +169,7 @@ export type PapParameter = 'fwhm' | 'a';
  */
 export function papFct(x: number, fwhm: number, a: number) {
   const D = fwhm;
-  const thr = -D * (4 - a * a) / (2 * a);
+  const thr = (-D * (4 - a * a)) / (2 * a);
   if (x <= thr) return 0;
   const u = (2 * a * x) / (D * (4 - a * a));
   const k = (4 - a * a) / (a * a);
@@ -185,7 +187,7 @@ function papArea(options: GetPapAreaOptions) {
   const alpha = (2 * a) / (4 - a * a);
   const k = (4 - a * a) / (a * a);
   // integral = height * D/alpha * exp(k) * Gamma(k+1) / k^(k+1)
-  return height * (D / alpha) * Math.exp(k) * gamma(k + 1) / k ** (k + 1);
+  return (height * (D / alpha) * Math.exp(k) * gamma(k + 1)) / k ** (k + 1);
 }
 
 /**
@@ -205,13 +207,14 @@ export function calculatePapHeight(options: CalculatePapHeightOptions = {}) {
  * @param options - sampling options.
  * @returns intensity values.
  */
-export function getPapData(shape: PapClassOptions, options: GetData1DOptions = {}) {
+export function getPapData(
+  shape: PapClassOptions,
+  options: GetData1DOptions = {},
+) {
   const { fwhm = 500, a = 1 } = shape;
   const D = fwhm;
-  const {
-    factor = 5,
-    height = calculatePapHeight({ fwhm, a, area: 1 }),
-  } = options;
+  const { factor = 5, height = calculatePapHeight({ fwhm, a, area: 1 }) } =
+    options;
   let { length } = options;
   if (!length) {
     length = Math.min(Math.ceil(D * factor), 2 ** 25 - 1);
