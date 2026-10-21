@@ -9,6 +9,7 @@ import type { PseudoVoigtParameter } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCHParameter } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 import type { Shape1D, Shape1DKind } from './shape_1d.ts';
 import type { SplitGaussianParameter } from './splitGaussian/SplitGaussian.ts';
+import type { PapParameter } from './pap/Pap.ts';
 
 /**
  * Every parameter a 1D shape can expose: the combination of the parameters of
@@ -24,6 +25,7 @@ export type Shape1DParameter = [
   PseudoVoigtParameter,
   PseudoVoigtTCHParameter,
   SplitGaussianParameter,
+  PapParameter,
 ][number];
 
 export interface Shape1DDerivative {
