@@ -29,13 +29,14 @@ interface GetPapAreaOptions {
 }
 
 /**
- * Lanczos approximation of the gamma function.
+ * Lanczos approximation of the logarithm of the gamma function, stable for
+ * large arguments (the gamma value itself would overflow).
  * @param z - input value.
- * @returns gamma(z).
+ * @returns ln(gamma(z)).
  */
-function gamma(z: number): number {
+function logGamma(z: number): number {
   if (z < 0.5) {
-    return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+    return Math.log(Math.PI / Math.sin(Math.PI * z)) - logGamma(1 - z);
   }
   const g = 7;
   const c = [
@@ -49,7 +50,60 @@ function gamma(z: number): number {
     x += c[i] / (z + i);
   }
   const t = z + g + 0.5;
-  return Math.sqrt(2 * Math.PI) * t ** (z + 0.5) * Math.exp(-t) * x;
+  return Math.log(Math.sqrt(2 * Math.PI) * x) + (z + 0.5) * Math.log(t) - t;
+}
+
+/**
+ * Regularized lower incomplete gamma function P(s, x) = g(s, x) / G(s),
+ * computed with the series (x < s + 1) or the continued fraction
+ * (x >= s + 1), both already normalized so no gamma value is formed.
+ * @param s - shape parameter, s > 0.
+ * @param x - integration bound, x >= 0.
+ * @returns the area fraction below x of a gamma distribution with shape s.
+ */
+function lowerGammaRegularized(s: number, x: number): number {
+  if (x <= 0) {
+    return 0;
+  }
+  if (x < s + 1) {
+    // series expansion
+    let ap = s;
+    let term = 1 / s;
+    let sum = term;
+    for (let i = 0; i < 10000; i++) {
+      ap++;
+      term *= x / ap;
+      sum += term;
+      if (Math.abs(term) < Math.abs(sum) * 1e-16) {
+        break;
+      }
+    }
+    return sum * Math.exp(-x + s * Math.log(x) - logGamma(s));
+  }
+  // modified Lentz continued fraction
+  let b = x + 1 - s;
+  let c = Infinity;
+  let d = 1 / b;
+  let h = d;
+  for (let i = 1; i < 200; i++) {
+    const an = -i * (i - s);
+    b += 2;
+    d = an * d + b;
+    if (Math.abs(d) < 1e-300) {
+      d = 1e-300;
+    }
+    c = b + an / c;
+    if (Math.abs(c) < 1e-300) {
+      c = 1e-300;
+    }
+    d = 1 / d;
+    const delta = d * c;
+    h *= delta;
+    if (Math.abs(delta - 1) < 1e-15) {
+      break;
+    }
+  }
+  return 1 - Math.exp(-x + s * Math.log(x) - logGamma(s)) * h;
 }
 
 /**
@@ -73,16 +127,14 @@ export class Pap implements Shape1DClass {
 
   constructor(options: PapClassOptions = {}) {
     const { fwhm = 500, a = 1 } = options;
+    if (a <= 0 || a >= 2) {
+      throw new Error('a should be (0 - 2)');
+    }
+    if (fwhm <= 0) {
+      throw new Error('fwhm should be > 0');
+    }
     this.fwhm = fwhm;
     this.a = a;
-  }
-
-  private get alpha() {
-    return (2 * this.a) / (4 - this.a * this.a);
-  }
-
-  private get k() {
-    return (4 - this.a * this.a) / (this.a * this.a);
   }
 
   /**
@@ -118,7 +170,7 @@ export class Pap implements Shape1DClass {
   }
 
   getFactor(area?: number) {
-    return area ?? 0.9999;
+    return getPapFactor(area, this.a);
   }
 
   getData(options: GetData1DOptions = {}) {
@@ -139,25 +191,8 @@ export class Pap implements Shape1DClass {
   }
 
   derivative(x: number): Shape1DDerivative {
-    const f = this.fct(x);
-    const D = this.fwhm;
-    const a = this.a;
-    const alpha = this.alpha;
-    const k = this.k;
-    const u = (alpha * x) / D;
-    // dx
-    const dudx = alpha / D;
-    const dEdu = -k * (u / (1 + u));
-    const dx = f * dEdu * dudx;
-    // dD
-    const dED = (k * u * u) / (D * (1 + u));
-    const dFwhm = f * dED;
-    // da via finite differences
-    const eps = 1e-6;
-    const fPlus = papFct(x, D, a + eps);
-    const fMinus = papFct(x, D, a - eps);
-    const da = (fPlus - fMinus) / (2 * eps);
-    return { fct: f, dx, parameters: [dFwhm, da] };
+    const { fct, dx, dD, da } = papDerivative(x, this.fwhm, this.a);
+    return { fct, dx, parameters: [dD, da] };
   }
 }
 
@@ -183,7 +218,36 @@ export function papFct(x: number, fwhm: number, a: number) {
 }
 
 /**
- * Calculate the area of a Pap peak.
+ * Analytical value and partial derivatives of the Pap peak function at `x`.
+ * @param x - position.
+ * @param fwhm - standard deviation (D).
+ * @param a - asymmetry factor.
+ * @returns the value `fct` and its partial derivatives with respect to `x`
+ * (`dx`), to the standard deviation (`dD`) and to the asymmetry factor (`da`).
+ */
+export function papDerivative(x: number, fwhm: number, a: number) {
+  const fct = papFct(x, fwhm, a);
+  if (fct === 0) {
+    return { fct, dx: 0, dD: 0, da: 0 };
+  }
+  const D = fwhm;
+  const u = (2 * a * x) / (D * (4 - a * a));
+  const k = (4 - a * a) / (a * a);
+  // dx
+  const dx = fct * ((-k * u) / (1 + u)) * ((2 * a) / (D * (4 - a * a)));
+  // dD
+  const dD = (fct * k * u * u) / (D * (1 + u));
+  // da
+  const dKda = -8 / (a * a * a);
+  const duda = ((2 * (4 + a * a)) / ((4 - a * a) * (4 - a * a))) * (x / D);
+  const dEda = dKda * (Math.log(1 + u) - u) - ((k * u) / (1 + u)) * duda;
+  const da = fct * dEda;
+  return { fct, dx, dD, da };
+}
+
+/**
+ * Calculate the area of a Pap peak, evaluated in log space so it stays
+ * accurate (and finite) for every `a` in (0, 2).
  * @param options - height, fwhm and a.
  * @returns the area.
  */
@@ -192,8 +256,10 @@ function papArea(options: GetPapAreaOptions) {
   const D = fwhm;
   const alpha = (2 * a) / (4 - a * a);
   const k = (4 - a * a) / (a * a);
-  // integral = height * D/alpha * exp(k) * Gamma(k+1) / k^(k+1)
-  return (height * (D / alpha) * Math.exp(k) * gamma(k + 1)) / k ** (k + 1);
+  // integral = height * D/alpha * exp(k) * Gamma(k+1) / k^(k+1), in log space
+  const lnArea =
+    Math.log(D / alpha) + k + logGamma(k + 1) - (k + 1) * Math.log(k);
+  return height * Math.exp(lnArea);
 }
 
 /**
@@ -208,6 +274,44 @@ export function calculatePapHeight(options: CalculatePapHeightOptions = {}) {
 }
 
 /**
+ * Calculate the number of times the standard deviation (stored as `fwhm`)
+ * must be sampled around the peak maximum to reach the requested coverage of
+ * the total area. The window is symmetric around the maximum, so both sides
+ * of the asymmetric peak are taken into account.
+ * @param [area=0.9999] - Expected area to be covered.
+ * @param a - asymmetry factor, in the range (0, 2). Default 1.
+ * @returns the factor by which to multiply the standard deviation.
+ */
+export function getPapFactor(area = 0.9999, a = 1) {
+  if (area >= 1) {
+    throw new Error('area should be (0 - 1)');
+  }
+  const k = (4 - a * a) / (a * a);
+  const scaled = a / (4 - a * a);
+  // coverage of [x, +x] around the maximum: cumulative from the far tail
+  const coverage = (factor: number) => {
+    const high = lowerGammaRegularized(k + 1, k * (1 + factor * scaled));
+    const low = 1 - factor * scaled;
+    return low > 0 ? high - lowerGammaRegularized(k + 1, k * low) : high;
+  };
+  let lo = 0;
+  let hi = 1;
+  while (coverage(hi) < area && hi < 1e8) {
+    lo = hi;
+    hi *= 2;
+  }
+  for (let i = 0; i < 100 && hi - lo > 1e-9; i++) {
+    const mid = (lo + hi) / 2;
+    if (coverage(mid) < area) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return (lo + hi) / 2;
+}
+
+/**
  * Generate an intensity array for a Pap peak.
  * @param shape - peak parameters.
  * @param options - sampling options.
@@ -219,8 +323,10 @@ export function getPapData(
 ) {
   const { fwhm = 500, a = 1 } = shape;
   const D = fwhm;
-  const { factor = 5, height = calculatePapHeight({ fwhm, a, area: 1 }) } =
-    options;
+  const {
+    factor = getPapFactor(0.9999, a),
+    height = calculatePapHeight({ fwhm, a, area: 1 }),
+  } = options;
   let { length } = options;
   if (!length) {
     length = Math.min(Math.ceil(D * factor), 2 ** 25 - 1);

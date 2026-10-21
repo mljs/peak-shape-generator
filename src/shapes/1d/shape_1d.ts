@@ -1,10 +1,10 @@
 import type { GaussianClassOptions } from './gaussian/Gaussian.ts';
 import type { GeneralizedLorentzianClassOptions } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import type { LorentzianClassOptions } from './lorentzian/Lorentzian.ts';
+import type { PapClassOptions } from './pap/Pap.ts';
 import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCHClassOptions } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 import type { SplitGaussianClassOptions } from './splitGaussian/SplitGaussian.ts';
-import type { PapClassOptions } from './pap/Pap.ts';
 
 /**
  * kind of shape

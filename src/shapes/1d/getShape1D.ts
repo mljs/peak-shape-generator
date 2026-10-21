@@ -3,11 +3,11 @@ import { Gaussian } from './gaussian/Gaussian.ts';
 import { GeneralizedLorentzian } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import { Lorentzian } from './lorentzian/Lorentzian.ts';
 import { LorentzianDispersive } from './lorentzianDispersive/LorentzianDispersive.ts';
+import { Pap } from './pap/Pap.ts';
 import { PseudoVoigt } from './pseudoVoigt/PseudoVoigt.ts';
 import { PseudoVoigtTCH } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 import type { Shape1D } from './shape_1d.ts';
 import { SplitGaussian } from './splitGaussian/SplitGaussian.ts';
-import { Pap } from './pap/Pap.ts';
 
 /**
  * Generate an instance of a specific kind of shape.

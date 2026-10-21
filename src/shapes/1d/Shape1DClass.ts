@@ -5,11 +5,11 @@ import type { GaussianParameter } from './gaussian/Gaussian.ts';
 import type { GeneralizedLorentzianParameter } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import type { LorentzianParameter } from './lorentzian/Lorentzian.ts';
 import type { LorentzianDispersiveParameter } from './lorentzianDispersive/LorentzianDispersive.ts';
+import type { PapParameter } from './pap/Pap.ts';
 import type { PseudoVoigtParameter } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCHParameter } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 import type { Shape1D, Shape1DKind } from './shape_1d.ts';
 import type { SplitGaussianParameter } from './splitGaussian/SplitGaussian.ts';
-import type { PapParameter } from './pap/Pap.ts';
 
 /**
  * Every parameter a 1D shape can expose: the combination of the parameters of

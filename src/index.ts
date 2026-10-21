@@ -16,13 +16,13 @@ export type {
   GeneralizedLorentzianShape1D,
   LorentzianDispersiveShape1D,
   LorentzianShape1D,
+  PapShape1D,
   PseudoVoigtShape1D,
   PseudoVoigtTCHShape1D,
   Shape1D,
   Shape1DKind,
   Shape1DWithFWHM,
   SplitGaussianShape1D,
-  PapShape1D,
 } from './shapes/1d/shape_1d.ts';
 export type {
   GaussianShape2D,
