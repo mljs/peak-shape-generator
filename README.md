@@ -38,6 +38,8 @@ You see the resulting functions using this [playground](https://codesandbox.io/s
 
 ## Usage
 
+### 1D shapes
+
 ```js
 import {
   getGaussianData,
@@ -45,52 +47,59 @@ import {
   getPseudoVoigtData,
 } from 'ml-peak-shape-generator';
 
-// It's possible to specify the windows size with factor option
+// It's possible to specify the windows size with the factor option
 let data = getGaussianData({ sd: 500 }, { factor: 3.5 });
 // or fix the number of points as Full Width at Half Maximum
 let data = getGaussianData({ fwhm: 500 }, { factor: 3.5 });
 
-// It's possible to specify the windows size with factor option
+// It's possible to specify the windows size with the factor option
 let data = getLorentzianData({ fwhm: 500 }, { factor: 5 });
 
-// It's possible to specify the windows size with factor option
+// It's possible to specify the windows size with the factor option
 let data = getPseudoVoigtData({ fwhm: 500 }, { factor: 5 });
 ```
 
-It is also possible to take an instance of each kind of shape:
+It is also possible to take an instance of a 1D shape:
 
 ```js
-import { Gaussian, gaussianFct, Gaussian2D } from 'ml-peak-shape-generator';
+import { Gaussian, gaussianFct } from 'ml-peak-shape-generator';
 
 const gaussianShape = new Gaussian({ fwhm: 500 });
 // It is possible to set a new value for fwhm
 gaussianShape.fwhm = 300;
 
-// By default the height value ensure a volume equal 1.
-const symmetric2DShape = new Gaussian2D({ fwhm: 500 });
-
-// It is possible to set values for sd, fwhm and factor for each axes.
-const gaussian2DShape = new Gaussian2D({ fwhm: { x: 300, y: 500 } });
-
-// It is possible to set new value for fwhm by:
-gaussian2DShape.fwhm = { x: 300, y: 500 };
-// or set the same value for both axes.
-gaussian2DShape.fwhm = 400;
-
-// An instance of any shape has the same methods accessible for each
-// shape e.g. fct or getData, but these use the internal parameters. e.g:
-
+// An instance has the same methods accessible for each
+// shape, e.g. fct or getData, but these use the internal parameters:
 gaussianShape.fct(5);
 gaussianFct(5, 500);
 // getData
 gaussianShape.getData({ factor: 3.5 });
 ```
 
+### 2D shapes
+
+```js
+import { Gaussian2D } from 'ml-peak-shape-generator';
+
+// By default the height ensures a volume equal to 1.
+const symmetric2DShape = new Gaussian2D({ fwhm: 500 });
+
+// It is possible to set values for sd, fwhm and factor for each axis.
+const gaussian2DShape = new Gaussian2D({ fwhm: { x: 300, y: 500 } });
+
+// It is possible to set a new value for fwhm by:
+gaussian2DShape.fwhm = { x: 300, y: 500 };
+// or set the same value for both axes.
+gaussian2DShape.fwhm = 400;
+```
+
+### Dynamic shape selection
+
 ```js
 import { getShape1D, getShape2D } from 'ml-peak-shape-generator';
 
-// If you want to dynamically select a shape you can use `getShape1D` /
-// `getShape2D`. They return an instance of the required kind of shape.
+// `getShape1D` / `getShape2D` turn a descriptor into an instance of the
+// required kind of shape.
 
 const lorentzian = getShape1D({ kind: 'lorentzian', fwhm: 500 });
 const gaussian2D = getShape2D({ kind: 'gaussian', sd: 500 });
@@ -147,6 +156,29 @@ It is also possible to get a function that allows to calculate y for any x
 ```js
 import { gaussianFct } from 'ml-peak-shape-generator';
 const func = gaussianFct(x - mean, fwhm);
+```
+
+## Widths and FWHM
+
+Every shape is internally defined by its **full width at half maximum** (`fwhm`).
+A few shapes accept alternative ways to express a width, which are resolved to
+`fwhm` on construction and serialized back as `fwhm`:
+
+- `sd` (gaussian, 1D and 2D): the standard deviation, i.e. half the distance
+  between the inflection points. It is converted with `fwhm = 2 * sd * sqrt(2 * ln(2))`.
+- `fwhmLow` / `fwhmHigh` (`splitGaussian`): the fwhm of each half.
+- `fwhmG` / `fwhmL` (`pseudoVoigtTCH`): the fwhm of the gaussian and
+  lorentzian components.
+
+The `width` used by the conversion helpers `widthToFWHM` / `fwhmToWidth` is
+the distance between the inflection points (for a gaussian, `width = 2 * sd`).
+Each shape applies its own conversion factor, so the same `width` produces a
+different `fwhm` depending on the kind of shape.
+
+```js
+const gaussian = new Gaussian({ fwhm: 500 });
+gaussian.fwhmToWidth(); // width between inflection points
+gaussian.widthToFWHM(20); // fwhm from an inflection-point width
 ```
 
 ## [API Documentation](https://mljs.github.io/peak-shape-generator/)
