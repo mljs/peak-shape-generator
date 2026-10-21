@@ -149,6 +149,29 @@ import { gaussianFct } from 'ml-peak-shape-generator';
 const func = gaussianFct(x - mean, fwhm);
 ```
 
+## Widths and FWHM
+
+Every shape is internally defined by its **full width at half maximum** (`fwhm`).
+A few shapes accept alternative ways to express a width, which are resolved to
+`fwhm` on construction and serialized back as `fwhm`:
+
+- `sd` (gaussian, 1D and 2D): the standard deviation, i.e. half the distance
+  between the inflection points. It is converted with `fwhm = 2 * sd * sqrt(2 * ln(2))`.
+- `fwhmLow` / `fwhmHigh` (`splitGaussian`): the fwhm of each half.
+- `fwhmG` / `fwhmL` (`pseudoVoigtTCH`): the fwhm of the gaussian and
+  lorentzian components.
+
+The `width` used by the conversion helpers `widthToFWHM` / `fwhmToWidth` is
+the distance between the inflection points (for a gaussian, `width = 2 * sd`).
+Each shape applies its own conversion factor, so the same `width` produces a
+different `fwhm` depending on the kind of shape.
+
+```js
+const gaussian = new Gaussian({ fwhm: 500 });
+gaussian.fwhmToWidth(); // width between inflection points
+gaussian.widthToFWHM(20); // fwhm from an inflection-point width
+```
+
 ## [API Documentation](https://mljs.github.io/peak-shape-generator/)
 
 ## License
