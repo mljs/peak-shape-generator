@@ -1,6 +1,7 @@
 import type { GaussianClassOptions } from './gaussian/Gaussian.ts';
 import type { GeneralizedLorentzianClassOptions } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import type { LorentzianClassOptions } from './lorentzian/Lorentzian.ts';
+import type { PapClassOptions } from './pap/Pap.ts';
 import type { PseudoVoigtClassOptions } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCHClassOptions } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 import type { SplitGaussianClassOptions } from './splitGaussian/SplitGaussian.ts';
@@ -36,6 +37,10 @@ export interface SplitGaussianShape1D extends SplitGaussianClassOptions {
   kind: 'splitGaussian';
 }
 
+export interface PapShape1D extends PapClassOptions {
+  kind: 'pap';
+}
+
 /**
  * Discriminant of every 1D shape.
  */
@@ -51,7 +56,8 @@ export type Shape1D =
   | LorentzianDispersiveShape1D
   | GeneralizedLorentzianShape1D
   | PseudoVoigtTCHShape1D
-  | SplitGaussianShape1D;
+  | SplitGaussianShape1D
+  | PapShape1D;
 
 /**
  * All supported 1D shapes that have a FWHM parameter.

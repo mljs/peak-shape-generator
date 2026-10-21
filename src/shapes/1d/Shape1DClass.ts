@@ -5,6 +5,7 @@ import type { GaussianParameter } from './gaussian/Gaussian.ts';
 import type { GeneralizedLorentzianParameter } from './generalizedLorentzian/GeneralizedLorentzian.ts';
 import type { LorentzianParameter } from './lorentzian/Lorentzian.ts';
 import type { LorentzianDispersiveParameter } from './lorentzianDispersive/LorentzianDispersive.ts';
+import type { PapParameter } from './pap/Pap.ts';
 import type { PseudoVoigtParameter } from './pseudoVoigt/PseudoVoigt.ts';
 import type { PseudoVoigtTCHParameter } from './pseudoVoigtTCH/PseudoVoigtTCH.ts';
 import type { Shape1D, Shape1DKind } from './shape_1d.ts';
@@ -24,6 +25,7 @@ export type Shape1DParameter = [
   PseudoVoigtParameter,
   PseudoVoigtTCHParameter,
   SplitGaussianParameter,
+  PapParameter,
 ][number];
 
 export interface Shape1DDerivative {

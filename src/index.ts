@@ -5,6 +5,7 @@ export * from './shapes/1d/pseudoVoigt/PseudoVoigt.ts';
 export * from './shapes/1d/pseudoVoigtTCH/PseudoVoigtTCH.ts';
 export * from './shapes/1d/generalizedLorentzian/GeneralizedLorentzian.ts';
 export * from './shapes/1d/splitGaussian/SplitGaussian.ts';
+export * from './shapes/1d/pap/Pap.ts';
 export * from './shapes/2d/gaussian2D/Gaussian2D.ts';
 
 export * from './shapes/1d/getShape1D.ts';
@@ -15,6 +16,7 @@ export type {
   GeneralizedLorentzianShape1D,
   LorentzianDispersiveShape1D,
   LorentzianShape1D,
+  PapShape1D,
   PseudoVoigtShape1D,
   PseudoVoigtTCHShape1D,
   Shape1D,
